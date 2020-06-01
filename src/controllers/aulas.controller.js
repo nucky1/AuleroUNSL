@@ -1,28 +1,28 @@
 const Aulas = require('../models/Aulas');
 
 module.exports = {
-    getAulas = async (req,res) =>{
+    getAulas:  async (req,res) =>{
         const aulas = await Aulas.findAll();
         res.render('listaAulas.html', {aulas});
     },
 
-    getDetalleAula = async (req,res) =>{
+    getDetalleAula: async (req,res) =>{
         const id = req.params.id;
         const aula = await Aulas.findOne({
             where: {
                 id: id
             }
         })
-        res.json(aula);
+        res.send(aula);
     },
 
-    getAulasEdificio = async (req,res) =>{
+    getAulasEdificio: async (req,res) =>{
         const edificio = req.params.edificio;
         const aulas = await Aulas.findAll({
             where: {
                 edificio: edificio
             }
         })
-        res.json(aulas);
+        res.send(aulas);
     }
 }

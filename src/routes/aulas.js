@@ -7,8 +7,8 @@ router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
 
 // Si un usuario visita la pagina listado de aulas:
-router.get("/aulas", aulasController.getAulas(req,res));
-router.get("/aulas/:id", aulasController.getDetalleAula(req,res));
-router.get("/aulas/:edificio", aulasController.getAulasEdificio(req,res));
+router.get("/aulas", aulasController.getAulas);
+router.get("/aulas/id/:id", aulasController.getDetalleAula);
+router.get("/aulas/edificio/:edificio", aulasController.getAulasEdificio);
 // Exporto "router" a los demas archivos que lo necesiten.
 module.exports = router;

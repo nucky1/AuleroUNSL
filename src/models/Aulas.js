@@ -1,14 +1,26 @@
-const sequalize = require('../database/database');
+const Sequelize = require("sequelize");
+const sequelize = require("../database/database");
 
-const Aulas = sequelize.define('aula',{
+const Aula = sequelize.define(
+  "aula",
+  {
     id: {
-        type: sequelize.INTEGER
-    }
-})
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+    },
+    name: {
+      type: Sequelize.TEXT,
+    },
+    edificio: {
+      type: Sequelize.TEXT,
+    },
+  },
+  {
+    timestamps: false,
+  }
+);
 
-module.exports = Aulas;
-
-
+module.exports = Aula;
 
 /*
 class Aula {
