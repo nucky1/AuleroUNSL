@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS usuarios(
     id SERIAL PRIMARY KEY,
     username text NOT NULL CHECK (username <> ''),
     password text NOT NULL CHECK (password <> ''),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS edificio(
     id SERIAL PRIMARY KEY,
     nombre text NOT NULL CHECK (nombre <> ''),
     direccion text NOT NULL CHECK (direccion <> ''),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS aulas(
     capacidad integer NOT NULL,
     extras chiches,
     ubicacion text NOT NULL CHECK (ubicacion <> ''),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (idEdificio) REFERENCES edificio(id)
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS aulas(
 CREATE TABLE IF NOT EXISTS facultad(
     id SERIAL PRIMARY KEY,
     nombre text NOT NULL CHECK (nombre <> ''),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS carrera(
     nombre text NOT NULL CHECK (nombre <> ''),   
     idFacultad smallint,
     FOREIGN KEY (idFacultad) REFERENCES facultad(id),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS docente(
     legajo text NOT NULL CHECK (legajo <> ''),
     dni integer NOT NULL,
     idUsuario smallint,
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS administrador(
     legajo text NOT NULL CHECK (legajo <> ''),
     dni integer NOT NULL,
     idUsuario smallint,
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES usuarios(id)
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS materia(
     periodo period,
     anio integer NOT NULL,
     cod integer UNIQUE,
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -92,14 +92,14 @@ CREATE TABLE IF NOT EXISTS reserva(
     estado state,
     idAula smallint REFERENCES aulas(id),
     idDocente smallint REFERENCES docente(id),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 CREATE TABLE IF NOT EXISTS reservaMateria(
     idReserva smallint REFERENCES reserva(id),
     codMateria integer REFERENCES materia(cod),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (idReserva,codMateria)
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS reservaMateria(
 CREATE TABLE IF NOT EXISTS carreraMateria(
     codMateria integer REFERENCES materia(cod),
     idCarrera smallint REFERENCES carrera(id),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (codMateria,idCarrera)
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS carreraMateria(
 CREATE TABLE IF NOT EXISTS reservaAdmin(
     idReserva smallint REFERENCES reserva(id),
     idAdministrador integer REFERENCES administrador(id),
-    state situation,
+    state situation DEFAULT 'ACTIVA',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (idReserva,idAdministrador)
