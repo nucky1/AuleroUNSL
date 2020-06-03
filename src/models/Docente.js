@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
 const Reserva = require("Reserva.js");
-const Aula = sequelize.define(
-    "aulas",
+const Docente = sequelize.define(
+    "docente",
     {
         id: {
             type: Sequelize.INTEGER,
@@ -12,22 +12,21 @@ const Aula = sequelize.define(
         nombre: {
             type: Sequelize.TEXT,
         },
-        numero: {
-            type: Sequelize.INTEGER,
+        apellido: {
+            type: Sequelize.TEXT,
         },
-        idEdificio: {
+        idUsuario: {
             type: Sequelize.INTEGER,
             references: {
-                model: 'edificio',
+                model: 'usuarios',
                 key: 'id',
-            } 
+            }
         },
-        capacidad: {
+        dni: {
             type: Sequalize.INTEGER,
         },
-        extras: {
-            type: Sequelize.ENUM,
-            values: ['Pizarra', 'Proyector', 'Pizarron', 'Ventilador'],
+        legajo: {
+            type: Sequalize.TEXT,
         },
         ubicacion: {
             type: Sequelize.TEXT,
@@ -47,5 +46,5 @@ const Aula = sequelize.define(
         timestamps: false,
     }
 );
-Aula.hasMany(Reserva);
-module.exports = Aula;
+Docente.hasMany(Reserva);
+module.exports = Docente;
