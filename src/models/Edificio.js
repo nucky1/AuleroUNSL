@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const Aula = require("Aulas.js");
 const Edificio = sequelize.define(
     "edificio",
     {
@@ -16,8 +15,7 @@ const Edificio = sequelize.define(
             type: Sequelize.TEXT,
         },
         state: {
-            type: Sequalize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -30,5 +28,4 @@ const Edificio = sequelize.define(
         timestamps: false,
     }
 );
-Edificio.hasMany(Aula);
 module.exports = Edificio;

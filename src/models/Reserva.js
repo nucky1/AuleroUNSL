@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
 const ReservaAdmin = require("./ReservaAdmin.js");
+const Docente = require("./Docente.js");
 const Administrador = require("./Administrador.js");
 const Reserva = sequelize.define(
     "reserva",
@@ -22,14 +23,14 @@ const Reserva = sequelize.define(
         estado: {
             type: Sequelize.ENUM(['AUTORIZADA', 'PENDIENTE', 'FINALIZADA', 'RECHAZADA'])
         },
-        idAula: {
+        aulaId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'aulas',
                 key: 'id',
             } 
         },
-        idDocente: {
+        docenteId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'docente',
@@ -50,6 +51,8 @@ const Reserva = sequelize.define(
         timestamps: false,
     }
 );
-Reserva.belongsToMany(Administrador, { through: ReservaAdmin});
-
+Reserva.belongsToMany(Administrador, { through: ReservaAdmin });
+Administrador.belongsToMany(Reserva, { through: ReservaAdmin });
+Reserva.belongsTo(Docente);
+Docente.hasMany(Reserva);
 module.exports = Reserva;

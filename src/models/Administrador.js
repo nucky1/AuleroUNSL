@@ -31,8 +31,7 @@ const Administrador = sequelize.define(
             type: Sequelize.TEXT,
         },
         state: {
-            type: Sequelize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
         },
         createdAt: {
             type: Sequelize.DATE,

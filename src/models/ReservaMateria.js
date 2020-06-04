@@ -3,7 +3,7 @@ const sequelize = require("../database/database");
 const ReservaMateria = sequelize.define(
     "reservamateria",
     {
-        idReserva: {
+        reservaId: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             references: {
@@ -11,7 +11,7 @@ const ReservaMateria = sequelize.define(
                 key: 'id',
             }
         },
-        codMateria: {
+        materiaId: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             references: {
@@ -20,8 +20,7 @@ const ReservaMateria = sequelize.define(
             }
         },
         state: {
-            type: Sequalize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
         },
         createdAt: {
             type: Sequelize.DATE,

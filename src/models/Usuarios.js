@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const Docente = require("Docente.js");
-const Administrador = require("Administrador.js");
+const Docente = require("./Docente.js");
+const Administrador = require("./Administrador.js");
 const Usuario = sequelize.define(
     "usuarios",
     {
@@ -17,8 +17,7 @@ const Usuario = sequelize.define(
             type: Sequelize.TEXT,
         },
         state: {
-            type: Sequalize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
         },
         createdAt: {
             type: Sequelize.DATE,

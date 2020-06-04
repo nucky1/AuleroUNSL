@@ -18,4 +18,7 @@ router.get("/detallesAula", (req, res) => {
   res.render("detallesAula.html");
 });
 
+//
+router.get("/listadoAulas/edificio/:edificio/capacidad/:capacidad/ubicacion/:ubicacion", aulasController.filtrar)
+
 module.exports = router;

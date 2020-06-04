@@ -1,6 +1,26 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
 const Reserva = require("./Reserva.js");
+const Edificio = require("./Edificio.js");
+const extra = sequelize.define(
+    "extras",
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            autoincrement: true,
+            primaryKey: true,
+        },
+        idAula: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'aulas',
+                key: 'id',
+            }
+        },
+        extras: {
+            type: Sequelize.ENUM(['Pizarra', 'Proyector', 'Pizarron', 'Ventilador']),
+        },
+    });
 const Aula = sequelize.define(
     "aulas",
     {
@@ -15,7 +35,7 @@ const Aula = sequelize.define(
         numero: {
             type: Sequelize.INTEGER,
         },
-        idEdificio: {
+        edificioId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'edificio',
@@ -25,16 +45,11 @@ const Aula = sequelize.define(
         capacidad: {
             type: Sequelize.INTEGER,
         },
-        extras: {
-            type: Sequelize.ENUM,
-            values: ['Pizarra', 'Proyector', 'Pizarron', 'Ventilador'],
-        },
         ubicacion: {
             type: Sequelize.TEXT,
         },
         state: {
-            type: Sequelize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -47,5 +62,10 @@ const Aula = sequelize.define(
         timestamps: false,
     }
 );
+Aula.belongsTo(Edificio, { foreignKey: 'edificioid' });
+Edificio.hasMany(Aula, { foreignKey: 'edificioid' });
 Aula.hasMany(Reserva);
+Reserva.belongsTo(Aula);
+extra.hasMany(Aula);
+Aula.belongsTo(extra);
 module.exports = Aula;

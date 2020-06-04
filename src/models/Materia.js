@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const CarreraMateria = require("CarreraMateria.js");
-const ReservaMateria = require("ReservaMateria.js");
-const Carrera = require("Carrera.js");
-const Reserva = require("Reserva.js");
+const CarreraMateria = require("./CarreraMateria.js");
+const ReservaMateria = require("./ReservaMateria.js");
+const Carrera = require("./Carrera.js");
+const Reserva = require("./Reserva.js");
 const Materia = sequelize.define(
     "materia",
     {
@@ -16,8 +16,7 @@ const Materia = sequelize.define(
             type: Sequelize.TEXT,
         },
         periodo: {
-            type: Sequalize.ENUM,
-            values: ['primer cuatrimestre', 'segundo cuatrimestre', 'anual']
+            type: Sequelize.ENUM(['primer cuatrimestre', 'segundo cuatrimestre', 'anual']),
         },
         anio: {
             type: Sequelize.INTEGER,
@@ -27,8 +26,7 @@ const Materia = sequelize.define(
             unique: true,
         },
         state: {
-            type: Sequalize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -42,5 +40,7 @@ const Materia = sequelize.define(
     }
 );
 Materia.belongsToMany(Carrera, { through: CarreraMateria });
+Carrera.belongsToMany(Materia, { through: CarreraMateria });
+Reserva.belongsToMany(Materia, { through: ReservaMateria });
 Materia.belongsToMany(Reserva, { through: ReservaMateria });
 module.exports = Materia;

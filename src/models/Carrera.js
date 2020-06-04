@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
+const Facultad = require("./Facultad.js");
 const Carrera = sequelize.define(
     "carrera",
     {
@@ -11,7 +12,7 @@ const Carrera = sequelize.define(
         nombre: {
             type: Sequelize.TEXT,
         },
-        idFacultad: {
+        facultadId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'Facultad',
@@ -19,8 +20,7 @@ const Carrera = sequelize.define(
             }
         },
         state: {
-            type: Sequalize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -33,4 +33,7 @@ const Carrera = sequelize.define(
         timestamps: false,
     }
 );
+Facultad.hasMany(carrera);
+Carrera.belongsTo(Facultad);
+
 module.exports = Carrera;
