@@ -1,0 +1,82 @@
+/*TODO: refactorizar nombres de atributos */
+body{
+    background-color: #F6F6F6;
+}
+.bg2{
+    background: white;
+    height: 100%;
+    padding: 0px;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+
+}
+.header{
+    background-color: #2666BC;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+    width: 100%;
+}
+h1{
+    color: #D9D9D9;
+    padding-left: 20px;
+}
+.bg1{
+    background-color: #C4C4C4;
+    align-self: center;
+    height: 250px;
+}
+.bg3{
+    border-color: #FFFFFF;
+    box-shadow: 0 0px 0px 0;
+}
+.title{
+    padding-left: 24px;
+}
+.titulo-materia{
+    padding: 8px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.navbar{
+    background: #2666BC;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+
+}
+.navbar-brand{
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0;
+    padding-right: 100px;
+    height: 55px;
+
+    display: inline-block;
+}
+.nav{
+    color: #FFFFFF;
+    display: flex;
+    overflow: auto;
+}
+.navbar-default .navbar-nav li a{
+    color: #D9D9D9;
+    font-family: "Mitram Regular",sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+.navbar-default .navbar-nav li a:focus{
+    color: #FFFFFF;
+}
+.navbar-default .navbar-nav li a:hover{
+    color: #EAEAEA;
+}
+.logo{
+    height: 55px;
+}
