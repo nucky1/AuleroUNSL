@@ -22,16 +22,16 @@ const Administrador = sequelize.define(
             }
         },
         dni: {
-            type: Sequalize.INTEGER,
+            type: Sequelize.INTEGER,
         },
         legajo: {
-            type: Sequalize.TEXT,
+            type: Sequelize.TEXT,
         },
         ubicacion: {
             type: Sequelize.TEXT,
         },
         state: {
-            type: Sequalize.ENUM,
+            type: Sequelize.ENUM,
             values: ['ACTIVO', 'INACTIVO', 'BAJA']
         },
         createdAt: {

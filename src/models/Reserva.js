@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const ReservaAdmin = require("ReservaAdmin.js");
-const Administrador = require("Administrador.js");
+const ReservaAdmin = require("./ReservaAdmin.js");
+const Administrador = require("./Administrador.js");
 const Reserva = sequelize.define(
     "reserva",
     {
@@ -11,8 +11,7 @@ const Reserva = sequelize.define(
             primaryKey: true,
         },
         dia: {
-            type: Sequelize.ENUM,
-            values: ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'],
+            type: Sequelize.ENUM(['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'])
         },
         horaInicio: {
             type: Sequelize.INTEGER,
@@ -21,8 +20,7 @@ const Reserva = sequelize.define(
             type: Sequelize.INTEGER,
         },
         estado: {
-            type: Sequalize.ENUM,
-            value: ['AUTORIZADA', 'PENDIENTE', 'FINALIZADA', 'RECHAZADA'],    
+            type: Sequelize.ENUM(['AUTORIZADA', 'PENDIENTE', 'FINALIZADA', 'RECHAZADA'])
         },
         idAula: {
             type: Sequelize.INTEGER,
@@ -39,8 +37,7 @@ const Reserva = sequelize.define(
             } 
         },
         state: {
-            type: Sequalize.ENUM,
-            values: ['ACTIVO', 'INACTIVO', 'BAJA']
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
         },
         createdAt: {
             type: Sequelize.DATE,

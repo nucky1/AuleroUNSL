@@ -20,7 +20,7 @@ const ReservaAdmin = sequelize.define(
             }
         },
         state: {
-            type: Sequalize.ENUM,
+            type: Sequelize.ENUM,
             values: ['ACTIVO', 'INACTIVO', 'BAJA']
         },
         createdAt: {
@@ -34,4 +34,4 @@ const ReservaAdmin = sequelize.define(
         timestamps: false,
     }
 );
-module.exports = CarreraMateria;
+module.exports = ReservaAdmin;

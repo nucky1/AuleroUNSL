@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const Reserva = require("Reserva.js");
+const Reserva = require("./Reserva.js");
 const Aula = sequelize.define(
     "aulas",
     {
@@ -23,7 +23,7 @@ const Aula = sequelize.define(
             } 
         },
         capacidad: {
-            type: Sequalize.INTEGER,
+            type: Sequelize.INTEGER,
         },
         extras: {
             type: Sequelize.ENUM,
@@ -33,7 +33,7 @@ const Aula = sequelize.define(
             type: Sequelize.TEXT,
         },
         state: {
-            type: Sequalize.ENUM,
+            type: Sequelize.ENUM,
             values: ['ACTIVO', 'INACTIVO', 'BAJA']
         },
         createdAt: {
