@@ -8,7 +8,7 @@ router.use(express.json()); // convierte datos a json.
 
 // Si un usuario visita la pagina principal:
 router.get("/", (req, res) => {
-  res.render("pruebas.html"); // uso render ya que usamos el motor de vista ejs.
+  res.render("principal.html"); // uso render ya que usamos el motor de vista ejs.
 });
 
 // Exporto "router" a los demas archivos que lo necesiten.

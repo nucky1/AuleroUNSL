@@ -1,46 +1,71 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-
+const Reserva = require("./Reserva.js");
+const Edificio = require("./Edificio.js");
+const extra = sequelize.define(
+    "extras",
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            autoincrement: true,
+            primaryKey: true,
+        },
+        idAula: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'aulas',
+                key: 'id',
+            }
+        },
+        extras: {
+            type: Sequelize.ENUM(['Pizarra', 'Proyector', 'Pizarron', 'Ventilador']),
+        },
+    });
 const Aula = sequelize.define(
-  "aula",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
+    "aulas",
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            autoincrement: true,
+            primaryKey: true,
+        },
+        nombre: {
+            type: Sequelize.TEXT,
+        },
+        numero: {
+            type: Sequelize.INTEGER,
+        },
+        edificioId: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'edificio',
+                key: 'id',
+            } 
+        },
+        capacidad: {
+            type: Sequelize.INTEGER,
+        },
+        ubicacion: {
+            type: Sequelize.TEXT,
+        },
+        state: {
+            type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
+        },
+        createdAt: {
+            type: Sequelize.DATE,
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+        }
     },
-    name: {
-      type: Sequelize.TEXT,
-    },
-    edificio: {
-      type: Sequelize.TEXT,
-    },
-  },
-  {
-    timestamps: false,
-  }
+    {
+        timestamps: false,
+    }
 );
-
+Aula.belongsTo(Edificio, { foreignKey: 'edificioid' });
+Edificio.hasMany(Aula, { foreignKey: 'edificioid' });
+Aula.hasMany(Reserva);
+Reserva.belongsTo(Aula);
+extra.hasMany(Aula);
+Aula.belongsTo(extra);
 module.exports = Aula;
-
-/*
-class Aula {
-  constructor(nombre, numero, edificio, capacidad, ubicacion, estado) {
-    this.nombre = nombre;
-    this.numero = numero;
-    this.edificio = edificio;
-    this.capacidad = capacidad;
-    this.ubicacion = ubicacion;
-    this.estado = estado;
-    this.id++;
-  }
-}
-module.exports = Aula;
-
-Cada aula tiene:
-nombre: aula o sala
-numero: 57 / 58 / 7
-edificio: bloque 2 / rectorado
-capacidad: 30 / 70
-ubicación: planta baja / 1er piso
-estado: habiitado o no // TODO: esto es diferente de si está ocupada o no.
-*/
