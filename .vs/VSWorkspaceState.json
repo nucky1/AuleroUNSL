@@ -3,9 +3,12 @@
     "",
     "\\SQL",
     "\\src",
+    "\\src\\controllers",
     "\\src\\database",
-    "\\src\\models"
+    "\\src\\models",
+    "\\src\\routes",
+    "\\src\\views"
   ],
-  "SelectedNode": "\\src\\database\\database.js",
+  "SelectedNode": "\\SQL\\bd.sql",
   "PreviewInSolutionExplorer": false
 }

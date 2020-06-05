@@ -10,7 +10,7 @@ const extra = sequelize.define(
             autoincrement: true,
             primaryKey: true,
         },
-        idAula: {
+        aulaId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'aulas',
@@ -62,10 +62,10 @@ const Aula = sequelize.define(
         timestamps: false,
     }
 );
-Aula.belongsTo(Edificio, { foreignKey: 'edificioid' });
-Edificio.hasMany(Aula, { foreignKey: 'edificioid' });
+Aula.belongsTo(Edificio);
+Edificio.hasMany(Aula);
 Aula.hasMany(Reserva);
 Reserva.belongsTo(Aula);
-extra.hasMany(Aula);
-Aula.belongsTo(extra);
-module.exports = Aula;
+extra.belongsTo(Aula);
+Aula.hasMany(extra);
+module.exports = {Aula,extra};

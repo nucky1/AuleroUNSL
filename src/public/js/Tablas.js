@@ -2,7 +2,7 @@
 
 function llenarTabla() {
     let tabla = document.getElementById('table');
-    //const aulas = aulascontroller.filtrar
+    
 
     //Eliminamos las filas:
     for (let index = tabla.rows.length-1; index > 0 ; index--) {
@@ -10,18 +10,18 @@ function llenarTabla() {
     }
 
     //insertamos aulas
-    //aulas.forEach(aula => {
+    aulas.forEach(aula => {
         let fila = tabla.insertRow(-1);
 
         let celda = fila.insertCell(0);
-        celda.appendChild(document.createTextNode('bla'));
+        celda.appendChild(document.createTextNode(''));
 
         celda = fila.insertCell(1);
-        celda.appendChild(document.createTextNode('blaaa'));
+        celda.appendChild(document.createTextNode(''));
 
         celda = fila.insertCell(2);
         celda.appendChild(document.createTextNode('blaaaaaaa'));
-    //});
+    });
 
 
 }

@@ -1,6 +1,8 @@
 const db = {
     Aulas: require('../models/Aulas'),
-    Edificio: require('../models/Edificio')
+    Edificio: require('../models/Edificio'),
+    Carrera: require('../models/Carrera'),
+    Facultad: require('../models/Facultad')
 }; 
 
 
@@ -10,16 +12,17 @@ module.exports = {
         const edificio = req.params.edificio;
         const capacidad = req.params.capacidad;
         const ubicacion = req.params.ubicacion;
-        const aulas = await db.Aulas.findAll()
-        /*whereAula = {};
-        whereEdificio = {};
+        const extras = req.params.extras.split(',');
+        console.log(extras);
+        whereAula = { state: 'ACTIVO'};
+        whereEdificio = { state: 'ACTIVO'};
         if (edificio != "todos")
             whereEdificio.nombre = edificio;
         if (capacidad != "todos")
             whereAula.capacidad = capacidad;
         if (ubicacion != "todos")
             whereAula.ubicacion = ubicacion;
-        const aulas = await db.Aulas.findAll({
+        const aulas = await db.Aulas.Aula.findAll({
             where: whereAula,
             include: [
                 {
@@ -27,9 +30,85 @@ module.exports = {
                     as: "edificio",
                     where: whereEdificio,
                     attributes: ['nombre'],
+                },
+                {
+                    model: db.Aulas.extra,
+                    as: "extras",
+                    attributes: ['extra'],
                 }
             ]
-        });*/
-        res.send(aulas)
+        }).then(function(aulas){
+            filtroExtras = [];
+            aulas.forEach(elemento => { 
+                flag = true; 
+                elemento.extras.forEach(element => {
+                    if (!extras.includes(element.get('extra')))
+                        flag = false;
+                });
+                if (flag && elemento.extras.length == extras.length ) {
+                    filtroExtras.push(elemento);
+                }
+            });
+            res.send(filtroExtras);
+        })
+        
+    },
+
+    filtrarPorCarrera: async (req,res) => {
+        const facultad = req.params.facultad;
+        const carrera = req.params.carrera;
+        const anio = req.params.anio;
+        const periodo = req.params.periodo;
+
+        
+        whereFacultad = { state: 'ACTIVO'};
+        whereCarrera = { state: 'ACTIVO'};
+        whereMateria = { state: 'ACTIVO'};
+        
+        if (facultad != "todos")
+            whereFacultad.nombre = facultad;
+        if (carrera != "todos")
+            whereCarrera.nombre = carrera;
+        if (anio != "todos")
+            whereMateria.anio = anio;
+        if (periodo != "todos")
+            whereMateria.periodo = periodo;
+
+        const aulas = db.Carrera.findAll({
+            where: whereCarrera,
+            include: [
+                {
+                    model: db.Facultad,
+                    as: "facultad",
+                    where: whereFacultad,
+                    attributes: ['nombre']
+                },
+                {
+                    model: db.Materia,
+                    as: "materia",
+                    where: whereMateria,
+                    attributes: ['nombre']
+                },
+                {
+                    model: db.Aula.Aula,
+                    as: "aula",
+                    where:{
+                        state: 'ACTIVO'
+                    },
+                    attributes: ['nombre','numero']
+                },
+                {
+                    model: db.Reserva,
+                    as: "reserva",
+                    where:{
+                        estado: 'AUTORIZADA',
+                        state: 'ACTIVO'
+                    },
+                    attributes: ['dia','horaInicio','horaFin']
+                }
+            ]
+        })
     }
+
+
 }
