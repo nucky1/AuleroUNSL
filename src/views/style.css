@@ -1,0 +1,131 @@
+/*TODO: refactorizar nombres de atributos */
+body{
+    background-color: #F6F6F6;
+
+}
+.bg-container{
+    background: white;
+    height: 100%;
+    padding: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+
+}
+.bg-encabezado{
+    background: white;
+    height: 100%;
+    padding: 24px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+}
+.header{
+    background-color: #2666BC;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+    width: 100%;
+    height: 95px;
+}
+
+.bg1{
+    background-color: #C4C4C4;
+    align-self: center;
+    height: 250px;
+}
+.bg3{
+    border-color: #FFFFFF;
+    box-shadow: 0 0px 0px 0;
+}
+.panel .panel-heading{
+    background-color: #CBE9FF;
+}
+
+.titulo-materia{
+    font-family: "Mitram Bold", sans-serif;
+    padding: 8px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.titulo{
+    font-family: "Mitram Bold", sans-serif;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.navbar{
+    background: #2666BC;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+
+}
+.navbar-brand{
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0;
+    padding-right: 100px;
+    height: 55px;
+
+    display: inline-block;
+}
+.nav{
+    color: #FFFFFF;
+    display: flex;
+    overflow: auto;
+}
+.navbar-default .navbar-nav li a{
+    color: #D9D9D9;
+    font-family: "Mitram Regular",sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+.navbar-default .navbar-nav li a:focus{
+    color: #FFFFFF;
+}
+.navbar-default .navbar-nav li a:hover{
+    color: #EAEAEA;
+}
+.logo{
+    height: 55px;
+}
+.btn{
+    background-color: #2666BC;
+    color: #FFFFFF;
+    border-radius: 25px;
+    width: 50px;
+}
+.btn:hover{
+    box-shadow: 0 5px 5px 0 rgba(203,233,255,0.7);
+    color: #FFFFFF;
+}
+.btn:focus{
+    border-radius: 25px;
+    border-color: #2666BC;
+}
+.form-control{
+    border-radius: 25px;
+    border-color: #2666BC;
+}
+.etiqueta{
+    padding-right: 6px;
+
+}
+.campo{
+    margin-right: 25px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    width: fit-content;
+
+}
