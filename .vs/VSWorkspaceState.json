@@ -6,9 +6,11 @@
     "\\src\\controllers",
     "\\src\\database",
     "\\src\\models",
+    "\\src\\public",
+    "\\src\\public\\js",
     "\\src\\routes",
     "\\src\\views"
   ],
-  "SelectedNode": "\\SQL\\bd.sql",
+  "SelectedNode": "\\src\\controllers\\aulas.controller.js",
   "PreviewInSolutionExplorer": false
 }

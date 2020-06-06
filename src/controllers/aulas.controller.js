@@ -7,6 +7,18 @@ const db = {
 
 
 module.exports = {
+    getDatosFiltros: async (req, res) => {
+        const filtros = await db.facultad.findAll({
+            attributes: ['nombreFac'],
+            include: [{
+                model: db.Carrera,
+                as: "carrera",
+                attributes: ['nombre','cantAnios'],
+
+            }]
+        })
+        res.send(filtros);
+    },
         //req = {edificio, capacidad, ubicacion}
     filtrar:  async (req,res) =>{
         const edificio = req.params.edificio;
