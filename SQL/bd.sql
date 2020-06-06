@@ -4,6 +4,7 @@ CREATE TYPE situation AS ENUM ('ACTIVO','INACTIVO','BAJA');
 CREATE TYPE dias AS ENUM ('lunes','martes','miercoles','jueves','viernes','sabado');
 CREATE TYPE period AS ENUM ('primer cuatrimestre','segundo cuatrimestre','anual');
 CREATE TYPE state AS ENUM ('AUTORIZADA','PENDIENTE','FINALIZADA','RECHAZADA');
+
 CREATE TABLE IF NOT EXISTS usuarios(
     id SERIAL PRIMARY KEY,
     username text NOT NULL CHECK (username <> ''),
@@ -157,55 +158,101 @@ CREATE TRIGGER tr_carreramateria BEFORE UPDATE ON carreramateria FOR EACH ROW
 CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     EXECUTE PROCEDURE update_updated_at ();
 
-    INSERT INTO edificio(nombre,direccion) VALUES ('bloque 2','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),('bloque 1','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),('bloque 4','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW');
-    INSERT INTO aulas(nombre,numero,"edificioId",capacidad,ubicacion) VALUES ('aula',58,1,50,'planta baja'),('sala',7,1,15,'planta baja'),('aula',32,2,50,'planta baja');
-    INSERT INTO extras("aulaId",extra) VALUES (1,'Pizarron'),(2,'Proyector'),(2,'Pizarra'),(3,'Proyector'),(3,'Pizarron');
-    insert into facultad (nombre)
-    VALUES ('Facultad de QuÌmica, BioquÌmica y Farmacia'),
-    ('Facultad de Ciencias FÌsico-Matem·ticas y Naturales'),
+    INSERT INTO usuarios(username,password) VALUES
+    ('mSilvestri777','0000'),
+    ('web4kd','0000'),
+    ('admin1','0000'),
+    ('admin2','0000'),
+    ('admin3','0000'),
+
+
+    INSERT INTO edificio(nombre,direccion) VALUES 
+    ('bloque 2','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),
+    ('bloque 1','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),
+    ('bloque 4','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW');
+
+    INSERT INTO aulas(nombre,numero,"edificioId",capacidad,ubicacion) VALUES 
+    ('aula',58,1,50,'planta baja'),
+    ('sala',7,1,15,'planta baja'),
+    ('aula',36,2,60,'planta baja'),
+    ('aula',37,2,45,'planta baja'),
+    ('aula',38,2,60,'planta baja'),
+    ('aula',28,3,80,'planta baja'),
+    ('aula',29,3,100,'planta baja'),
+    ('aula',30,3,100,'planta baja');
+
+    INSERT INTO extras("aulaId",extra) VALUES 
+    (1,'Pizarron'),
+    (2,'Proyector'),
+    (3,'Pizarra');
+
+    insert into facultad (nombre) VALUES 
+    ('Facultad de QuÔøΩmica, BioquÔøΩmica y Farmacia'),
+    ('Facultad de Ciencias FÔøΩsico-MatemÔøΩticas y Naturales'),
     ('Facultad de Ciencias Humanas'),
-    ('Instituto PolitÈcnico y ArtÌstico Universitario'),
+    ('Instituto PolitÔøΩcnico y ArtÔøΩstico Universitario'),
     ('Facultad de Ciencias de la Salud'),
-    ('Facultad de PsicologÌa'),
+    ('Facultad de PsicologÔøΩa'),
     ('Facultad de Turismo y Urbanismo'),
-    ('Facultad de IngenierÌa y Ciencias Agropecuarias'),
-    ('Facultad de Ciencias EconÛmicas JurÌdicas Y Sociales');
+    ('Facultad de IngenierÔøΩa y Ciencias Agropecuarias'),
+    ('Facultad de Ciencias EconÔøΩmicas JurÔøΩdicas Y Sociales');
 
     INSERT INTO carrera(nombre,"facultadId") VALUES 
-    ('ANALISTA BIOL”GICO',1),
-    ('ANALISTA QUÕMICO',1),
-    ('BIOQUÕMICA',1),
+    ('ANALISTA BIOL√ìGICO',1),
+    ('ANALISTA QU√çMICO',1),
+    ('BIOQU√çMICA',1),
     ('FARMACIA',1),
-    ('LICENCIATURA EN BIOLOGÕA MOLECULAR',1),
-    ('LICENCIATURA EN BIOQUÕMICA',1),
-    ('LICENCIATURA EN BIOTECNOLOGÕA',1),
-    ('LICENCIATURA EN CIENCIAS BIOL”GICAS',1),
-    ('LICENCIATURA EN QUÕMICA',1), 
-    ('INGENIERÕA EN INFORM¡TICA',2),
-    ('INGENIERÕA EN COMPUTACI”N',2),
-    ('INGENIERÕA EN MINAS',2),
-    ('LICENCIATURA EN FÕSICA',2),
-    ('PROFESORADO EN MATEM¡TICA',2),
-    ('LICENCIATURA EN CIENCIAS DE LA COMPUTACI”N',2),
+    ('LICENCIATURA EN BIOLOG√çA MOLECULAR',1),
+    ('LICENCIATURA EN BIOQU√çMICA',1),
+    ('LICENCIATURA EN BIOTECNOLOG√çA',1),
+    ('LICENCIATURA EN CIENCIAS BIOL√ìGICAS',1),
+    ('LICENCIATURA EN QU√çMICA',1), 
+    ('Ingenier√≠a EN INFORM√ÅTICA',2),
+    ('Ingenier√≠a EN COMPUTACI√ìN',2),
+    ('Ingenier√≠a EN MINAS',2),
+    ('LICENCIATURA EN F√çSICA',2),
+    ('PROFESORADO EN MATEM√ÅTICA',2),
+    ('LICENCIATURA EN CIENCIAS DE LA COMPUTACI√ìN',2),
     ('PERIODISMO',3),    
-    ('TECNICO UNIVERSITARIO EN PRODUCCI”N MUSICAL',3),  
-    ('TECNICATURA UNIVERSITARIA EN PRODUCCI”N MUSICAL',3),  
+    ('TECNICO UNIVERSITARIO EN PRODUCCI√ìN MUSICAL',3),  
+    ('TECNICATURA UNIVERSITARIA EN PRODUCCI√ìN MUSICAL',3),  
     ('CICLO DE LICENCIATURA EN LENGUA INGLESA',3),  
     ('LICENCIATURA EN COMUNICACION SOCIAL',3),  
     ('LICENCIATURA EN PERIODISMO',3),  
     ('LOCUTOR NACIONAL',3),  
-    ('IngenierÌa QuÌmica',4),  
-    ('IngenierÌa AgronÛmica',4),
-    ('IngenierÌa Electromec·nica',4),
-    ('IngenierÌa MecatrÛnica',4);
+    ('Ingenier√≠a Qu√≠mica',4),  
+    ('Ingenier√≠a Agron√≥mica',4),
+    ('Ingenier√≠a Electromec√°nica',4),
+    ('Ingenier√≠a Mecatr√≥nica',4);
+
+    INSERT INTO docente(nombre,apellido,legajo,dni,"usuarioId") VALUES
+    ('Mario', 'Silvestri', '355917',30651678, 1),
+    ('Luis Ernesto Roqu√©', 'Fourcade', '458592',25987456, 2);
+
+    INSERT INTO administrador(nombre,apellido,legajo,dni,"usuarioId") VALUES
+    ('Nicol√°s', 'De Miguel', '355918',40123456, 3),
+    ('Santiago', 'Del√≠as', '355919',40651678, 4),
+    ('Margarita', 'Maguire', '355920',41651678, 5),
+    ('Luciano', 'gurruchaga', '355921',45651678, 6);
     
     INSERT INTO materia(nombre,periodo,anio,cod)  VALUES
     ('Estructura de datos y algoritmos','segundo cuatrimestre',1,1),
-    ('Calculo I','primer cuatrimestre',1,1),
-    ('Ingenieria web','primer cuatrimestre',4,1'Fisica I','segundo cuatrimestre',2,2),
-    ('Probabilidad y estadistica','primer cuatrimestre',2,3),
-    ('Ingles','anual',1,4);
-    INSERT INTO carreramateria("materiaId","carreraId") VALUES
+    ('Calculo I','primer cuatrimestre',1,2),
+    ('Ingenieria web','primer cuatrimestre',4,3),
+    ('Fisica I','segundo cuatrimestre',2,4),
+    ('Probabilidad y estadistica','primer cuatrimestre',2,5),
+    ('Ingles','anual',1,6);
+
+    INSERT INTO reserva(dia,"horaInicio","horaFin",estado,"aulaid","docenteId") VALUES
+    ('lunes',9,11,'AUTORIZADA',2,2),
+    ('martes',17,20,'AUTORIZADA',1,1);
+
+    INSERT INTO reservaMateria("reservaId","materiaId") VALUES
+    (1,3),
+    (2,1);
+    
+   
+    INSERT INTO carreraMateria("materiaId","carreraId") VALUES
     (2,10),
     (2,11),
     (2,12),
@@ -224,10 +271,12 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     (3,10),
     (3,11);
 
-
-    INSERT INTO reserva() VALUES
-    
-    INSERT INTO docente(nombre,apellido,legajo,dni,"usuarioId") VALUES ('Mario', 'Silvestri', '355917',40651678, 'mSilvestri777')
-    
-    
-    INSERT INTO facultad() VALUES
+    INSERT INTO reservaAdmin("reservaId","administradorId") VALUES
+    (1,1),
+    (1,2),
+    (1,3),
+    (1,4),
+    (2,1),
+    (2,2),
+    (2,3),
+    (2,4),
