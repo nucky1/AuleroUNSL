@@ -33,7 +33,7 @@ const Carrera = sequelize.define(
         timestamps: false,
     }
 );
-Facultad.hasMany(carrera);
+Facultad.hasMany(Carrera);
 Carrera.belongsTo(Facultad);
 
 module.exports = Carrera;

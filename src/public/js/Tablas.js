@@ -1,27 +1,28 @@
+function getHorarios(){
+    fetch('http://localhost:3000/horariosCarrera/facultad/FCFNyM/carrera/IngeWeb/anio/2020/periodo/1ro')
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(myJson) {
+        console.log(myJson);
+    });
+}
 
-
-function llenarTabla() {
-    let tabla = document.getElementById('table');
-    //const aulas = aulascontroller.filtrar
+function llenarTabla(filas,idTabla) {
+    let tabla = document.getElementById(idTabla);
+    
 
     //Eliminamos las filas:
     for (let index = tabla.rows.length-1; index > 0 ; index--) {
         tabla.deleteRow(index);        
     }
 
-    //insertamos aulas
-    //aulas.forEach(aula => {
+    //insertamos filas
+    filas.forEach(fila => {
         let fila = tabla.insertRow(-1);
-
-        let celda = fila.insertCell(0);
-        celda.appendChild(document.createTextNode('bla'));
-
-        celda = fila.insertCell(1);
-        celda.appendChild(document.createTextNode('blaaa'));
-
-        celda = fila.insertCell(2);
-        celda.appendChild(document.createTextNode('blaaaaaaa'));
-    //});
-
-
+        for (i = 0; i < fila.length; i++) {
+            let celda = fila.insertCell(i);
+            celda.appendChild(document.createTextNode(fila[i]));
+        }
+    });
 }

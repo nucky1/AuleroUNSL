@@ -17,8 +17,9 @@ router.get("/horariosCarrera", (req, res) => {
 router.get("/detallesAula", (req, res) => {
   res.render("detallesAula.html");
 });
+router.get("/getDatosFiltros", aulasController.getDatosFiltros);
 
-//
-router.get("/listadoAulas/edificio/:edificio/capacidad/:capacidad/ubicacion/:ubicacion", aulasController.filtrar)
+router.get("/listadoAulas/edificio/:edificio/capacidad/:capacidad/ubicacion/:ubicacion/extras/:extras", aulasController.filtrar);
 
+router.get("/horariosCarrera/facultad/:facultad/carrera/:carrera/anio/:anio/periodo/:periodo",aulasController.filtrarPorCarrera);
 module.exports = router;

@@ -3,9 +3,14 @@
     "",
     "\\SQL",
     "\\src",
+    "\\src\\controllers",
     "\\src\\database",
-    "\\src\\models"
+    "\\src\\models",
+    "\\src\\public",
+    "\\src\\public\\js",
+    "\\src\\routes",
+    "\\src\\views"
   ],
-  "SelectedNode": "\\src\\database\\database.js",
+  "SelectedNode": "\\src\\controllers\\aulas.controller.js",
   "PreviewInSolutionExplorer": false
 }
