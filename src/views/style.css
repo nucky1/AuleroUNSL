@@ -100,17 +100,17 @@ body{
 .logo{
     height: 55px;
 }
-.btn{
+.btn-search{
     background-color: #2666BC;
     color: #FFFFFF;
     border-radius: 25px;
     width: 50px;
 }
-.btn:hover{
+.btn-search:hover{
     box-shadow: 0 5px 5px 0 rgba(203,233,255,0.7);
     color: #FFFFFF;
 }
-.btn:focus{
+.btn-search:focus{
     border-radius: 25px;
     border-color: #2666BC;
 }
@@ -150,4 +150,38 @@ body{
 html {
     position: relative;
     min-height: 100%;
+}
+
+.expansible{
+    padding: 8px;
+    padding-left: 16px;
+}
+.botones{
+    padding: 8px;
+    padding-bottom: 12px;
+    padding-top: 0;
+}
+.btn-line{
+    background-color: #FFFFFF;
+    color: #2666BC;
+    border-radius: 25px;
+    border-style: solid;
+    border-color: #2666BC;
+    border-width: 1px;
+    font-weight: 400;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 130px;
+    margin-left: 16px;
+}
+.btn-line:hover{
+    background-color: #2666BC;
+    color: #FFFFFF;
+    border-radius: 25px;
+    width: 130px;
+    margin-left: 16px;
+}
+.icon-check{
+    color: #2666BC;
+    padding-right: 4px;
 }
