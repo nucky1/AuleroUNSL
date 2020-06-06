@@ -1,3 +1,13 @@
+function getHorarios(){
+    fetch('http://localhost:3000/horariosCarrera/facultad/FCFNyM/carrera/IngeWeb/anio/2020/periodo/1ro')
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(myJson) {
+        console.log(myJson);
+    });
+}
+
 function llenarTabla(filas,idTabla) {
     let tabla = document.getElementById(idTabla);
     
