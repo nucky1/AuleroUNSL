@@ -1,7 +1,5 @@
-
-
-function llenarTabla() {
-    let tabla = document.getElementById('table');
+function llenarTabla(filas,idTabla) {
+    let tabla = document.getElementById(idTabla);
     
 
     //Eliminamos las filas:
@@ -9,19 +7,12 @@ function llenarTabla() {
         tabla.deleteRow(index);        
     }
 
-    //insertamos aulas
-    aulas.forEach(aula => {
+    //insertamos filas
+    filas.forEach(fila => {
         let fila = tabla.insertRow(-1);
-
-        let celda = fila.insertCell(0);
-        celda.appendChild(document.createTextNode(''));
-
-        celda = fila.insertCell(1);
-        celda.appendChild(document.createTextNode(''));
-
-        celda = fila.insertCell(2);
-        celda.appendChild(document.createTextNode('blaaaaaaa'));
+        for (i = 0; i < fila.length; i++) {
+            let celda = fila.insertCell(i);
+            celda.appendChild(document.createTextNode(fila[i]));
+        }
     });
-
-
 }
