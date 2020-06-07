@@ -172,17 +172,18 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     INSERT INTO edificio(nombre,direccion) VALUES 
     ('bloque 2','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),
     ('bloque 1','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),
-    ('bloque 4','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW');
+    ('bloque 4','Ejercito de Los Andes 950, Ciudad de San Luis, Provincia de San Luis D5700HHW'),
+    ('El barco','D5700HOI, Chacabuco 917, D5700HOI San Luis');
 
     INSERT INTO aulas(nombre,numero,"edificioId",capacidad,ubicacion) VALUES 
     ('aula',58,1,50,'planta baja'),
     ('sala',7,1,15,'planta baja'),
     ('aula',36,2,60,'planta baja'),
-    ('aula',37,2,45,'planta baja'),
+    ('laboratorio',6,1,20,'segundo piso'),
     ('aula',38,2,60,'planta baja'),
     ('aula',28,3,80,'planta baja'),
-    ('aula',29,3,100,'planta baja'),
-    ('aula',30,3,100,'planta baja');
+    ('aula',29,4,38,'primer piso'),
+    ('Aula magna',0,4,100,'subusuelo');
 
     INSERT INTO extras("aulaId",extra) VALUES 
     (1,'Pizarron'),

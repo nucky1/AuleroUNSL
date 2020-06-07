@@ -12,6 +12,9 @@ const Carrera = sequelize.define(
         nombre: {
             type: Sequelize.TEXT,
         },
+        cantAnios: {
+            type: Sequelize.INTEGER,
+        },
         facultadId: {
             type: Sequelize.INTEGER,
             references: {

@@ -17,10 +17,16 @@ router.get("/horariosCarrera", (req, res) => {
 router.get("/detallesAula", (req, res) => {
   res.render("detallesAula.html");
 });
+
+//retorna los filtros para listadoAulas.html
+router.get("/getFiltrosAulas", aulasController.getFiltrosAulas);
+//retorna los filtros para horariosCarrera.html
 router.get("/getDatosFiltros", aulasController.getDatosFiltros);
 router.get("/detallesAula/id/:id/periodo/:periodo", aulasController.detallesAula);
 
 router.get("/listadoAulas/edificio/:edificio/capacidad/:capacidad/ubicacion/:ubicacion/extras/:extras", aulasController.filtrar);
+
+router.get("/detallesAula/id/:id/periodo/:periodo", aulasController.detallesAula);
 
 router.get("/horariosCarrera/facultad/:facultad/carrera/:carrera/anio/:anio/periodo/:periodo",aulasController.filtrarPorCarrera);
 module.exports = router;
