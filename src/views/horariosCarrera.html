@@ -9,7 +9,7 @@
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/Tablas.js"></script>
+    <script type="text/javascript" src="js/horariosCarrera.js"></script>
 
 </head>
 
@@ -58,26 +58,15 @@
             <form class="form-group form-inline">
 
                 <label class="etiqueta" for="fac">Facultad</label>
-                <select class="form-control campo" id="fac">
-                    <option>FCFMyN</option>
-                    <option>FQByF</option>
-                    <option>FCS</option>
+                <select class="form-control campo" id="fac" onchange="cargarCarreras()">
                 </select>
 
                 <label class="etiqueta" for="carr">Carrera</label>
-                <select class="form-control campo" id="carr">
-                    <option>Ingeniería en Informática</option>
-                    <option>Ingeniería en Computación</option>
-                    <option>Lic. en Cs. de la Compútación</option>
+                <select class="form-control campo" id="carr" onchange="cargarAnios()">
                 </select>
 
                 <label class="etiqueta" for="anio">Año</label>
                 <select class="form-control campo" id="anio">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
                 </select>
 
                 <label class="etiqueta" for="cuatri">Cuatrimestre</label>
