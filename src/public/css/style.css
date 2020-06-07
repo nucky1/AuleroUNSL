@@ -31,6 +31,18 @@ body{
     border-width: 1px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
 }
+.bg-carousel{
+    background: white;
+    height: 100%;
+    margin-top: 8px;
+    padding: 0;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
+}
 .header{
     background-color: #2666BC;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
@@ -188,4 +200,11 @@ html {
 .icon-check{
     color: #2666BC;
     padding-right: 4px;
+}
+.carousel-inner > .item > img {
+    width: 100%;
+}
+.carousel{
+    overflow: hidden;
+
 }
