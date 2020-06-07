@@ -122,6 +122,10 @@ body{
     padding-right: 6px;
 
 }
+.valor{
+    padding-right: 24px;
+    font-weight: normal;
+}
 .campo{
     margin-right: 25px;
     margin-bottom: 12px;
