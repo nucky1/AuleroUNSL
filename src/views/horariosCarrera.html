@@ -22,7 +22,7 @@
             <nav class="navbar navbar-default navbar-fixed-top ">
                 <div class="container align-center">
 
-                    <a class="navbar-brand" href="Principal">
+                    <a class="navbar-brand" href="Principal.html">
                         <img class="logo d-inline-block align-top" src="http://www.unsl.edu.ar/application/assets/logos/logo-unsl-negativo2.png" width="150">
 
                     </a>
@@ -75,7 +75,7 @@
                     <option>2do</option>
                 </select>
 
-                <button type="submit" class="btn-search mb-2"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="submit" id="lupa" class="btn-search mb-2" onclick="getHorarios()" disabled><span class="glyphicon glyphicon-search"></span></button>
 
             </form>
 
@@ -83,7 +83,7 @@
         </div>
 
         <!-- Contenedor con los horarios -->
-        <div class="container bg-container">
+        <div class="container bg-container" id ="ContenedorHorarios">
 
             <!-- Bloque con horario de una materia -->
             <div class="panel panel-default bg3">

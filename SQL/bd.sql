@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS reservaMateria(
     state situation DEFAULT 'ACTIVO',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY ("reservaId","materiaId")
+    PRIMARY KEY ("reservaId","materiumId")
 );
 CREATE TABLE IF NOT EXISTS carreraMateria(
     "materiumId" integer REFERENCES materia(cod),
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS carreraMateria(
     state situation DEFAULT 'ACTIVO',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY ("materiaId","carreraId")
+    PRIMARY KEY ("materiumId","carreraId")
 );
 CREATE TABLE IF NOT EXISTS reservaAdmin(
     "reservaId" smallint REFERENCES reserva(id),
@@ -250,12 +250,12 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     ('lunes',9,11,'AUTORIZADA',2,2),
     ('martes',17,20,'AUTORIZADA',1,1);
 
-    INSERT INTO reservaMateria("reservaId","materiaId") VALUES
+    INSERT INTO reservaMateria("reservaId","materiumId") VALUES
     (1,3),
     (2,1);
     
    
-    INSERT INTO carreraMateria("materiaId","carreraId") VALUES
+    INSERT INTO carreraMateria("materiumId","carreraId") VALUES
     (2,10),
     (2,11),
     (2,12),
