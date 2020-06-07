@@ -5,19 +5,34 @@ const db = {
   Facultad: require("../models/Facultad"),
   Reserva: require("../models/Reserva"),
   Materia: require("../models/Materia"),
-  ReservaMateria: require("../models/ReservaMateria"),
+  Op: require("sequelize"),
+  ReservaMateria: require("../models/ReservaMateria")
 };
 
 module.exports = {
+  //retorna los filtros para listadoAulas.html
+  getFiltrosAulas: async (req, res) => {
+    const filtros = await db.Edificio.findAll({
+      attributes: ["nombre"],
+      include: [
+        {
+          model: db.Aulas.Aula,
+          attributes: ["ubicacion"]
+        }
+      ]
+    });
+    res.send(filtros);
+  },
+  //retorna los filtros para horariosCarrera.html
   getDatosFiltros: async (req, res) => {
     const filtros = await db.Facultad.findAll({
       attributes: ["nombre"],
       include: [
         {
           model: db.Carrera,
-          attributes: ["nombre", "cantAnios"],
-        },
-      ],
+          attributes: ["nombre", "cantAnios"]
+        }
+      ]
     });
     res.send(filtros);
   },
@@ -27,11 +42,10 @@ module.exports = {
     const capacidad = req.params.capacidad;
     const ubicacion = req.params.ubicacion;
     const extras = req.params.extras.split(",");
-    console.log(extras);
     whereAula = { state: "ACTIVO" };
     whereEdificio = { state: "ACTIVO" };
     if (edificio != "todos") whereEdificio.nombre = edificio;
-    if (capacidad != "todos") whereAula.capacidad = capacidad;
+      if (capacidad != "undefined") whereAula.capacidad = { [db.Op.gte] : capacidad };
     if (ubicacion != "todos") whereAula.ubicacion = ubicacion;
     const aulas = await db.Aulas.Aula.findAll({
       where: whereAula,
@@ -40,26 +54,31 @@ module.exports = {
           model: db.Edificio,
           as: "edificio",
           where: whereEdificio,
-          attributes: ["nombre"],
+          attributes: ["nombre"]
         },
         {
           model: db.Aulas.extra,
           as: "extras",
-          attributes: ["extra"],
-        },
-      ],
-    }).then(function (aulas) {
-      filtroExtras = [];
-      aulas.forEach((elemento) => {
-        flag = true;
-        elemento.extras.forEach((element) => {
-          if (!extras.includes(element.get("extra"))) flag = false;
-        });
-        if (flag && elemento.extras.length == extras.length) {
-          filtroExtras.push(elemento);
+          attributes: ["extra"]
         }
-      });
-      res.send(filtroExtras);
+      ]
+    }).then(function (aulas) {
+        filtroExtras = [];
+        console.log(extras[0]);
+        if (extras[0] != 'all') {
+            aulas.forEach(elemento => {
+                flag = true;
+                elemento.extras.forEach(element => {
+                    if (!extras.includes(element.get("extra"))) flag = false;
+                });
+                if (flag && elemento.extras.length == extras.length) {
+                    filtroExtras.push(elemento);
+                }
+            });
+            res.send(filtroExtras);
+        } else {
+            res.send(aulas);
+        }
     });
   },
 
@@ -86,26 +105,26 @@ module.exports = {
           include: [
             {
               model: db.Facultad,
-              where: whereFacultad,
-            },
-          ],
+              where: whereFacultad
+            }
+          ]
         },
         {
           model: db.Reserva,
           where: {
             estado: "AUTORIZADA",
-            state: "ACTIVO",
+            state: "ACTIVO"
           },
           include: [
             {
               model: db.Aulas.Aula,
               where: {
-                state: "ACTIVO",
-              },
-            },
-          ],
-        },
-      ],
+                state: "ACTIVO"
+              }
+            }
+          ]
+        }
+      ]
     });
     res.send(aulas);
   },
@@ -116,13 +135,13 @@ module.exports = {
 
     const aula = await db.Aulas.Aula.findAll({
       where: {
-        id: id,
+        id: id
       },
       include: [
         {
           model: db.Edificio,
           as: "edificio",
-          attributes: ["nombre"],
+          attributes: ["nombre"]
         },
         {
           model: db.Reserva,
@@ -131,18 +150,18 @@ module.exports = {
             {
               model: db.Materia,
               where: {
-                periodo: periodo,
-              },
-            },
-          ],
+                periodo: periodo
+              }
+            }
+          ]
         },
         {
           model: db.Aulas.extra,
           as: "extras",
-          attributes: ["extra"],
-        },
-      ],
+          attributes: ["extra"]
+        }
+      ]
     });
     res.send(aula);
-  },
+  }
 };

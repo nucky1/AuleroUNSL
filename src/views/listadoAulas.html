@@ -65,7 +65,7 @@
                 <option>todos</option>
                 </select>
 
-                <button type="submit" class="btn btn-search mb-2" onclick="cargarTabla()"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="button" class="btn btn-search mb-2" onclick="getAulas()"><span class="glyphicon glyphicon-search"></span></button>
 
             </form>
 
@@ -87,71 +87,8 @@
                         </tr>
                         </thead>
                         <!-- Cuerpo de la tabla -->
-                        <tbody>
-                        <!-- Cada fila está compuesta por dos partes: la fila con información visible -->
-                        <!-- y la fila expansible con datos extra y los botones -->
-
-                            <!-- Fila con información visible-->
-                            <div class="acordion-heading">
-                                <tr class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
-                                    <td>Aula 58</td>
-                                    <td>Bloque II</td>
-                                    <td>150</td>
-                                    <td>Planta baja</td>
-                                </tr>
-                            </div>
-                            <!-- Fila expansible -->
-                            <tr>
-                                <td colspan="4" style="padding: 0; border-top-style: none;">
-                                    <div id="collapseOne" class="collapse">
-                                        <div class="expansible">
-
-                                            <!-- Lista de extras del aula, compuesto por ícono y nombre -->
-                                            <ul class="list-inline">
-                                                <li><span class="glyphicon glyphicon-check icon-check"></span>Proyector</li>
-                                                <li><span class="glyphicon glyphicon-check icon-check"></span>Pizarrón</li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="botones text-right">
-                                            <button type="button" class="btn btn-line mb-2">Ver detalles</button>
-                                            <button type="button" class="btn btn-line mb-2">Reservar</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Fila con información visible-->
-                            <div class="acordion-heading">
-                                <tr class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
-                                    <td>Aula 58</td>
-                                    <td>Bloque II</td>
-                                    <td>150</td>
-                                    <td>Planta baja</td>
-                                </tr>
-                            </div>
-                            <!-- Fila expansible -->
-                            <tr>
-                                <td colspan="4" style="padding: 0; border-top-style: none;">
-                                    <div id="collapseTwo" class="collapse" >
-                                        <div class="expansible">
-                                            <!-- Lista de extras del aula, compuesto por ícono y nombre -->
-                                            <ul class="list-inline">
-
-                                                <li><span class="glyphicon glyphicon-check icon-check"></span>Proyector</li>
-                                                <li><span class="glyphicon glyphicon-check icon-check"></span>Pizarrón</li>
-                                            </ul>
-
-                                        </div>
-
-                                        <div class="botones text-right">
-                                            <button type="button" class="btn btn-line mb-2">Ver detalles</button>
-                                            <button type="button" class="btn btn-line mb-2">Reservar</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
+                        <tbody id="tbody">
+                        
                         </tbody>
 
                     </table>

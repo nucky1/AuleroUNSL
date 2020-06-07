@@ -15,17 +15,19 @@ function cargarFiltros(filtros) {
     let opcion = document.createElement('option'); 
     opcion.text = 'todos';
     selector.add(opcion);
+    let limit = filtros.length;
     //añadimos los nombres de edificios
-    for (i = 0; i < filtros.length; i++) {
+    for (let index in filtros) {
         let opcion = document.createElement('option'); 
-        let setUbicaciones = new Set();
-        for (i = 0; i < filtros[i].aulas.length; i++) {
-            setUbicaciones.add(filtros[i].aulas.ubicacion); //creamos un set de ubicaciones para el filtro ubicaciones
+        let setUbi = new Set();
+        for (let ind in filtros[index].aulas) {
+            setUbi.add(filtros[index].aulas[ind].ubicacion);
         }
-        mapaUbicaciones.set(filtros[i].nombre, setUbicaciones); //un mapa con el set de anterior accediendo mediante el nombre del edificio
-        opcion.text = filtros[i].nombre; 
+        mapaUbicaciones.set(filtros[index].nombre, setUbi); //un mapa con el set de anterior accediendo mediante el nombre del edificio
+        opcion.text = filtros[index].nombre; 
         selector.add(opcion); 
     }
+
 }
 function cargarUbicacion() {
     let selector = document.getElementById('edif');
@@ -41,21 +43,30 @@ function cargarUbicacion() {
         return;
     }
     //añadimos las ubicaciones de aulas en ese edificio
-    let ubicaciones = mapaUbicaciones.get(facSelect); 
+    let ubicaciones = mapaUbicaciones.get(edifSelect); 
+    console.log(ubicaciones);
     ubicaciones.forEach((value) => {
+        console.log(value);
         let opcion = document.createElement('option');
         opcion.text = value;
-        selector.add(opcion);
+        selectorUbicaciones.add(opcion);
     });
 }
-async function cargarTabla() {
-    let edificio = document.getElementById('edif').options[selector.selectedIndex].text;
+async function getAulas() {
+    let selector = document.getElementById('edif');
+    let edificio = selector.options[selector.selectedIndex].text;
     let capacidad = document.getElementById('capac').text;
-    let ubicacion = document.getElementById('edif').options[selector.selectedIndex].text;
-    let extras = [];
+    selector = document.getElementById('ubic');
+    let ubicacion = selector.options[selector.selectedIndex].text;
+    let extras = 'all';
     let responseJSON = await fetch('http://localhost:3000//listadoAulas/edificio/'+edificio+'/capacidad/'+capacidad+'/ubicacion/'+ubicacion+'/extras/'+extras)
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API
         });
-    cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+    cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+}
+function cargarTabla(aulas) {
+    let tabla = document.getElementById('tbody');
+    let beforeInfoAula = '<div class="acordion-heading">< tr class="accordion-toggle" data - toggle="collapse" href = "#collapseOne" >';
+    let afterInfoAula = '</tr></div ><tr><td colspan="4" style="padding: 0; border-top-style: none;"><div id="collapseOne" class="collapse"><div class="expansible"><ul class="list-inline">';
 }
