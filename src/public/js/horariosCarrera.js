@@ -55,7 +55,7 @@ function crearBloqueMateria(nombre,listaAulas){
     for(i=0;i<listaAulas.length;i++){
         codigoHTML+="\n<tr>";
         codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificioId+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
         codigoHTML+= "\n<td>"+listaAulas[i].dia+"</td>";
         codigoHTML+= "\n<td>"+listaAulas[i].horaInicio+" - "+listaAulas[i].horaFin+"</td>";
         codigoHTML+= "\n</tr>";
