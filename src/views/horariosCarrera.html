@@ -75,7 +75,7 @@
                     <option>2do</option>
                 </select>
 
-                <button type="submit" class="btn-search mb-2"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="submit" id="lupa" class="btn-search mb-2" onclick="getHorarios()" disabled><span class="glyphicon glyphicon-search"></span></button>
 
             </form>
 
@@ -83,7 +83,7 @@
         </div>
 
         <!-- Contenedor con los horarios -->
-        <div class="container bg-container">
+        <div class="container bg-container" id ="ContenedorHorarios">
 
             <!-- Bloque con horario de una materia -->
             <div class="panel panel-default bg3">

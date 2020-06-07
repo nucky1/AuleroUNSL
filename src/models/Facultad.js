@@ -8,9 +8,6 @@ const Facultad= sequelize.define(
             autoincrement: true,
             primaryKey: true,
         },
-        cantAnios:{
-            type: Sequelize.INTEGER
-        },
         nombre: {
             type: Sequelize.TEXT,
         },
