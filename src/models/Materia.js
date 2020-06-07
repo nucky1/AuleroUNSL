@@ -22,7 +22,7 @@ const Materia = sequelize.define(
             type: Sequelize.INTEGER,
         },
         cod: {
-            type: Sequalize.INTEGER,
+            type: Sequelize.INTEGER,
             unique: true,
         },
         state: {
