@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Horarios por carrera</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -9,11 +9,12 @@
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/horariosCarrera.js"></script>
+    <script type="text/javascript" src="js/Tablas.js"></script>
 
 </head>
 
 <body>
+    <!-- Barra de Navegación -->
     <header>
 
         <div class="container header">
@@ -48,110 +49,140 @@
 
         </div>
     </header>
-    <div class="container bg-encabezado">
-        <h1 class="titulo">Horarios por carrera</h1> <br>
-        <form class="form-group form-inline">
 
-            <label class="etiqueta" for="fac">Facultad</label>
-            <select class="form-control campo" id="fac" onchange="cargarCarreras()">
-            </select>
+    <!-- Contenido de la página -->
+    <main class="main-container" role="main">
+        <!-- Encabezado con Filtros -->
+        <div class="container bg-encabezado">
+            <h1 class="titulo">Horarios por carrera</h1> <br>
+            <form class="form-group form-inline">
 
-            <label class="etiqueta" for="carr">Carrera</label>
-            <select class="form-control campo" id="carr" onchange="cargarAnios()">
-            </select>
+                <label class="etiqueta" for="fac">Facultad</label>
+                <select class="form-control campo" id="fac">
+                    <option>FCFMyN</option>
+                    <option>FQByF</option>
+                    <option>FCS</option>
+                </select>
 
-            <label class="etiqueta" for="anio">Año</label>
-            <select class="form-control campo" id="anio">
-            </select>
+                <label class="etiqueta" for="carr">Carrera</label>
+                <select class="form-control campo" id="carr">
+                    <option>Ingeniería en Informática</option>
+                    <option>Ingeniería en Computación</option>
+                    <option>Lic. en Cs. de la Compútación</option>
+                </select>
 
-            <label class="etiqueta" for="cuatri">Cuatrimestre</label>
-            <select class="form-control campo" id="cuatri">
-                <option>1er</option>
-                <option>2do</option>
-            </select>
+                <label class="etiqueta" for="anio">Año</label>
+                <select class="form-control campo" id="anio">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
 
-            <button type="submit" class="btn mb-2"><span class="glyphicon glyphicon-search"></span></button>
+                <label class="etiqueta" for="cuatri">Cuatrimestre</label>
+                <select class="form-control campo" id="cuatri">
+                    <option>1er</option>
+                    <option>2do</option>
+                </select>
 
-        </form>
+                <button type="submit" class="btn-search mb-2"><span class="glyphicon glyphicon-search"></span></button>
+
+            </form>
 
 
-    </div>
+        </div>
 
-    <div class="container bg-container">
-        <div class="panel panel-default bg3">
-            <div class="panel-heading bg3"><h2 class="titulo-materia">Álgebra I</h2></div>
-            <div class="panel-body">
-                <table class="table">
+        <!-- Contenedor con los horarios -->
+        <div class="container bg-container">
 
-                    <thead>
-                      <tr>
-                        <th>Aula</th>
-                        <th>Día</th>
-                        <th>Horario</th>
-                      </tr>
-                    </thead>
+            <!-- Bloque con horario de una materia -->
+            <div class="panel panel-default bg3">
+                <!-- Encabezado con el nombre de la materia -->
+                <div class="panel-heading bg3">
+                    <h2 class="titulo-materia">Álgebra I</h2>
+                </div>
+                <!-- Cuerpo con la tabla de horarios -->
+                <div class="panel-body">
+                    <table class="table">
 
-                    <tbody>
-                      <tr>
-                        <td>Aula 58</td>
-                        <td>Lunes</td>
-                        <td>10:00 - 13:00</td>
-                      </tr>
-                      <tr>
-                        <td>Aula 57</td>
-                        <td>Miércoles</td>
-                        <td>8:00 - 10:00</td>
-                      </tr>
-                      <tr>
-                        <td>Aula 51</td>
-                        <td>Jueves</td>
-                        <td>15:00 - 18:00</td>
-                      </tr>
-                    </tbody>
+                        <thead>
+                          <tr>
+                            <th>Aula</th>
+                            <th>Día</th>
+                            <th>Horario</th>
+                          </tr>
+                        </thead>
 
-                  </table>
+                        <tbody>
+                          <tr>
+                            <td>Aula 58</td>
+                            <td>Lunes</td>
+                            <td>10:00 - 13:00</td>
+                          </tr>
+                          <tr>
+                            <td>Aula 57</td>
+                            <td>Miércoles</td>
+                            <td>8:00 - 10:00</td>
+                          </tr>
+                          <tr>
+                            <td>Aula 51</td>
+                            <td>Jueves</td>
+                            <td>15:00 - 18:00</td>
+                          </tr>
+                        </tbody>
+
+                      </table>
+                </div>
+            </div>
+
+            <!-- Bloque con horario de una materia -->
+            <div class="panel panel-default bg3">
+                <!-- Encabezado con el nombre de la materia -->
+                <div class="panel-heading bg3">
+                    <h2 class="titulo-materia">Cálculo I</h2>
+                </div>
+                <!-- Cuerpo con la tabla de horarios -->
+                <div class="panel-body">
+                    <table class="table">
+
+                        <thead>
+                          <tr>
+                            <th>Aula</th>
+                            <th>Día</th>
+                            <th>Horario</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                            <div class="collapse"></div>
+                          <tr>
+                            <td>Aula 58</td>
+                            <td>Lunes</td>
+                            <td>8:00 - 10:00</td>
+                          </tr>
+                          <tr>
+                            <td>Aula 54</td>
+                            <td>Miércoles</td>
+                            <td>10:00 - 12:00</td>
+                          </tr>
+                          <tr>
+                            <td>Anfiteatro II</td>
+                            <td>Viernes</td>
+                            <td>18:00 - 20:00</td>
+                          </tr>
+                        </tbody>
+
+                      </table>
+                </div>
             </div>
         </div>
 
-        <div class="panel panel-default bg3">
-            <div class="panel-heading bg3"><h2 class="titulo-materia">Cálculo I</h2></div>
-            <div class="panel-body">
-                <table class="table">
+    </main>
 
-                    <thead>
-                      <tr>
-                        <th>Aula</th>
-                        <th>Día</th>
-                        <th>Horario</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                        <div class="collapse"></div>
-                      <tr>
-                        <td>Aula 58</td>
-                        <td>Lunes</td>
-                        <td>8:00 - 10:00</td>
-                      </tr>
-                      <tr>
-                        <td>Aula 54</td>
-                        <td>Miércoles</td>
-                        <td>10:00 - 12:00</td>
-                      </tr>
-                      <tr>
-                        <td>Anfiteatro II</td>
-                        <td>Viernes</td>
-                        <td>18:00 - 20:00</td>
-                      </tr>
-                    </tbody>
-
-                  </table>
-            </div>
-        </div>
-    </div>
     <!-- TODO: Terminar Footer-->
-    <footer>
-        <div class="container-fluid bg1">
+    <footer class="footer">
+        <div class="container">
             <h2>Footer</h2>
 
         </div>
