@@ -2,11 +2,26 @@ const db = {
     Aulas: require('../models/Aulas'),
     Edificio: require('../models/Edificio'),
     Carrera: require('../models/Carrera'),
-    Facultad: require('../models/Facultad')
+    Facultad: require('../models/Facultad'),
+    Materia: require('../models/Materia'),
+    Op : require('sequelize')
 }; 
 
 
 module.exports = {
+    //retorna los filtros para listadoAulas.html
+    getFiltrosAulas: async (req, res) => {
+        const filtros= await db.Edificio.findAll({
+            attributes: ['nombre'],
+            include: [{
+                model: db.Aulas.Aula,
+                attributes: ['ubicacion'],
+                
+            }],
+        })
+        res.send(filtros);
+    },
+    //retorna los filtros para horariosCarrera.html
     getDatosFiltros: async (req, res) => {
         const filtros = await db.Facultad.findAll({
             attributes: ['nombre'],
@@ -29,10 +44,10 @@ module.exports = {
         whereEdificio = { state: 'ACTIVO'};
         if (edificio != "todos")
             whereEdificio.nombre = edificio;
-        if (capacidad != "todos")
-            whereAula.capacidad = capacidad;
         if (ubicacion != "todos")
-            whereAula.ubicacion = ubicacion;
+                whereAula.ubicacion = ubicacion;
+
+        whereAula.capacidad = { [db.Op.gte]: capacidad }
         const aulas = await db.Aulas.Aula.findAll({
             where: whereAula,
             include: [
@@ -101,7 +116,7 @@ module.exports = {
                     attributes: ['nombre']
                 },
                 {
-                    model: db.Aula.Aula,
+                    model: db.Aulas.Aula,
                     as: "aula",
                     where:{
                         state: 'ACTIVO'
