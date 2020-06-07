@@ -8,11 +8,10 @@ const db = {
 
 module.exports = {
     getDatosFiltros: async (req, res) => {
-        const filtros = await db.facultad.findAll({
-            attributes: ['nombreFac'],
+        const filtros = await db.Facultad.findAll({
+            attributes: ['nombre'],
             include: [{
                 model: db.Carrera,
-                as: "carrera",
                 attributes: ['nombre','cantAnios'],
 
             }]
@@ -121,6 +120,4 @@ module.exports = {
             ]
         })
     }
-
-
 }
