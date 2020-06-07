@@ -19,6 +19,9 @@ const Carrera = sequelize.define(
                 key: 'id',
             }
         },
+        cantAnios:{
+            type: Sequelize.INTEGER
+        },
         state: {
             type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
         },
