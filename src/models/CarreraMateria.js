@@ -11,7 +11,7 @@ const CarreraMateria = sequelize.define(
                 key: 'id',
             }
         },
-        materiaId: {
+        materiumId: { 
             type: Sequelize.INTEGER,
             primaryKey: true,
             references: {

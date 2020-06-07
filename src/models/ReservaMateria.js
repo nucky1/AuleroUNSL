@@ -11,7 +11,7 @@ const ReservaMateria = sequelize.define(
                 key: 'id',
             }
         },
-        materiaId: {
+        materiumId: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             references: {

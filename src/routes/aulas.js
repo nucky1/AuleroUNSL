@@ -21,5 +21,7 @@ router.get("/getDatosFiltros", aulasController.getDatosFiltros);
 
 router.get("/listadoAulas/edificio/:edificio/capacidad/:capacidad/ubicacion/:ubicacion/extras/:extras", aulasController.filtrar);
 
+router.get("/detallesAula/id/:id/periodo/:periodo", aulasController.detallesAula),
+
 router.get("/horariosCarrera/facultad/:facultad/carrera/:carrera/anio/:anio/periodo/:periodo",aulasController.filtrarPorCarrera);
 module.exports = router;
