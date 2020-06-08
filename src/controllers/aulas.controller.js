@@ -5,14 +5,14 @@ const db = {
   Facultad: require("../models/Facultad"),
   Reserva: require("../models/Reserva"),
   Materia: require("../models/Materia"),
-  Op: require("sequelize"),
+  seq: require("sequelize"),
   ReservaMateria: require("../models/ReservaMateria")
 };
 var idDetallesAula;
 module.exports = {
-    setId: function (id) {
-        idDetallesAula = id;  
-    },
+  setId: function(id) {
+    idDetallesAula = id;
+  },
   //retorna los filtros para listadoAulas.html
   getFiltrosAulas: async (req, res) => {
     const filtros = await db.Edificio.findAll({
@@ -27,7 +27,7 @@ module.exports = {
     res.send(filtros);
   },
   //idDetallesAula
-  getAulaPrimerVez: async(req,res) => {
+  getAulaPrimerVez: async (req, res) => {
     const aula = await db.Aulas.Aula.findAll({
       where: {
         id: idDetallesAula
@@ -47,7 +47,7 @@ module.exports = {
     });
     res.send(aula);
   },
-  
+
   //retorna los filtros para horariosCarrera.html
   getDatosFiltros: async (req, res) => {
     const filtros = await db.Facultad.findAll({
@@ -64,16 +64,18 @@ module.exports = {
   //req = {edificio, capacidad, ubicacion}
   filtrar: async (req, res) => {
     const edificio = req.params.edificio;
-    const capacidad = req.params.capacidad;
-    const ubicacion = req.params.ubicacion;
+    const capacidadDato = req.params.capacidad;
+    const ubicacionDato = req.params.ubicacion;
     const extras = req.params.extras.split(",");
-    whereAula = { state: "ACTIVO" };
+    whereAula = [{ state: "ACTIVO" }];
+    whereAula.push({ capacidad: { [db.seq.Op.gte]: capacidadDato } });
     whereEdificio = { state: "ACTIVO" };
     if (edificio != "todos") whereEdificio.nombre = edificio;
-      if (capacidad != "undefined") whereAula.capacidad = { [db.Op.gte] : capacidad };
-    if (ubicacion != "todos") whereAula.ubicacion = ubicacion;
+
+    if (ubicacionDato != "todos") whereAula.push({ ubicacion: ubicacionDato });
+    console.log(whereAula);
     const aulas = await db.Aulas.Aula.findAll({
-      where: whereAula,
+      where: { [db.seq.Op.and]: whereAula },
       include: [
         {
           model: db.Edificio,
@@ -87,23 +89,23 @@ module.exports = {
           attributes: ["extra"]
         }
       ]
-    }).then(function (aulas) {
-        filtroExtras = [];
-        console.log(extras[0]);
-        if (extras[0] != 'all') {
-            aulas.forEach(elemento => {
-                flag = true;
-                elemento.extras.forEach(element => {
-                    if (!extras.includes(element.get("extra"))) flag = false;
-                });
-                if (flag && elemento.extras.length == extras.length) {
-                    filtroExtras.push(elemento);
-                }
-            });
-            res.send(filtroExtras);
-        } else {
-            res.send(aulas);
-        }
+    }).then(function(aulas) {
+      filtroExtras = [];
+      console.log(extras[0]);
+      if (extras[0] != "all") {
+        aulas.forEach(elemento => {
+          flag = true;
+          elemento.extras.forEach(element => {
+            if (!extras.includes(element.get("extra"))) flag = false;
+          });
+          if (flag && elemento.extras.length == extras.length) {
+            filtroExtras.push(elemento);
+          }
+        });
+        res.send(filtroExtras);
+      } else {
+        res.send(aulas);
+      }
     });
   },
 
@@ -116,19 +118,29 @@ module.exports = {
     whereFacultad = { state: "ACTIVO" };
     whereCarrera = { state: "ACTIVO" };
     whereMateria = { state: "ACTIVO" };
-
+      whereOr = {};
     if (facultad != "todos") whereFacultad.nombre = facultad;
     if (carrera != "todos") whereCarrera.nombre = carrera;
     if (anio != "todos") whereMateria.anio = anio;
-      if (periodo != "todos") {
-          if (periodo == '1er') {
-              whereMateria.periodo = 'primer cuatrimestre';
-          } else {
-              whereMateria.periodo = 'segundo cuatrimestre';
-          }
+      if (periodo == "1er") {
+          whereOr = {
+              [db.seq.Op.or]: [
+                  { periodo: "primer cuatrimestre" },
+                  { periodo: "anual" }
+              ]
+          };
+      } else {
+          whereOr = {
+              [db.seq.Op.or]: [
+                  { periodo: "anual" },
+                  { periodo: "segundo cuatrimestre" }
+              ]
+          };
       }
+      whereAll = Object.assign({}, whereOr, whereMateria);
+    console.log(whereAll);
     const aulas = await db.Materia.findAll({
-      where: whereMateria,
+      where: whereAll,
       include: [
         {
           model: db.Carrera,
@@ -153,13 +165,13 @@ module.exports = {
                 state: "ACTIVO"
               },
               include: [
-                  {
-                      model: db.Edificio,
-                      attributes: ['nombre'],
-                      where: {
-                          state: "ACTIVO"
-                      }
+                {
+                  model: db.Edificio,
+                  attributes: ["nombre"],
+                  where: {
+                    state: "ACTIVO"
                   }
+                }
               ]
             }
           ]

@@ -53,10 +53,12 @@ function cargarUbicacion() {
 async function getAulas() {
     let selector = document.getElementById('edif');
     let edificio = selector.options[selector.selectedIndex].text;
-    let capacidad = document.getElementById('capac').text;
+    let capacidad = document.getElementById('capac').value;
     selector = document.getElementById('ubic');
     let ubicacion = selector.options[selector.selectedIndex].text;
     let extras = 'all';
+    if (capacidad == '') capacidad = 0;
+    console.log(edificio + '/capacidad/' + capacidad + '/ubicacion/' + ubicacion + '/extras/' + extras);
     let responseJSON = await fetch('http://localhost:3000/listadoAulas/edificio/'+edificio+'/capacidad/'+capacidad+'/ubicacion/'+ubicacion+'/extras/'+extras)
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API

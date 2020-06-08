@@ -43,15 +43,17 @@ function cargarFiltros(filtros){
 function cargarMateriasFiltradas(materias){
     console.log(materias);
     for(i=0;i<materias.length;i++){
-        crearBloqueMateria(materias[i].nombre,materias[i].reservas);
+        crearBloqueMateria(materias[i].periodo,materias[i].nombre,materias[i].reservas);
     }
 }
 //Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
-function crearBloqueMateria(nombre,listaAulas){
+function crearBloqueMateria(periodo, nombre, listaAulas) {
+    let period = "";
+    if (periodo == "anual") period = ' ('+periodo+')';
     codigoHTML = "<div class='panel panel-default bg3'>" ; //Cerrar este Div
     codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
-    codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre + "</h2>"; // Nombre Materia
+    codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre+ period + "</h2>"; // Nombre Materia
     codigoHTML+="\n </div>";
     //Cuerpo con la tabla de horarios
     codigoHTML+= "\n <div class='panel-body'>";
@@ -70,8 +72,10 @@ function crearBloqueMateria(nombre,listaAulas){
         codigoHTML+="\n<tr>";
         codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
         codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].dia+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].horaInicio+" - "+listaAulas[i].horaFin+"</td>";
+        codigoHTML += "\n<td>" + listaAulas[i].dia + "</td>";
+        let horaIn = listaAulas[i].horaInicio;
+        let horaFin = listaAulas[i].horaFin;
+        codigoHTML += "\n<td>" + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+"</td>";
         codigoHTML+= "\n</tr>";
     }
     codigoHTML+= "              </tbody>";
@@ -90,6 +94,7 @@ function cargarCarreras(){
     let facSelect = selector.options[selector.selectedIndex].text;//Get Texto seleccionado
     let arrayCarreras = facultades.get(facSelect); //Arreglo de carreras by claveNombre
     selectorCarreras.options.length = 0;
+    document.getElementById('anio').options.length = 0;
     for(i=0;i<arrayCarreras.length;i++){
         anios.set(arrayCarreras[i].nombre,arrayCarreras[i].cantAnios); //lleno el Mapa anios GLOBAL
         let opcion = document.createElement('option'); //Creo el objeto opción 
