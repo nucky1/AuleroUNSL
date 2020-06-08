@@ -65,6 +65,10 @@ async function getAulas() {
 }
 function cargarTabla(aulas) {
     let tabla = document.getElementById('tbody');
+    //eliminamos las filas
+    for (let index = tabla.rows.length - 1; index > 0; index--) {
+        tabla.deleteRow(index);
+    }
     let beforeInfoAula = '<div class="acordion-heading">' +
         '<tr class="accordion-toggle" data-toggle="collapse" href="#collapse';
     let fincolapsar = '">';

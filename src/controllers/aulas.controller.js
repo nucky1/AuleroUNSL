@@ -126,7 +126,16 @@ module.exports = {
               model: db.Aulas.Aula,
               where: {
                 state: "ACTIVO"
-              }
+              },
+              include: [
+                  {
+                      model: db.Edificio,
+                      attributes: ['nombre'],
+                      where: {
+                          state: "ACTIVO"
+                      }
+                  }
+              ]
             }
           ]
         }
