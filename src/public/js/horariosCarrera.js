@@ -10,8 +10,16 @@ async function getFiltros(){
     });
     cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-async function getHorarios(){
-     let responseJSON = await fetch('http://localhost:3000/horariosCarrera/facultad/Facultad de Ciencias Físico-Matemáticas y Naturales/carrera/Ingeniería EN INFORMÁTICA/anio/1/periodo/segundo cuatrimestre')
+async function getHorarios() {
+    let selector = document.getElementById('fac');
+    let facSelect = selector.options[selector.selectedIndex].text;
+    selector = document.getElementById('carr');
+    let carreraSelect = selector.options[selector.selectedIndex].text;
+    selector = document.getElementById('anio');
+    let anioSelect = selector.options[selector.selectedIndex].text;
+    selector = document.getElementById('cuatri');
+    let cuatriSelect = selector.options[selector.selectedIndex].text;
+    let responseJSON = await fetch('http://localhost:3000/horariosCarrera/facultad/' + facSelect + '/carrera/' + carreraSelect + '/anio/' + anioSelect + '/periodo/'+cuatriSelect)
     .then(function(response) { //Trae los filtros en el parametro "response" 
         return response.json(); //Retorno como JSON los datos de la API
     });

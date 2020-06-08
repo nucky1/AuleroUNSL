@@ -248,8 +248,8 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     ('Ingles','anual',1,6);
 
     INSERT INTO reserva(dia,"horaInicio","horaFin",estado,"aulaId","docenteId") VALUES
-    ('lunes',9,11,'AUTORIZADA',2,2),
-    ('martes',17,20,'AUTORIZADA',1,1);
+    ('lunes',900,1100,'AUTORIZADA',2,2),
+    ('martes',1700,2000,'AUTORIZADA',1,1);
 
     INSERT INTO reservaMateria("reservaId","materiumId") VALUES
     (1,3),

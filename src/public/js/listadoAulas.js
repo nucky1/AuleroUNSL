@@ -66,7 +66,7 @@ async function getAulas() {
 function cargarTabla(aulas) {
     let tabla = document.getElementById('tbody');
     //eliminamos las filas
-    for (let index = tabla.rows.length - 1; index > 0; index--) {
+    for (let index = tabla.rows.length -1; index > -1; index--) {
         tabla.deleteRow(index);
     }
     let beforeInfoAula = '<div class="acordion-heading">' +
@@ -82,10 +82,12 @@ function cargarTabla(aulas) {
         '<ul class="list-inline">';
     let beforeExtra = '<li><span class="glyphicon glyphicon-check icon-check"></span>';
     let afterExtra = '</li>';
-    let endFila = '</ul>' +
+    let endFilabeforeId = '</ul>' +
         '</div >' +
         '<div class="botones text-right">' +
-        '<button type="button" class="btn btn-line mb-2" onclick="location.href=\'detallesAula\'">Ver detalles</button>' +
+        '<button type="button" class="btn btn-line mb-2" onclick="location.href=\'detallesAula/id/';
+    
+    let endFila = '/periodo/primer cuatrimestre\'">Ver detalles</button>' +
         '<button type="button" class="btn btn-line mb-2">Reservar</button>' +
         '</div>' +
         '</div >' +
@@ -101,6 +103,6 @@ function cargarTabla(aulas) {
         for (let ind in aulas[index].extras) {
             extrasAula += beforeExtra + aulas[index].extras[ind].extra + afterExtra;
         }
-        tabla.innerHTML += beforeInfoAula + index + fincolapsar + infoAula + afterInfoAula + index + finColapsedos + extrasAula + endFila;
+        tabla.innerHTML += beforeInfoAula + index + fincolapsar + infoAula + afterInfoAula + index + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id + endFila;
     }
 }

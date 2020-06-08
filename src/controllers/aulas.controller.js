@@ -8,8 +8,11 @@ const db = {
   Op: require("sequelize"),
   ReservaMateria: require("../models/ReservaMateria")
 };
-
+var idDetallesAula;
 module.exports = {
+    setId: function (id) {
+        idDetallesAula = id;  
+    },
   //retorna los filtros para listadoAulas.html
   getFiltrosAulas: async (req, res) => {
     const filtros = await db.Edificio.findAll({
@@ -23,6 +26,28 @@ module.exports = {
     });
     res.send(filtros);
   },
+  //idDetallesAula
+  getAulaPrimerVez: async(req,res) => {
+    const aula = await db.Aulas.Aula.findAll({
+      where: {
+        id: idDetallesAula
+      },
+      include: [
+        {
+          model: db.Edificio,
+          as: "edificio",
+          attributes: ["nombre"]
+        },
+        {
+          model: db.Aulas.extra,
+          as: "extras",
+          attributes: ["extra"]
+        }
+      ]
+    });
+    res.send(aula);
+  },
+  
   //retorna los filtros para horariosCarrera.html
   getDatosFiltros: async (req, res) => {
     const filtros = await db.Facultad.findAll({
