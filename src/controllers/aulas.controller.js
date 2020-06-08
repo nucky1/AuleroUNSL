@@ -95,7 +95,13 @@ module.exports = {
     if (facultad != "todos") whereFacultad.nombre = facultad;
     if (carrera != "todos") whereCarrera.nombre = carrera;
     if (anio != "todos") whereMateria.anio = anio;
-    if (periodo != "todos") whereMateria.periodo = periodo;
+      if (periodo != "todos") {
+          if (periodo == '1er') {
+              whereMateria.periodo = 'primer cuatrimestre';
+          } else {
+              whereMateria.periodo = 'segundo cuatrimestre';
+          }
+      }
     const aulas = await db.Materia.findAll({
       where: whereMateria,
       include: [
