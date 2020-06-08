@@ -12,12 +12,18 @@ const Carrera = sequelize.define(
         nombre: {
             type: Sequelize.TEXT,
         },
+        cantAnios: {
+            type: Sequelize.INTEGER,
+        },
         facultadId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'Facultad',
                 key: 'id',
             }
+        },
+        cantAnios:{
+            type: Sequelize.INTEGER
         },
         state: {
             type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),

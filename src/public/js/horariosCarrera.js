@@ -1,5 +1,4 @@
 getFiltros();//Llama al getFiltros, esto se ejecuta cada vez que horarios carrera ejecuta el script de esta hoja, OJO
-
 var facultades = new Map(); //Mapa de facultades - lo lleno en cargarFiltros
 anios = new Map(); //Mapa de Carreras - cantAños - lo lleno en cargarCarreras
 
@@ -11,7 +10,28 @@ async function getFiltros(){
     });
     cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-function cargarFiltros(filtros){
+async function getHorariosByFiltros(){
+    //get facultad
+    let selector = document.getElementById('fac'); 
+    let facSelect = selector.options[selector.selectedIndex].text;
+    //get Carrera
+    let selectorCarr = document.getElementById('carr'); 
+    let carrSelect = selectorCarr.options[selectorCarr.selectedIndex].text;
+    //get Anio
+    let selectorAnio = document.getElementById('anio'); 
+    let anioSelect = selectorAnio.options[selectorAnio.selectedIndex].text;
+    //get Periodo
+    let selectorCuatri = document.getElementById('cuatri'); 
+    let cuatriSelect = selectorCuatri.options[selectorCuatri.selectedIndex].text; 
+    let peticionGet = "http://localhost:3000/horariosCarrera/facultad/"+facSelect+"/carrera/"+carrSelect+"/anio/"+anioSelect+"/periodo/"+cuatriSelect;
+    console.log(peticionGet);
+    let responseJSON = await fetch(peticionGet)
+    .then(function(response) { //Trae los filtros en el parametro "response" 
+        return response.json(); //Retorno como JSON los datos de la API
+    });
+    cargarMateriasFiltradas(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+}
+function cargarFiltros(filtros){ 
     let selector = document.getElementById('fac'); //Obtengo el objeto del comboBox o "Selector" del front
     for(i=0;i<filtros.length;i++){ 
         facultades.set(filtros[i].nombre,filtros[i].carreras); //lleno el Mapa facultades GLOBAL
@@ -20,8 +40,51 @@ function cargarFiltros(filtros){
         selector.add(opcion); //Añado la opcion al selector de facultades
     }
 }
+function cargarMateriasFiltradas(materias){
+    console.log(materias);
+    for(i=0;i<materias.length;i++){
+        crearBloqueMateria(materias[i].nombre,materias[i].reservas);
+    }
+}
+//Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
+//En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
+function crearBloqueMateria(nombre,listaAulas){
+    codigoHTML = "<div class='panel panel-default bg3'>" ; //Cerrar este Div
+    codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
+    codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre + "</h2>"; // Nombre Materia
+    codigoHTML+="\n </div>";
+    //Cuerpo con la tabla de horarios
+    codigoHTML+= "\n <div class='panel-body'>";
+    codigoHTML+= "\n<table class='table'>";
+    codigoHTML+= "\n<thead>";
+    codigoHTML+= "\n  <tr>";
+    codigoHTML+= "\n    <th>Aula</th>";
+    codigoHTML+= "\n    <th>Edificio</th>";
+    codigoHTML+= "\n    <th>Día</th>";
+    codigoHTML+= "\n    <th>Horario</th>";
+    codigoHTML+= "\n  </tr>";
+    codigoHTML+= "\n</thead>";
+    codigoHTML+= "\n <tbody>"
+    codigoHTML+= "\n<div class='collapse'></div>";
+    for(i=0;i<listaAulas.length;i++){
+        codigoHTML+="\n<tr>";
+        codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].dia+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].horaInicio+" - "+listaAulas[i].horaFin+"</td>";
+        codigoHTML+= "\n</tr>";
+    }
+    codigoHTML+= "              </tbody>";
+    codigoHTML+= "\n        </table>";
+    codigoHTML+= "\n    </div>";       
+    codigoHTML+= "\n</div>";
+    document.getElementById("ContenedorHorarios").innerHTML = codigoHTML;
+}
 //-------------------------- METODOS LLAMADOS DESDE EL FRONT ------------------------------------
 function cargarCarreras(){ 
+    let boton = document.getElementById("lupa");
+    boton.removeAttribute('disabled'); //habilito el boton para buscar
+    // boton.setAttribute('disabled', "true");
     let selector = document.getElementById('fac');
     let selectorCarreras = document.getElementById('carr');
     let facSelect = selector.options[selector.selectedIndex].text;//Get Texto seleccionado
@@ -37,7 +100,7 @@ function cargarCarreras(){
 
 function cargarAnios(){
     let selector = document.getElementById('carr');
-    let selectorAnio = document.getElementById('anio');
+    let selectorAnio = document.getElementById('anio'); 
     let carrSelect = selector.options[selector.selectedIndex].text;//Get Texto seleccionado
     let cantAnios = anios.get(carrSelect); //Arreglo de carreras by claveNombre
     selectorAnio.options.length = 0;
@@ -48,20 +111,8 @@ function cargarAnios(){
     }
 }
 //--------------------------------------------FIN METODOS LLAMADOS DESDE EL FRONT--------------------
-
-
+//---------------------------------------------------------------------------------------------------
 //-------------------------------METODOS EJEMPLOS, AUN NO SIRVEN ------------------------------------
-function getHorarios(){
-    fetch('http://localhost:3000/horariosCarrera/facultad/FCFNyM/carrera/IngeWeb/anio/2020/periodo/1ro')
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(myJson) {
-        console.log(myJson);
-    }); //HACE PETICION ASYNC A API
-}
-
-
 function llenarTabla(filas,idTabla) {
     let tabla = document.getElementById(idTabla);
     

@@ -6,19 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/horariosCarrera.js"></script>
 
 </head>
 
-<body>
+<body> 
+
     <!-- Barra de Navegación -->
     <header>
 
-        <div class="container header">
-
+        <div class="container header"> 
             <nav class="navbar navbar-default navbar-fixed-top ">
                 <div class="container align-center">
 
@@ -75,7 +74,7 @@
                     <option>2do</option>
                 </select>
 
-                <button type="submit" class="btn-search mb-2"><span class="glyphicon glyphicon-search"></span></button>
+                <button id="lupa" type="button" class="btn-search mb-2" onclick="getHorariosByFiltros()" disabled><span class="glyphicon glyphicon-search"></span></button>
 
             </form>
 
@@ -83,91 +82,14 @@
         </div>
 
         <!-- Contenedor con los horarios -->
-        <div class="container bg-container">
-
-            <!-- Bloque con horario de una materia -->
-            <div class="panel panel-default bg3">
-                <!-- Encabezado con el nombre de la materia -->
-                <div class="panel-heading bg3">
-                    <h2 class="titulo-materia">Álgebra I</h2>
-                </div>
-                <!-- Cuerpo con la tabla de horarios -->
-                <div class="panel-body">
-                    <table class="table">
-
-                        <thead>
-                          <tr>
-                            <th>Aula</th>
-                            <th>Día</th>
-                            <th>Horario</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          <tr>
-                            <td>Aula 58</td>
-                            <td>Lunes</td>
-                            <td>10:00 - 13:00</td>
-                          </tr>
-                          <tr>
-                            <td>Aula 57</td>
-                            <td>Miércoles</td>
-                            <td>8:00 - 10:00</td>
-                          </tr>
-                          <tr>
-                            <td>Aula 51</td>
-                            <td>Jueves</td>
-                            <td>15:00 - 18:00</td>
-                          </tr>
-                        </tbody>
-
-                      </table>
-                </div>
-            </div>
-
-            <!-- Bloque con horario de una materia -->
-            <div class="panel panel-default bg3">
-                <!-- Encabezado con el nombre de la materia -->
-                <div class="panel-heading bg3">
-                    <h2 class="titulo-materia">Cálculo I</h2>
-                </div>
-                <!-- Cuerpo con la tabla de horarios -->
-                <div class="panel-body">
-                    <table class="table">
-
-                        <thead>
-                          <tr>
-                            <th>Aula</th>
-                            <th>Día</th>
-                            <th>Horario</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                            <div class="collapse"></div>
-                          <tr>
-                            <td>Aula 58</td>
-                            <td>Lunes</td>
-                            <td>8:00 - 10:00</td>
-                          </tr>
-                          <tr>
-                            <td>Aula 54</td>
-                            <td>Miércoles</td>
-                            <td>10:00 - 12:00</td>
-                          </tr>
-                          <tr>
-                            <td>Anfiteatro II</td>
-                            <td>Viernes</td>
-                            <td>18:00 - 20:00</td>
-                          </tr>
-                        </tbody>
-
-                      </table>
-                </div>
-            </div>
+        <div class="container bg-container" id ="ContenedorHorarios">
+          <!--Megan aca te lo cargo desde horariosCarrera.js, no te asustes, la pagina quedo igual pero dinamica,
+          la cuestion es que javascript es la misma verga que php casi pero bueno - si no fuera por el casi... 
+          lo mejor de todo es que la pagina no se recarga-->
         </div>
 
     </main>
+    <script type="text/javascript" src="js/horariosCarrera.js"></script>
 
     <!-- TODO: Terminar Footer-->
     <footer class="footer">
@@ -176,6 +98,7 @@
 
         </div>
     </footer>
+        <script type="text/javascript" src="js/horariosCarrera.js"></script>
 
 </body>
 </html>

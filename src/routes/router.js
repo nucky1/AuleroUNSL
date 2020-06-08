@@ -7,7 +7,7 @@ router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
 
 // Si un usuario visita la pagina principal:
-router.get("/", (req, res) => {
+router.get("/Principal", (req, res) => {
   res.render("principal.html"); // uso render ya que usamos el motor de vista ejs.
 });
 

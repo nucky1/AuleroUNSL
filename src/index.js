@@ -8,10 +8,9 @@ app.engine('html', require('ejs').renderFile); //  esta es para que los archivos
 app.set('views', path.join(__dirname,'views')); // __dirname da la direccion absoluta de este archivo // le digo donde esta la carpeta views
 app.use(express.static(path.join(__dirname,'public')));
 app.set('view engine', 'ejs'); // Uso motor de la vista ejs. (mete js en html con sintaxis <%= %>)
-
 // Importa el archivo router
 app.use(require("./routes/router.js")); 
-app.use(require("./routes/aulas.js")); 
+app.use(require("./routes/aulas.js"));  
 
 // abre server.
 app.listen(app.get('port'), () => {

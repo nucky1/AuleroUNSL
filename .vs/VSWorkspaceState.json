@@ -3,14 +3,14 @@
     "",
     "\\SQL",
     "\\src",
-    "\\src\\controllers",
-    "\\src\\database",
     "\\src\\models",
     "\\src\\public",
+    "\\src\\public\\css",
     "\\src\\public\\js",
+    "\\src\\public\\resources",
     "\\src\\routes",
     "\\src\\views"
   ],
-  "SelectedNode": "\\src\\controllers\\aulas.controller.js",
+  "SelectedNode": "\\src\\public\\js\\listadoAulas.js",
   "PreviewInSolutionExplorer": false
 }
