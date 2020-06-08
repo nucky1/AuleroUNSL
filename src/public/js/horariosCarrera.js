@@ -10,16 +10,22 @@ async function getFiltros(){
     });
     cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-async function getHorarios() {
-    let selector = document.getElementById('fac');
+async function getHorariosByFiltros(){
+    //get facultad
+    let selector = document.getElementById('fac'); 
     let facSelect = selector.options[selector.selectedIndex].text;
-    selector = document.getElementById('carr');
-    let carreraSelect = selector.options[selector.selectedIndex].text;
-    selector = document.getElementById('anio');
-    let anioSelect = selector.options[selector.selectedIndex].text;
-    selector = document.getElementById('cuatri');
-    let cuatriSelect = selector.options[selector.selectedIndex].text;
-    let responseJSON = await fetch('http://localhost:3000/horariosCarrera/facultad/' + facSelect + '/carrera/' + carreraSelect + '/anio/' + anioSelect + '/periodo/'+cuatriSelect)
+    //get Carrera
+    let selectorCarr = document.getElementById('carr'); 
+    let carrSelect = selectorCarr.options[selectorCarr.selectedIndex].text;
+    //get Anio
+    let selectorAnio = document.getElementById('anio'); 
+    let anioSelect = selectorAnio.options[selectorAnio.selectedIndex].text;
+    //get Periodo
+    let selectorCuatri = document.getElementById('cuatri'); 
+    let cuatriSelect = selectorCuatri.options[selectorCuatri.selectedIndex].text; 
+    let peticionGet = "http://localhost:3000/horariosCarrera/facultad/"+facSelect+"/carrera/"+carrSelect+"/anio/"+anioSelect+"/periodo/"+cuatriSelect;
+    console.log(peticionGet);
+    let responseJSON = await fetch(peticionGet)
     .then(function(response) { //Trae los filtros en el parametro "response" 
         return response.json(); //Retorno como JSON los datos de la API
     });

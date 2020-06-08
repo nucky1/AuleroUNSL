@@ -21,7 +21,7 @@
             <nav class="navbar navbar-default navbar-fixed-top ">
                 <div class="container align-center">
 
-                    <a class="navbar-brand" href="Principal">
+                    <a class="navbar-brand" href="Principal.html">
                         <img class="logo d-inline-block align-top" src="http://www.unsl.edu.ar/application/assets/logos/logo-unsl-negativo2.png" width="150">
 
                     </a>
@@ -74,7 +74,7 @@
                     <option>2do</option>
                 </select>
 
-                <button id="lupa" type="button" class="btn-search mb-2" onclick="getHorarios()"><span class="glyphicon glyphicon-search"></span></button>
+                <button id="lupa" type="button" class="btn-search mb-2" onclick="getHorariosByFiltros()" disabled><span class="glyphicon glyphicon-search"></span></button>
 
             </form>
 
@@ -83,73 +83,9 @@
 
         <!-- Contenedor con los horarios -->
         <div class="container bg-container" id ="ContenedorHorarios">
-
-            <!-- Bloque con horario de una materia -->
-            <div class="panel panel-default bg3">
-                <!-- Encabezado con el nombre de la materia -->
-                <div class="panel-heading bg3">
-                    <h2 class="titulo-materia">Álgebra I</h2>
-                </div>
-                <!-- Cuerpo con la tabla de horarios -->
-                <div class="panel-body">
-                    <table class="table">
-
-                        <thead>
-                          <tr>
-                            <th>Aula</th>
-                            <th>Día</th>
-                            <th>Horario</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          
-                        </tbody>
-
-                      </table>
-                </div>
-            </div>
-
-            <!-- Bloque con horario de una materia -->
-            <div class="panel panel-default bg3">
-                <!-- Encabezado con el nombre de la materia -->
-                <div class="panel-heading bg3">
-                    <h2 class="titulo-materia">Cálculo I</h2>
-                </div>
-                <!-- Cuerpo con la tabla de horarios -->
-                <div class="panel-body">
-                    <table class="table">
-
-                        <thead>
-                          <tr>
-                            <th>Aula</th>
-                            <th>Día</th>
-                            <th>Horario</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                            <div class="collapse"></div>
-                          <tr>
-                            <td>Aula 58</td>
-                            <td>Lunes</td>
-                            <td>8:00 - 10:00</td>
-                          </tr>
-                          <tr>
-                            <td>Aula 54</td>
-                            <td>Miércoles</td>
-                            <td>10:00 - 12:00</td>
-                          </tr>
-                          <tr>
-                            <td>Anfiteatro II</td>
-                            <td>Viernes</td>
-                            <td>18:00 - 20:00</td>
-                          </tr>
-                        </tbody>
-
-                      </table>
-                </div>
-            </div>
+          <!--Megan aca te lo cargo desde horariosCarrera.js, no te asustes, la pagina quedo igual pero dinamica,
+          la cuestion es que javascript es la misma verga que php casi pero bueno - si no fuera por el casi... 
+          lo mejor de todo es que la pagina no se recarga-->
         </div>
 
     </main>
