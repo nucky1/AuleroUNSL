@@ -9,7 +9,7 @@ var id;
 router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
 router.get("/", (req, res) => {
-    res.render("principal.html");
+    res.render("Principal.html");
 });
 router.get("/listadoAulas", (req, res) => {
   res.render("listadoAulas.html");
