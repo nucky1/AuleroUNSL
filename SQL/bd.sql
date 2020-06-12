@@ -290,4 +290,4 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     (3,1),
     (3,2),
     (3,3),
-    (3,4);
+    (3,4); 
