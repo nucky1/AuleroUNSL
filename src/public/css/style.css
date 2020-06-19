@@ -75,6 +75,10 @@ body{
     padding-top: 6px;
     padding-bottom: 6px;
 }
+.subtitulo{
+    font-family: "Mitram Regular", sans-serif;
+    font-weight: bold;
+}
 .navbar{
     background: #2666BC;
     align-items: center;
@@ -132,6 +136,10 @@ body{
 .form-control{
     border-radius: 25px;
     border-color: #2666BC;
+}
+input{
+    max-width: 400px;
+
 }
 .etiqueta{
     padding-right: 6px;
@@ -191,14 +199,22 @@ html {
     font-weight: 400;
     padding-left: 8px;
     padding-right: 8px;
-    width: 130px;
+    min-width: 130px;
+    width: 180px;
     margin-left: 16px;
 }
 .btn-line:hover{
     background-color: #2666BC;
     color: #FFFFFF;
     border-radius: 25px;
-    width: 130px;
+    width: 180px;
+    margin-left: 16px;
+}
+.btn-bold{
+    background-color: #2666BC;
+    color: #FFFFFF;
+    border-radius: 25px;
+    width: 180px;
     margin-left: 16px;
 }
 .icon-check{
