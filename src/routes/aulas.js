@@ -8,6 +8,7 @@ var id;
 // Middleware (se ejecuta antes de todas las peticiones)
 router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
+
 router.get("/", (req, res) => {
     res.render("Principal.html");
 });
