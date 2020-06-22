@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SQL",
     "\\src",
+    "\\src\\controllers",
     "\\src\\models",
     "\\src\\public",
     "\\src\\public\\css",
@@ -11,6 +11,6 @@
     "\\src\\routes",
     "\\src\\views"
   ],
-  "SelectedNode": "\\src\\public\\js\\listadoAulas.js",
+  "SelectedNode": "\\src\\controllers\\aulas.controller.js",
   "PreviewInSolutionExplorer": false
 }

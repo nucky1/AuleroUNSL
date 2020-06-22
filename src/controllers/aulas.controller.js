@@ -122,21 +122,21 @@ module.exports = {
     if (facultad != "todos") whereFacultad.nombre = facultad;
     if (carrera != "todos") whereCarrera.nombre = carrera;
     if (anio != "todos") whereMateria.anio = anio;
-      if (periodo == "1er") {
-          whereOr = {
-              [db.seq.Op.or]: [
-                  { periodo: "primer cuatrimestre" },
-                  { periodo: "anual" }
-              ]
-          };
-      } else {
-          whereOr = {
-              [db.seq.Op.or]: [
-                  { periodo: "anual" },
-                  { periodo: "segundo cuatrimestre" }
-              ]
-          };
-      }
+    if (periodo == "1er") {
+        whereOr = {
+            [db.seq.Op.or]: [
+                { periodo: "primer cuatrimestre" },
+                { periodo: "anual" }
+            ]
+        };
+    } else {
+        whereOr = {
+            [db.seq.Op.or]: [
+                { periodo: "anual" },
+                { periodo: "segundo cuatrimestre" }
+            ]
+        };
+    }
       whereAll = Object.assign({}, whereOr, whereMateria);
     console.log(whereAll);
     const aulas = await db.Materia.findAll({
@@ -183,8 +183,13 @@ module.exports = {
 
   detallesAula: async (req, res) => {
     const id = req.params.id;
-    const periodo = req.params.periodo;
-
+    const periodoD = req.params.periodo;
+      whereOr = {
+          [db.seq.Op.or]: [
+              { periodo: periodoD },
+              { periodo: "anual" }
+          ]
+      };
     const aula = await db.Aulas.Aula.findAll({
       where: {
         id: id
@@ -201,9 +206,7 @@ module.exports = {
           include: [
             {
               model: db.Materia,
-              where: {
-                periodo: periodo
-              }
+              where: whereOr
             }
           ]
         },
