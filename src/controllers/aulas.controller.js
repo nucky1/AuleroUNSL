@@ -118,7 +118,7 @@ module.exports = {
     whereFacultad = { state: "ACTIVO" };
     whereCarrera = { state: "ACTIVO" };
     whereMateria = { state: "ACTIVO" };
-      whereOr = {};
+    whereOr = {};
     if (facultad != "todos") whereFacultad.nombre = facultad;
     if (carrera != "todos") whereCarrera.nombre = carrera;
     if (anio != "todos") whereMateria.anio = anio;
