@@ -28,9 +28,6 @@ const Docente = sequelize.define(
         legajo: {
             type: Sequelize.TEXT,
         },
-        ubicacion: {
-            type: Sequelize.TEXT,
-        },
         state: {
             type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA']),
         },

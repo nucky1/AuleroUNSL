@@ -13,6 +13,7 @@ app.set('view engine', 'ejs'); // Uso motor de la vista ejs. (mete js en html co
 // Importa el archivo router
 app.use(require("./routes/router.js")); 
 app.use(require("./routes/aulas.js"));  
+app.use(require("./routes/user.js"));
 
 // abre server.
 app.listen(app.get('port'), () => {

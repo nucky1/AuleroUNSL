@@ -14,7 +14,7 @@ const Administrador = sequelize.define(
         apellido: {
             type: Sequelize.TEXT,
         },
-        idUsuario: {
+        usuarioId: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'usuarios',

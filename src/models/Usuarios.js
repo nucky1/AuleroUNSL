@@ -16,6 +16,9 @@ const Usuario = sequelize.define(
         password: {
             type: Sequelize.TEXT,
         },
+        tipo: {
+            type: Sequelize.TEXT,
+        },
         state: {
             type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
         },

@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS usuarios(
     id SERIAL PRIMARY KEY,
     username text NOT NULL CHECK (username <> ''),
     password text NOT NULL CHECK (password <> ''),
+    tipo text NOT NULL CHECK (tipo <> ''),
     state situation DEFAULT 'ACTIVO',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
@@ -160,13 +161,13 @@ CREATE TRIGGER tr_carreramateria BEFORE UPDATE ON carreramateria FOR EACH ROW
 CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     EXECUTE PROCEDURE update_updated_at ();
 
-    INSERT INTO usuarios(username,password) VALUES
-    ('mSilvestri777','0000'),
-    ('web4kd','0000'),
-    ('admin1','0000'),
-    ('admin2','0000'),
-    ('admin3','0000'),
-    ('admin4','0000');
+    INSERT INTO usuarios(username,password,tipo) VALUES
+    ('mSilvestri777','0000','DOCENTE'),
+    ('web4kd','0000','DOCENTE'),
+    ('admin1','0000', 'ADMIN'),
+    ('admin2','0000', 'ADMIN'),
+    ('admin3','0000', 'ADMIN'),
+    ('admin4','0000', 'ADMIN');
 
 
     INSERT INTO edificio(nombre,direccion) VALUES 
