@@ -101,6 +101,7 @@ function cargarCarreras(){
         opcion.text = arrayCarreras[i].nombre; //Le setteo el valor del nombre de la carrera 
         selectorCarreras.add(opcion); //Añado la opcion al selector de carreras
     }
+    cargarAnios();
 }
 
 function cargarAnios(){
