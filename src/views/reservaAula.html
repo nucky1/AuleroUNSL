@@ -1,10 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Reserva de Aula</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/listadoAulas.js"></script>
 </head>
 <body>
+    <header>
 
+        <div class="container header">
+
+            <nav class="navbar navbar-default navbar-fixed-top ">
+                <div class="container align-center">
+
+                    <a class="navbar-brand" href="Principal">
+                        <img class="logo d-inline-block align-top" src="http://www.unsl.edu.ar/application/assets/logos/logo-unsl-negativo2.png" width="150">
+
+                    </a>
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav1">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+
+                    <div class="collapse navbar-collapse center-content" id="nav1">
+
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"><a href="listadoAulas" class="nav-link">AULAS</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ESTUDIANTES</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="horariosCarrera">Horarios por carrera</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Horarios personalizados</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DOCENTES</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="listadoReservas.html">Ver reservas</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="reservaAula.html">Reservar aula</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="listadoReservas.html">Cancelar reserva</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item"><a href="#" class="nav-link">ADMINISTRATIVOS</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Contenido de la página -->
+    <main class="main-container" role="main">
+
+        <div class="container bg-encabezado ">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h1 class="titulo">Reserva de aula</h1> <br>
+                </div>
+                <div class="col-xs-6 cont" style="justify-content: flex-end">
+                    <div class="chip">
+                        <div class="user-text">Bienvenido, Usuario</div>  <a class="log-out" href="#"><span class="glyphicon glyphicon-log-out"></span></a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--content inner-->
+            <div class="content__inner">
+
+                <div class="container overflow-hidden">
+                    <!--multisteps-form-->
+                    <div class="multisteps-form">
+                        <!--progress bar-->
+                        <div class="row">
+                            <div class="col-12 col-lg-8 ml-auto mr-auto mb-4 col-centered">
+                                <div class="multisteps-form__progress">
+                                    <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Buscar aula</button>
+                                    <button class="multisteps-form__progress-btn" type="button" title="Address">Seleccionar aula</button>
+                                    <button class="multisteps-form__progress-btn" type="button" title="Order Info">Completar datos</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--form panels-->
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="multisteps-form__form">
+                                    <!-- Panel de Buscar Aula-->
+                                    <div class="multisteps-form__panel js-active" data-animation="slideHorz">
+                                        <br><br>
+                                        <div class="container">
+                                            <div class="row">
+                                                <!-- Columna izquierda con los label de los campos -->
+                                                <div class="col-xs-6 text-right">
+                                                    <label class="etiqueta-stretch">Edificio:</label><br>
+                                                    <label class="etiqueta-stretch">Día</label><br>
+                                                    <label class="etiqueta-stretch">Hora inicio:</label><br>
+                                                    <label class="etiqueta-stretch">Cantidad de horas:</label><br>
+                                                    <label class="etiqueta-stretch">Capacidad:</label><br>
+                                                    <label class="etiqueta-stretch">Período:</label><br>
+                                                </div>
+
+                                                <!-- Columna derecha con los campos -->
+                                                <div class="col-xs-6 ">
+                                                    <select class="form-control campo-stretch">
+                                                        <option>Bloque I</option>
+                                                        <option>Bloque II</option>
+                                                    </select>
+
+                                                    <select class="form-control campo-stretch">
+                                                        <option>Todos</option>
+                                                        <option>Lunes</option>
+                                                        <option>Martes</option>
+                                                        <option>Miércoles</option>
+                                                        <option>Jueves</option>
+                                                        <option>Viernes</option>
+                                                    </select>
+
+
+                                                    <select class="form-control campo-stretch">
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                        <option>13</option>
+                                                        <option>14</option>
+                                                        <option>15</option>
+                                                        <option>16</option>
+                                                        <option>17</option>
+                                                        <option>18</option>
+                                                        <option>19</option>
+                                                        <option>20</option>
+                                                        <option>21</option>
+
+                                                    </select>
+
+                                                    <select class="form-control campo-stretch">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+
+                                                    </select>
+
+                                                    <input class="form-control campo-stretch" type="number" style="max-width: 80px">
+
+                                                    <select class="form-control campo-stretch">
+                                                        <option>1er Cuatrimestre</option>
+                                                        <option>2do Cuatrimestre</option>
+                                                        <option>Anual</option>
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="botones-step text-right">
+                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next">Siguiente</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Panel de Seleccionar Aula -->
+                                    <div class="multisteps-form__panel" data-animation="slideHorz">
+                                        <br><br>
+                                        <div class="conatiner">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Edificio</th>
+                                                    <th>Capacidad</th>
+                                                    <th>Ubicación</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                <tr>
+                                                    <td>Aula 58</td>
+                                                    <td>Bloque II</td>
+                                                    <td>150</td>
+                                                    <td>Planta baja</td>
+                                                    <td><input type="radio" id="1" name="aula" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Aula 57</td>
+                                                    <td>Bloque II</td>
+                                                    <td>150</td>
+                                                    <td>Planta baja</td>
+                                                    <td><input type="radio" id="2" name="aula" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Aula 51</td>
+                                                    <td>Bloque II</td>
+                                                    <td>30</td>
+                                                    <td>Planta baja</td>
+                                                    <td><input type="radio" id="3" name="aula" value=""></td>
+                                                </tr>
+                                                </tbody>
+
+                                            </table>
+
+                                            <div class="botones-step text-right">
+                                                <button class="btn btn-line ml-auto js-btn-prev" type="button" title="Prev">Volver</button>
+                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next">Siguiente</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Panel de Completar Datos-->
+                                    <div class="multisteps-form__panel" data-animation="slideHorz">
+                                        <br><br>
+                                        <div class="container">
+                                            <div class="row">
+                                                <!-- Columna izquierda con los label de los campos -->
+                                                <div class="col-xs-5 text-right">
+                                                    <label class="etiqueta-stretch">Materia:</label><br>
+                                                    <label class="etiqueta-stretch">Código:</label><br>
+                                                </div>
+
+                                                <!-- Columna derecha con los campos -->
+                                                <div class="col-xs-7 ">
+                                                    <input class="form-control campo-stretch" type="text">
+                                                    <input class="form-control campo-stretch" type="text">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="botones-step text-right">
+                                                <button class="btn btn-line ml-auto js-btn-prev" type="button" title="Prev">Volver</button>
+                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next">Finalizar</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+
+    </main>
+
+    <!-- TODO: Terminar Footer-->
+    <footer class="footer">
+        <div class="container">
+            <h2>Footer</h2>
+
+        </div>
+    </footer>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'></script>
+    <script  src="./script.js"></script>
 </body>
 </html>
