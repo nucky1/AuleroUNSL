@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 const userController = require("../controllers/user.controller");
-const { token } = require("morgan");
 const keyDocente = "llave del docente";
 const keyAdmin = "llave del admdinistrador";
 
@@ -15,7 +14,7 @@ router.get("/login", (req, res) => {
   res.render("login.html");
 });
 
-router.post("/login/username/:username/password/:password",async (req, res) => {
+router.post("/checkLogin",async (req, res) => {
   const user = await userController.getUser(req,res);
   var token;
   if(user.usuario != undefined){

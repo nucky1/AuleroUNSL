@@ -1,5 +1,3 @@
-const { where } = require("sequelize/types");
-
 const db = {
     Aulas: require("../models/Aulas"),
     Edificio: require("../models/Edificio"),
@@ -142,7 +140,22 @@ module.exports = {
         })
     },
 
-    autorizarReserva: async (req, res) =>{
+    eliminarReservadocente: async (req, res) => {
+        id = req.params.id;
+        db.Reserva.destroy({
+            where: {
+                id:id
+            }
+        }).then(function(reserva){
+            console.log("Reserva eliminada.");
+            res.sendStatus(201);
+        }, function(reason){
+            console.log("NO se elimino la reserva."+reason);
+            res.sendStatus(400);
+        })
+    },
+
+    updateReservaAdmin: async (req, res) =>{
         
     }
 };

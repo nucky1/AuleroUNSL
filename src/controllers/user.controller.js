@@ -50,8 +50,8 @@ const getUser = async function (req,res){
 
     const usuario = await db.Usuarios.findOne({
         where:{
-            username: req.params.username,
-            password: req.params.password
+            username: req.body.username,
+            password: req.body.password
         }            
     });
 

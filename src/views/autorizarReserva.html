@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+    <script src="js/autorizarReservas.js"></script>
 </head>
 <body>
 <!-- Barra de Navegación -->
@@ -47,11 +47,11 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DOCENTES</a>
                             <ul class="dropdown-menu">
-                                <li><a href="listadoReservas.html">Ver reservas</a></li>
+                                <li><a href="listadoReservas">Ver reservas</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="reservaAula.html">Reservar aula</a></li>
+                                <li><a href="reservaAula">Reservar aula</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="listadoReservas.html">Cancelar reserva</a></li>
+                                <li><a href="listadoReservas">Cancelar reserva</a></li>
                             </ul>
                         </li>
 
@@ -68,7 +68,7 @@
 <!-- Contenido de la página -->
 <main class="main-container" role="main">
     <!-- Container con información -->
-    <div class="container bg-encabezado">
+    <div class="container bg-encabezado" id = "containerListado">
 
         <h1 class="titulo">Listado de reservas pendientes</h1> <br>
         <h3 class="subtitulo">1er Cuatrimestre</h3><br>
