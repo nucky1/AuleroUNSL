@@ -1,3 +1,5 @@
+const { token } = require("morgan");
+
 getReservas();
 async function getReservas() {
     if(localStorage.getItem("token")){
@@ -6,9 +8,8 @@ async function getReservas() {
     }
     let responseJSON = await fetch('http://localhost:3000/allReservas',{
         method: 'GET', // or 'PUT'
-        body: token, // data can be `string` or {object}!
         headers:{ // NO SE PA QUE SIRVE 
-          'Content-Type': 'application/json' // NO SE PA QUE SIRVE  
+          'token': token // NO SE PA QUE SIRVE  
         }
       })
         .then(function (response) { //Trae los filtros en el parametro "response" 

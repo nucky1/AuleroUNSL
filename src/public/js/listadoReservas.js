@@ -1,12 +1,17 @@
 
 getReservasDocente();
 
-function getReservasDocente(){
+async function getReservasDocente(){
     if(localStorage.getItem("token")){
         let token = localStorage.getItem("token");
         console.log(token); // 
     }
-    let responseJSON = await fetch('http://localhost:3000/reservaDocente')
+    var misCabeceras = new Headers();
+    misCabeceras.append("token", token);
+    let responseJSON = await fetch('http://localhost:3000/listadoReservas',{
+        method: 'GET', // or 'PUT'
+        headers:misCabeceras
+      })
     .then(function (response) { //Trae los filtros en el parametro "response" 
         return response.json(); //Retorno como JSON los datos de la API
     });

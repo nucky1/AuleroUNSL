@@ -22,6 +22,7 @@ router.post("/checkLogin",async (req, res) => {
       token = jwt.sign({user: user.usuario, id: user.id }, keyAdmin);  
     }else{      
       token = jwt.sign({user: user.usuario, id: user.id }, keyDocente); 
+      
     }
     res.send({user:user, token:token});
   }else{
@@ -56,8 +57,10 @@ router.get("/pagprotegida", ensureToken, (req, res) => {
 
 // VERIFICA TOKEN
 function ensureToken(req, res, next) {
-  const bearerHeader = req.headers["authorization"];
+  const bearerHeader = req.headers["token"];
+  console.log(bearerHeader);
   if (typeof bearerHeader !== "undefined") {
+    
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[0];
     req.token = bearerToken;
@@ -68,3 +71,4 @@ function ensureToken(req, res, next) {
 }
 
 module.exports = router;
+module.exports.ensureToken = ensureToken;

@@ -5,14 +5,13 @@ const morgan = require("morgan");
 
 const keyDocente = "llave del docente";
 const keyAdmin = "llave del admdinistrador";
-const ensureToken = require("./user.js");
 const reservasController = require("../controllers/reservas.controller")
 
 // Middleware (se ejecuta antes de todas las peticiones)
 router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
 
-router.post("/cancelarReserva", ensureToken, (req,res) => {
+router.post("/cancelarReserva", eToken, (req,res) => {
   jwt.verify(req.token, keyDocente, (err, data) => {
     if (err) {
       res.render("login.html");
@@ -23,7 +22,7 @@ router.post("/cancelarReserva", ensureToken, (req,res) => {
   });
 });
 
-router.get("/listadoReservas", ensureToken, (req, res) => {
+router.get("/listadoReservas", eToken, (req, res) => {
   jwt.verify(req.token, keyDocente, (err, data) => {
     if (err) {
       res.render("login.html");
@@ -34,7 +33,7 @@ router.get("/listadoReservas", ensureToken, (req, res) => {
   });
 });
 
-router.get("/reservaDocente", ensureToken, (req, res) => {
+router.get("/reservaDocente", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.render("login.html");
@@ -46,7 +45,7 @@ router.get("/reservaDocente", ensureToken, (req, res) => {
     });
   });
 
-router.get("/reservaAula", ensureToken, (req, res) => {
+router.get("/reservaAula", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.render("login.html");
@@ -57,7 +56,7 @@ router.get("/reservaAula", ensureToken, (req, res) => {
     });
   });
 
-  router.get("/autorizarReserva", ensureToken, (req, res) => {
+  router.get("/autorizarReserva", eToken, (req, res) => {
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
         res.render("login.html");
@@ -68,7 +67,7 @@ router.get("/reservaAula", ensureToken, (req, res) => {
     });
   });
 
-  router.post("/updateReserva", ensureToken, (req, res) => {
+  router.post("/updateReserva", eToken, (req, res) => {
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
         res.render("login.html");
@@ -80,7 +79,7 @@ router.get("/reservaAula", ensureToken, (req, res) => {
     });
   });
 
-  router.get("/allReservas", ensureToken, (req, res) => {
+  router.get("/allReservas", eToken, (req, res) => {
     console.log(req.token);
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
@@ -93,7 +92,7 @@ router.get("/reservaAula", ensureToken, (req, res) => {
     });
   });
 
-  router.post("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", ensureToken, (req, res) => {
+  router.post("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.render("login.html");
@@ -105,7 +104,7 @@ router.get("/reservaAula", ensureToken, (req, res) => {
   });
 
 
-  router.post("/insertReserva/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/idAula/:idAula/codMateria/:codMateria/idDocente/:idDocente", ensureToken, (req, res) => {
+  router.post("/insertReserva/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/idAula/:idAula/codMateria/:codMateria/idDocente/:idDocente", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.render("login.html");
@@ -115,6 +114,22 @@ router.get("/reservaAula", ensureToken, (req, res) => {
       }
     });
   });
+
+
+  function eToken(req, res, next) {
+    const bearerHeader = req.headers["token"];
+    console.log(req.headers);
+    if (typeof bearerHeader !== "undefined") {
+      
+      const bearer = bearerHeader.split(" ");
+      const bearerToken = bearer[0];
+      req.token = bearerToken;
+      next();
+    } else {
+      res.render("login.html");
+    }
+  }
+
 module.exports = router;
 
 
