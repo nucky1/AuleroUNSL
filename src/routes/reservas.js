@@ -118,7 +118,7 @@ router.get("/reservaAula", eToken, (req, res) => {
 
   function eToken(req, res, next) {
     const bearerHeader = req.headers["token"];
-    console.log(req.headers);
+    console.log(req.headers.token);
     if (typeof bearerHeader !== "undefined") {
       
       const bearer = bearerHeader.split(" ");

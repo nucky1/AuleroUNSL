@@ -1,21 +1,24 @@
 
-getReservasDocente();
+//getReservasDocente();
 
-async function getReservasDocente(){
+async function getReservasDocente(){ 
+    var misCabeceras = new Headers();
+    //misCabeceras.append('Content-Type','application/json'); 
+    //misCabeceras.append('Accept','application/json'); 
     if(localStorage.getItem("token")){
         let token = localStorage.getItem("token");
         console.log(token); // 
+        misCabeceras.append("token", token);
     }
-    var misCabeceras = new Headers();
-    misCabeceras.append("token", token);
     let responseJSON = await fetch('http://localhost:3000/listadoReservas',{
         method: 'GET', // or 'PUT'
-        headers:misCabeceras
+        headers: misCabeceras, 
       })
-    .then(function (response) { //Trae los filtros en el parametro "response" 
-        return response.json(); //Retorno como JSON los datos de la API
-    });
-    cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+    .then(function (response) { //Trae los filtros en el parametro "response"
+        return response.text(); //Retorno como JSON los datos de la API
+    }) 
+    console.log(responseJSON); 
+    //cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 
 function cargarTabla(reservas) {

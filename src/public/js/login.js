@@ -13,7 +13,7 @@ async function iniciarSesion(){
           method: 'POST', // or 'PUT'
           body: JSON.stringify(data), // data can be `string` or {object}!
           headers:{ // NO SE PA QUE SIRVE 
-            'Content-Type': 'application/json' // NO SE PA QUE SIRVE  
+            'Content-Type': 'application/json' // NO SE PA QUE SIRVE pero sino no funca 
           }
         }).then(function(response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API

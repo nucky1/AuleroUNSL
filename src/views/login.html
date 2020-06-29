@@ -51,25 +51,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DOCENTES</a>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:getReservasDocente()" >Ver reservas</a></li>
-                                <script>
-                                    function x(){
-                                        var myHeaders = new Headers();
-                                        myHeaders.append("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoid2ViNGtkIiwiaWQiOjIsImlhdCI6MTU5MzM2NzY3M30.wsqBC8hgpds8Fh9ZTIyxVQRf6iGXj9EOzml-62kCB-k");
-
-                                        var requestOptions = {
-                                        method: 'GET',
-                                        headers: myHeaders,
-                                        redirect: 'follow'
-                                        };
-
-                                        fetch("http://localhost:3000/listadoReservas", requestOptions)
-                                        .then(response => response.text())
-                                        .then(result => console.log(result))
-                                        .catch(error => console.log('error', error));
-                                    }
-                                    
-                                </script>
+                                <li><a href="javascript:getReservasDocente()" >Ver reservas</a></li> 
                                 <li role="separator" class="divider"></li>
                                 <li><a href="reservaAula">Reservar aula</a></li>
                                 <li role="separator" class="divider"></li>
