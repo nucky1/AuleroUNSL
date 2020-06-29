@@ -1,7 +1,7 @@
 
 //getReservasDocente();
 
-async function getReservasDocente(){ 
+async function redirectListadoReservas(){ 
     var misCabeceras = new Headers();
     //misCabeceras.append('Content-Type','application/json'); 
     //misCabeceras.append('Accept','application/json'); 
@@ -10,6 +10,7 @@ async function getReservasDocente(){
         console.log(token); // 
         misCabeceras.append("token", token);
     }
+    
     let responseJSON = await fetch('http://localhost:3000/listadoReservas',{
         method: 'GET', // or 'PUT'
         headers: misCabeceras, 
@@ -17,7 +18,9 @@ async function getReservasDocente(){
     .then(function (response) { //Trae los filtros en el parametro "response"
         return response.text(); //Retorno como JSON los datos de la API
     }) 
+    
     console.log(responseJSON); 
+    document.getElementById("html").innerHTML = responseJSON;
     //cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 
