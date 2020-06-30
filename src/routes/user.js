@@ -21,12 +21,12 @@ router.post("/checkLogin",async (req, res) => {
     if(user.tipo == "ADMIN"){      
       token = jwt.sign({user: user.usuario, id: user.id }, keyAdmin);  
     }else{      
-      token = jwt.sign({user: user.usuario, id: user.id }, keyDocente); 
-      
+      token = jwt.sign({user: user.usuario, id: user.id }, keyDocente);       
     }
+    console.log(token);
     res.send({user:user, token:token});
   }else{
-    return res.status(404).send("No user found");
+    res.status(404).send("No user found");
   }
   
     
@@ -57,18 +57,14 @@ router.get("/pagprotegida", ensureToken, (req, res) => {
 
 // VERIFICA TOKEN
 function ensureToken(req, res, next) {
-  const bearerHeader = req.headers["token"];
-  console.log(bearerHeader);
-  if (typeof bearerHeader !== "undefined") {
-    
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[0];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403);
-  }
+  const token = req.headers["token"];
+    if (typeof token !== "undefined") {
+      req.token = token;
+      next();
+    } else {
+      res.render("login.html");
+      next();
+    }
 }
 
 module.exports = router;
-module.exports.ensureToken = ensureToken;

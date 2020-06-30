@@ -1,4 +1,6 @@
 <script src="js/listadoReservas.js"></script>
+<script src="js/reservarAula.js"></script>
+<script src="js/autorizarReservas.js"></script>
 <header>
     <div class="container header">
 
@@ -34,13 +36,13 @@
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:redirectListadoReservas()">Ver reservas</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="reservaAula">Reservar aula</a></li>
+                                <li><a href="javascript:redirectReservarAula()">Reservar aula</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="listadoReservas">Cancelar reserva</a></li>
+                                <li><a href="javascript:redirectListadoReservas()">Cancelar reserva</a></li>
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a href="listadoReservas" class="nav-link">ADMINISTRATIVOS</a></li>
+                        <li class="nav-item"><a href="javascript:redirectAutorizarReservas()" class="nav-link">ADMINISTRATIVOS</a></li>
                     </ul>
 
                 </div>
