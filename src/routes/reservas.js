@@ -67,7 +67,7 @@ router.get("/reservaAula", eToken, (req, res) => {
     });
   });
 
-  router.post("/updateReserva", eToken, (req, res) => {
+  router.post("/updateReserva/id/:id", eToken, (req, res) => {
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
         res.render("login.html");
