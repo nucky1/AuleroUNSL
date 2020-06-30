@@ -9,18 +9,24 @@ async function redirectListadoReservas(){
         let token = localStorage.getItem("token");
         console.log(token); // 
         misCabeceras.append("token", token);
-    }
-    
+    }    
     let responseJSON = await fetch('http://localhost:3000/listadoReservas',{
         method: 'GET', // or 'PUT'
         headers: misCabeceras, 
       })
-    .then(function (response) { //Trae los filtros en el parametro "response"
-        return response.text(); //Retorno como JSON los datos de la API
-    }) 
+    .then(function (response) { //Trae los filtros en el parametro "response"    
+        console.log(response.url) 
+        if(response.status != 404){
+            window.history.pushState(null,"",response.url);
+        }else{
+            window.location.assign('http://localhost:3000/login');
+        }        
+        return response.text() //Retorno como JSON los datos de la API
+    })   
+    if(responseJSON.status != 404){
+        document.getElementById("html").innerHTML = responseJSON;
+    }
     
-    console.log(responseJSON); 
-    document.getElementById("html").innerHTML = responseJSON;
     //cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 
