@@ -22,15 +22,8 @@ router.post("/cancelarReserva", eToken, (req,res) => {
   });
 });
 
-router.get("/listadoReservas", eToken, (req, res) => {
-  jwt.verify(req.token, keyDocente, (err, data) => {
-    if (err) {
-      res.sendStatus(404);
-    } else {
-      //ESCRIBIR TODO ACA
-      res.render("listadoReservas.html");
-    }
-  });
+router.get("/listadoReservas", (req, res) => {
+    res.render("listadoReservas.html");
 });
 
 router.get("/reservaDocente", eToken, (req, res) => {
@@ -45,32 +38,18 @@ router.get("/reservaDocente", eToken, (req, res) => {
     });
   });
 
-router.get("/reservaAula", eToken, (req, res) => {
-    jwt.verify(req.token, keyDocente, (err, data) => {
-      if (err) {
-        res.sendStatus(404);
-      } else {
-        //ESCRIBIR TODO ACA
-        res.render("reservaAula.html");
-      }
-    });
+router.get("/reservaAula", (req, res) => {
+    res.render("reservaAula.html");
   });
 
-  router.get("/autorizarReserva", eToken, (req, res) => {
-    jwt.verify(req.token, keyAdmin, (err, data) => {
-      if (err) {
-        res.sendStatus(404);
-      } else {
-        //ESCRIBIR TODO ACA
+  router.get("/autorizarReserva", (req, res) => {
         res.render("autorizarReserva.html");
-      }
-    });
   });
 
   router.post("/updateReserva/id/:id", eToken, (req, res) => {
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
-        res.sendStatus(404);
+        res.sendStatus(403);
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
@@ -83,7 +62,7 @@ router.get("/reservaAula", eToken, (req, res) => {
     console.log(req.token);
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
-        res.sendStatus(404);
+        res.sendStatus(403);
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
@@ -115,6 +94,34 @@ router.get("/reservaAula", eToken, (req, res) => {
     });
   });
 
+  router.get("/verificarAdmin/", eToken, (req, res) => {
+    jwt.verify(req.token, keyAdmin, (err, data) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        res.status(200).send("/autorizarReserva");
+      }
+    });
+  });
+  router.get("/verificarDocente/pagina/:pagina", eToken, (req, res) => {
+    jwt.verify(req.token, keyDocente, (err, data) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        //ESCRIBIR TODO ACA
+        switch(req.params.pagina){
+            case "verReservas":{
+                res.status(200).send("/listadoReservas");
+                break;
+            }
+            case "reservarAula":{
+              res.status(200).send("/reservaAula");
+              break;
+          }
+        }
+      }
+    });
+  });
 
   function eToken(req, res, next) {
     const token = req.headers["token"];
@@ -123,7 +130,7 @@ router.get("/reservaAula", eToken, (req, res) => {
       req.token = token;
       next();
     } else {
-      res.sendStatus(404);
+      res.sendStatus(403);
     }
   }
 

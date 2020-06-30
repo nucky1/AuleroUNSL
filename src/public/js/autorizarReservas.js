@@ -2,37 +2,11 @@
 
 //getReservas();
 
-async function redirectAutorizarReservas(){
-    var misCabeceras = new Headers();
-    //misCabeceras.append('Content-Type','application/json'); 
-    //misCabeceras.append('Accept','application/json'); 
-    if(localStorage.getItem("token")){
-        let token = localStorage.getItem("token");
-        console.log(token); // 
-        misCabeceras.append("token", token);
-    }    
-    let responseJSON = await fetch('http://localhost:3000/autorizarReserva',{
-        method: 'GET', // or 'PUT'
-        headers: misCabeceras, 
-      })
-    .then(function (response) { //Trae los filtros en el parametro "response"    
-        console.log(response.url) 
-        if(response.status != 404){
-            window.history.pushState(null,"",response.url);
-        }else{
-            window.location.assign('http://localhost:3000/login');
-        }        
-        return response.text() //Retorno como JSON los datos de la API
-    })   
-    if(responseJSON.status != 404){
-        document.getElementById("html").innerHTML = responseJSON;
-    }
-}
 
 async function getReservas() {
     if(localStorage.getItem("token")){
         let token = localStorage.getItem("token");
-        console.log(token); // 
+        console.log(token); 
     }
     let responseJSON = await fetch('http://localhost:3000/allReservas',{
         method: 'GET', // or 'PUT'
@@ -43,10 +17,10 @@ async function getReservas() {
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API
         });
-    cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+        cargarTablaAdmin(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 
-function cargarTabla(reservas){
+function cargarTablaAdmin(reservas){
     let container = document.getElementById("containerListado");
     let primerCuatri = "<h3 class='subtitulo'>1er Cuatrimestre</h3><br></br>";
     let segundoCuatri = "<h3 class='subtitulo'>2do Cuatrimestre</h3><br></br>";

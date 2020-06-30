@@ -16,7 +16,7 @@ function cargarFiltros(filtros) {
     opcion.text = 'todos';
     selector.add(opcion);
     let limit = filtros.length;
-    //añadimos los nombres de edificios
+    //aï¿½adimos los nombres de edificios
     for (let index in filtros) {
         let opcion = document.createElement('option'); 
         let setUbi = new Set();
@@ -42,7 +42,7 @@ function cargarUbicacion() {
     if (edifSelect == 'todos') {
         return;
     }
-    //añadimos las ubicaciones de aulas en ese edificio
+    //aï¿½adimos las ubicaciones de aulas en ese edificio
     let ubicaciones = mapaUbicaciones.get(edifSelect); 
     ubicaciones.forEach((value) => {
         let opcion = document.createElement('option');
