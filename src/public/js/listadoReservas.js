@@ -2,6 +2,11 @@
 //getReservasDocente();
 
 
+
+
+
+
+
 function cargarTablaReservas(reservas) {
     let tabla = document.getElementById('tbody');
     //eliminamos las filas
