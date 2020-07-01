@@ -1,3 +1,8 @@
+function logout(){
+  localStorage.clear();
+  window.location.href = '/login';
+}
+
 async function redirectListadoReservas(){ 
     var misCabeceras = new Headers();
     //misCabeceras.append('Content-Type','application/json'); 

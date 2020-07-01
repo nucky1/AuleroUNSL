@@ -25,10 +25,15 @@
                 <div class="col-xs-6">
                     <h1 class="titulo">Horarios por carrera</h1> <br>
                 </div>
-                <div class="col-xs-6 cont" style="justify-content: flex-end">
-                    <div class="chip">
-                        <div class="user-text">Bienvenido, Usuario</div>  <a class="log-out" href="#"><span class="glyphicon glyphicon-log-out"></span></a>
-                    </div>
+                <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
+                    <script>
+                        if(!localStorage.getItem("token")!= null){
+                            flotante = document.getElementById("flotante");
+                            flotante.innerHTML ='<div class="chip">'+
+                                                    '<div class="user-text">Bienvenido,'+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
+                                                '</div>';
+                        }
+                    </script>
                 </div>
 
             </div>
