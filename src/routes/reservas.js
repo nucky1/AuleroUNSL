@@ -71,7 +71,7 @@ router.get("/reservaAula", (req, res) => {
     });
   });
 
-  router.post("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", eToken, (req, res) => {
+  router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.sendStatus(404);

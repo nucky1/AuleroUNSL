@@ -20,6 +20,6 @@ async function iniciarSesion(){
         })
         .catch(error => console.error('Error:', error)) 
     
-    localStorage.setItem("token", responseJSON.token);
+    localStorage.setItem("token", responseJSON.token); // Guardo token en localstorage
     console.log(responseJSON.token);
 }
