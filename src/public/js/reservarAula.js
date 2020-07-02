@@ -90,7 +90,7 @@ function controlCampos(){
     return (horaInicio+HoraFin)<= 2300; //Controlo que no sea mas de las 23 hs     
 }
 
-function buscarAulas(){
+async function buscarAulas(){
     if(controlCampos()){
         let selector = document.getElementById('edif');  
         let edificio=selector.options[selector.selectedIndex].text; //Valor edificio

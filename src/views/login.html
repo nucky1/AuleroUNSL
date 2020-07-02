@@ -28,7 +28,8 @@
             
             <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
                 <script>
-                    if(!localStorage.getItem("token")!= null){
+                    if(localStorage.getItem("token")!= null){
+                        console.log(localStorage.getItem("token"));
                         flotante = document.getElementById("flotante");
                         flotante.innerHTML ='<div class="chip">'+
                                                 '<div class="user-text">Bienvenido,'+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
@@ -42,13 +43,15 @@
         <div class="text-center">
             <div class="container center-div">
                 <form class="form-group">
-                    <input type="text" class="form-control" id="user" placeholder="Usuario">
+                    <input type="text" class="form-control" id="user" placeholder="Usuario" onclick="setError(0)">
                     <br>
                     <input type="password" class="form-control" id="pass" placeholder="Contraseña">
-                    <br><br>
+                    <br>
+                    <br>
                     <button type="button" class="btn btn-bold mb-2" onclick="iniciarSesion()">Iniciar sesión</button>
 
                 </form>
+                <span style="color: red; opacity: 0;" id = "spanError"> El usuario y/o contraseña son incorrectos. </span>
             </div>
         </div>
 

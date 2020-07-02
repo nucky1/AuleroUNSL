@@ -46,13 +46,13 @@ router.get("/reservaAula", (req, res) => {
         res.render("autorizarReserva.html");
   });
 
-  router.post("/updateReserva/id/:id", eToken, (req, res) => {
+  router.post("/updateReserva", eToken, (req, res) => {
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
         res.sendStatus(403);
       } else {
         //ESCRIBIR TODO ACA
-        req.params.id = data.id;
+        req.body.id = data.id;
         res.send(reservasController.updateReservaAdmin(req,res));
       }
     });
@@ -97,7 +97,7 @@ router.get("/reservaAula", (req, res) => {
   router.get("/verificarAdmin/", eToken, (req, res) => {
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
-        res.sendStatus(404);
+        res.sendStatus(403);
       } else {
         res.status(200).send("/autorizarReserva");
       }
@@ -106,7 +106,7 @@ router.get("/reservaAula", (req, res) => {
   router.get("/verificarDocente/pagina/:pagina", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
-        res.sendStatus(404);
+        res.sendStatus(403);
       } else {
         //ESCRIBIR TODO ACA
         switch(req.params.pagina){

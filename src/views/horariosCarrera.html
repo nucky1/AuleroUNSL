@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
                     <script>
-                        if(!localStorage.getItem("token")!= null){
+                        if(localStorage.getItem("token")!= null){
                             flotante = document.getElementById("flotante");
                             flotante.innerHTML ='<div class="chip">'+
                                                     '<div class="user-text">Bienvenido,'+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
