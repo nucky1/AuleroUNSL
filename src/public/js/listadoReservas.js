@@ -1,36 +1,13 @@
 
 //getReservasDocente();
 
-async function redirectListadoReservas(){ 
-    var misCabeceras = new Headers();
-    //misCabeceras.append('Content-Type','application/json'); 
-    //misCabeceras.append('Accept','application/json'); 
-    if(localStorage.getItem("token")){
-        let token = localStorage.getItem("token");
-        console.log(token); // 
-        misCabeceras.append("token", token);
-    }    
-    let responseJSON = await fetch('http://localhost:3000/listadoReservas',{
-        method: 'GET', // or 'PUT'
-        headers: misCabeceras, 
-      })
-    .then(function (response) { //Trae los filtros en el parametro "response"    
-        console.log(response.url) 
-        if(response.status != 404){
-            window.history.pushState(null,"",response.url);
-        }else{
-            window.location.assign('http://localhost:3000/login');
-        }        
-        return response.text() //Retorno como JSON los datos de la API
-    })   
-    if(responseJSON.status != 404){
-        document.getElementById("html").innerHTML = responseJSON;
-    }
-    
-    //cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
-}
 
-function cargarTabla(reservas) {
+
+
+
+
+
+function cargarTablaReservas(reservas) {
     let tabla = document.getElementById('tbody');
     //eliminamos las filas
     for (let index = tabla.rows.length -1; index > -1; index--) {

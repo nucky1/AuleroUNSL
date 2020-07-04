@@ -1,3 +1,4 @@
+//Esta clase no sirve 
 class User{ 
 
     constructor(token){

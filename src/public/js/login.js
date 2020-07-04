@@ -15,11 +15,23 @@ async function iniciarSesion(){
           headers:{ // NO SE PA QUE SIRVE 
             'Content-Type': 'application/json;charset=utf-8' // NO SE PA QUE SIRVE pero sino no funca 
           }
-        }).then(function(response) { //Trae los filtros en el parametro "response" 
-            return response.json(); //Retorno como JSON los datos de la API
-        })
-        .catch(error => console.error('Error:', error)) 
-    
-    localStorage.setItem("token", responseJSON.token);
-    console.log(responseJSON.token);
+        }).then(function(response) { 
+              return response.json(); //Retorno como JSON los datos de la API
+            
+        }).catch(function(reason) {
+          console.log(reason);
+          setError(1);
+       });
+        //la primera me tira cuando hay 404.. la segunda es por si acaso, y la tercera por el ensure token
+    if(responseJSON != undefined && responseJSON.status != 404 && responseJSON.status != 403){
+      localStorage.setItem("token", responseJSON.token); // Guardo token en localstorage
+      localStorage.setItem("username",responseJSON.user.usuario);
+      localStorage.setItem("")
+      location.reload();
+    }
+}
+
+function setError(i){
+  span = document.getElementById("spanError");
+  span.style.opacity = i;
 }

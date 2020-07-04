@@ -21,18 +21,37 @@
 <main class="main-container" role="main">
     <!-- Encabezado con información -->
     <div class="container bg-encabezado">
-        <h2 class="titulo">Iniciar sesión</h2>
+        <div class="row">
+            <div class="col-xs-6">
+                <h1 class="titulo">Iniciar sesión</h1>
+            </div>
+            
+            <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
+                <script>
+                    if(localStorage.getItem("token")!= null){
+                        console.log(localStorage.getItem("token"));
+                        flotante = document.getElementById("flotante");
+                        flotante.innerHTML ='<div class="chip">'+
+                                                '<div class="user-text">Bienvenido,'+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
+                                            '</div>';
+                    }
+                </script>
+            </div>
+
+        </div>
         <br>
         <div class="text-center">
             <div class="container center-div">
                 <form class="form-group">
-                    <input type="text" class="form-control" id="user" placeholder="Usuario">
+                    <input type="text" class="form-control" id="user" placeholder="Usuario" onclick="setError(0)">
                     <br>
                     <input type="password" class="form-control" id="pass" placeholder="Contraseña">
-                    <br><br>
+                    <br>
+                    <br>
                     <button type="button" class="btn btn-bold mb-2" onclick="iniciarSesion()">Iniciar sesión</button>
 
                 </form>
+                <span style="color: red; opacity: 0;" id = "spanError"> El usuario y/o contraseña son incorrectos. </span>
             </div>
         </div>
 

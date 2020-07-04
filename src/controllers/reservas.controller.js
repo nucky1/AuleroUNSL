@@ -156,6 +156,21 @@ module.exports = {
     },
 
     updateReservaAdmin: async (req, res) =>{
-        
+        const id = req.body.id;
+        const idAula = req.body.idAula;
+        const estado = req.body.estado;
+        try{
+        const aula = await db.Aulas.Aula.update(
+            {
+                estado:  estado
+            },
+            {
+                where: {id : idAula, state : 'ACTIVA'}
+            }
+        );
+        //aca resultado exitoso
+        }catch(err){
+            //aca manejo error
+        }
     }
 };

@@ -2,37 +2,11 @@
 
 //getReservas();
 
-async function redirectAutorizarReservas(){
-    var misCabeceras = new Headers();
-    //misCabeceras.append('Content-Type','application/json'); 
-    //misCabeceras.append('Accept','application/json'); 
-    if(localStorage.getItem("token")){
-        let token = localStorage.getItem("token");
-        console.log(token); // 
-        misCabeceras.append("token", token);
-    }    
-    let responseJSON = await fetch('http://localhost:3000/autorizarReserva',{
-        method: 'GET', // or 'PUT'
-        headers: misCabeceras, 
-      })
-    .then(function (response) { //Trae los filtros en el parametro "response"    
-        console.log(response.url) 
-        if(response.status != 404){
-            window.history.pushState(null,"",response.url);
-        }else{
-            window.location.assign('http://localhost:3000/login');
-        }        
-        return response.text() //Retorno como JSON los datos de la API
-    })   
-    if(responseJSON.status != 404){
-        document.getElementById("html").innerHTML = responseJSON;
-    }
-}
 
 async function getReservas() {
     if(localStorage.getItem("token")){
         let token = localStorage.getItem("token");
-        console.log(token); // 
+        console.log(token); 
     }
     let responseJSON = await fetch('http://localhost:3000/allReservas',{
         method: 'GET', // or 'PUT'
@@ -43,10 +17,27 @@ async function getReservas() {
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API
         });
-    cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+        cargarTablaAdmin(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-
-function cargarTabla(reservas){
+function updateReservaAdmin(idAula,estado){
+    if(localStorage.getItem("token")){
+        let token = localStorage.getItem("token");
+        console.log(token); 
+    }
+    let responseJSON = await fetch('http://localhost:3000/updateReserva',{
+        method: 'POST', 
+        body:{
+            idAula : idAula,
+            estado : estado
+        },
+        headers:{ // NO SE PA QUE SIRVE 
+          'token': token // NO SE PA QUE SIRVE  
+        }
+      }).then(function (response) { //Trae los filtros en el parametro "response" 
+            return response.json(); //Retorno como JSON los datos de la API
+        });
+}
+function cargarTablaAdmin(reservas){
     let container = document.getElementById("containerListado");
     let primerCuatri = "<h3 class='subtitulo'>1er Cuatrimestre</h3><br></br>";
     let segundoCuatri = "<h3 class='subtitulo'>2do Cuatrimestre</h3><br></br>";
@@ -78,11 +69,11 @@ function cargarTabla(reservas){
     let endFilabeforeId = '</ul>' +
         '</div >' +
         '<div class="botones text-right">' +
-        '<button type="button" class="btn btn-line mb-2" onclick="location.href=\'updateReservaAdmin/id/';
+        '<button type="button" class="btn btn-line mb-2" onclick="updateReservaAdmin(';
     
-    let endFilabeforeId2 = '/estado/:AUTORIZADA\'">Rechazar reserva</button>' +
-    '<button type="button" class="btn btn-line mb-2" onclick="location.href=\'updateReservaAdmin/id/'
-    let endFila = 'Autorizar reserva</button>' +
+    let endFilabeforeId2 = ',AUTORIZADA)">Rechazar reserva</button>' +
+    '<button type="button" class="btn btn-line mb-2" onclick="updateReservaAdmin('
+    let endFila = ',AUTORIZADA")>Autorizar reserva</button>' +
         '</div>' +
         '</div >' +
         '</td >' +
@@ -103,7 +94,7 @@ function cargarTabla(reservas){
             for (let ind in reservas[index].aula.extras) {
                 extrasAula += beforeExtra + reservas[index].aula.extras[ind].extra + afterExtra;
             }
-            container.innerHTML += beforeinfo + index + fincolapsar + infoAula + afterInfoAula + indice + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id + endFila;
+            container.innerHTML += beforeinfo + index + fincolapsar + infoAula + afterInfoAula + indice + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id +endFilabeforeId2+aulas[index].id+ endFila;
             indice++;
         }
     }
@@ -122,10 +113,11 @@ function cargarTabla(reservas){
             for (let ind in reservas2Cuatri[index].aula.extras) {
                 extrasAula += beforeExtra + reservas2Cuatri[index].aula.extras[ind].extra + afterExtra;
             }
-            container.innerHTML += beforeinfo + index + fincolapsar + infoAula + afterInfoAula + indice + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id + endFila;
+            container.innerHTML += beforeinfo + index + fincolapsar + infoAula + afterInfoAula + indice + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id +endFilabeforeId2+aulas[index].id+ endFila;
             indice++;
         }
     }
+    // las aunales
     container.innerHTML += anuales;
     var reservasAnual;
     for (let index in reservasAnual) {
@@ -137,7 +129,7 @@ function cargarTabla(reservas){
         for (let ind in reservasAnual[index].aula.extras) {
             extrasAula += beforeExtra + reservasAnual[index].aula.extras[ind].extra + afterExtra;
         }
-        container.innerHTML += beforeinfo + index + fincolapsar + infoAula + afterInfoAula + indice + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id + endFila;
+        container.innerHTML += beforeinfo + index + fincolapsar + infoAula + afterInfoAula + indice + finColapsedos + extrasAula + endFilabeforeId + aulas[index].id +endFilabeforeId2+aulas[index].id+ endFila;
         indice++;
     }
     
