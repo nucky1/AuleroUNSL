@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
+const Reserva = require("./Reserva");
+const Admin = require("./Administrador");
 const ReservaAdmin = sequelize.define(
     "reservaadmin",
     {

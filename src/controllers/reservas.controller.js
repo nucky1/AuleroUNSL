@@ -2,11 +2,13 @@ const db = {
     Aulas: require("../models/Aulas"),
     Edificio: require("../models/Edificio"),
     Carrera: require("../models/Carrera"),
+    Docente: require("../models/Docente"),
     Facultad: require("../models/Facultad"),
     Reserva: require("../models/Reserva"),
     Materia: require("../models/Materia"),
     seq: require("sequelize"),
-    ReservaMateria: require("../models/ReservaMateria")
+    ReservaMateria: require("../models/ReservaMateria"),
+    ReservaAdmin : require("../models/ReservaAdmin")
 };
 module.exports = {
     //listado de reservas para administradores.
@@ -29,11 +31,15 @@ module.exports = {
                 model : db.Materia,
                 where: { state: "ACTIVO" },
                 attributes: ["nombre","periodo"]
-                },
+                }
 
             ]
-        });
-        res.send(reservas);
+        }).then(function(reservas){
+            res.send(reservas);
+        }, function(reason){
+            console.log(reason);
+            res.sendStatus(400);
+        })
     },
     //listado de reservas para un docente.
     //router.get("/reservaDocente/id/:id", reservasController.reservaDocente);
@@ -157,20 +163,39 @@ module.exports = {
 
     updateReservaAdmin: async (req, res) =>{
         const id = req.body.id;
-        const idAula = req.body.idAula;
+        const idReserva = req.body.idReserva;
         const estado = req.body.estado;
+        console.log("body en update reserva " +req.body);
+        console.log("id admin "+ id);
         try{
-        const aula = await db.Aulas.Aula.update(
+        const reserva = await db.Reserva.update(
             {
                 estado:  estado
             },
             {
-                where: {id : idAula, state : 'ACTIVA'}
+                where: {id : idReserva, state : 'ACTIVO'}
             }
-        );
-        //aca resultado exitoso
+        ).then(async function(reserva){
+            console.log("Reserva actualizada "+reserva);
+            console.log("id Reserva"+ idReserva);
+        console.log("id admin"+ id);
+            const reservaAdmin = await db.ReservaAdmin.create({
+                administradorId : id,
+                reservaId : idReserva
+            }).then(function(reserva){
+                console.log("Reserva actualizada "+reserva);
+                res.sendStatus(200);
+            }, function(reason){
+                console.log("Mal update reservaAdin "+reason);
+                res.sendStatus(400);
+            });
+        }, function(reason){
+            console.log("Mal update reserva "+reason);
+            res.sendStatus(400);
+        });
         }catch(err){
-            //aca manejo error
+            console.log("ERROR"+err);
+            res.sendStatus(400);
         }
     }
 };

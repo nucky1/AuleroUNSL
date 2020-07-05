@@ -53,20 +53,19 @@ router.get("/reservaAula", (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.body.id = data.id;
-        res.send(reservasController.updateReservaAdmin(req,res));
+        reservasController.updateReservaAdmin(req,res);
       }
     });
   });
 
   router.get("/allReservas", eToken, (req, res) => {
-    console.log(req.token);
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
         res.sendStatus(403);
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
-        res.send(reservasController.allReservas(req,res));
+        reservasController.allReservas(req,res);
       }
     });
   });
@@ -125,7 +124,6 @@ router.get("/reservaAula", (req, res) => {
 
   function eToken(req, res, next) {
     const token = req.headers["token"];
-    console.log(token);
     if (typeof token !== "undefined") {
       req.token = token;
       next();
