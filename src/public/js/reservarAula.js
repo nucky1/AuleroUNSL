@@ -184,6 +184,7 @@ async function getMaterias(){
 
 function cargarMaterias(materias){//Recupero materias
     let selector = document.getElementById('nombMateria');
+    selector.options.length = 0;
     for(i=0;i<materias.length;i++){
         let opcion = document.createElement('option'); //Creo el objeto opción del selector 
         opcion.text = materias[i].nombre; //Le setteo el valor del nombre del edificio
