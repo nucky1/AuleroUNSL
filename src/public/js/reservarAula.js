@@ -156,25 +156,29 @@ function cargarListaAulas(listaAulas){
 }
 
 async function getMaterias(){
-    var misCabeceras = new Headers();
-    if(localStorage.getItem("token")){
-        let token = localStorage.getItem("token"); 
-        misCabeceras.append("token", token);
-    }
-    let responseJSON = await fetch('http://localhost:3000/buscarMateras/periodo/'+per,{ //URL de buscarMateras
-        method: 'GET', // or 'PUT'
-        headers: misCabeceras, 
-      })
-      .then(function (response) { //Trae los filtros en el parametro "response"  
-        if(response.status == 404){ // Esto significa que la API no loggeo al usuario 
-            window.location.href = '/login'; //Entonces lo manda a iniciar sesion
-        }else if(response.status == 200){ 
-            return response.json(); //Retorno como JSON los datos de la API 
-        }else{
-            console.log(response.text());
+    if(getAulaSeleccionada()>-1){
+        var misCabeceras = new Headers();
+        if(localStorage.getItem("token")){
+            let token = localStorage.getItem("token"); 
+            misCabeceras.append("token", token);
         }
-    }); 
-    cargarMaterias(responseJSON);
+        let responseJSON = await fetch('http://localhost:3000/buscarMateras/periodo/'+per,{ //URL de buscarMateras
+            method: 'GET', // or 'PUT'
+            headers: misCabeceras, 
+        })
+        .then(function (response) { //Trae los filtros en el parametro "response"  
+            if(response.status == 404){ // Esto significa que la API no loggeo al usuario 
+                window.location.href = '/login'; //Entonces lo manda a iniciar sesion
+            }else if(response.status == 200){ 
+                return response.json(); //Retorno como JSON los datos de la API 
+            }else{
+                console.log(response.text());
+            }
+        }); 
+        cargarMaterias(responseJSON);
+    }else{
+        console.log("tenemos que mostrarle que tiene que seleccionar al menos una materia ");
+    }
 }
 
 function cargarMaterias(materias){//Recupero materias
@@ -199,7 +203,8 @@ function getAulaSeleccionada() {
     for(i=0; i<rbutons.length; i++) { 
         if(rbutons[i].checked) 
             return aulasMap.get(i);
-    } 
+    }
+    return -1;
 }
 async function reservarAula(){
     if(controlCampos2()){
