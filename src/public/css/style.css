@@ -65,8 +65,8 @@ body{
     margin: 0 auto;
 }
 .col-xs-6, .col-xs-5, .col-xs-7{
-    padding-right: 8px;
-    padding-left: 8px;
+    padding-right: 16px;
+    padding-left: 16px;
 }
 
 .panel .panel-heading{
@@ -91,6 +91,12 @@ body{
 .subtitulo{
     font-family: "Mitram Regular", sans-serif;
     font-weight: bold;
+}
+.subtitulo-horario{
+    font-family: "Mitram Regular", sans-serif;
+    font-weight: bolder;
+    margin: 0;
+    padding-top: 4px;
 }
 .navbar{
     background: #2666BC;
@@ -156,14 +162,25 @@ body{
     color: #FFFFFF;
     border-radius: 25px;
     width: 50px;
+    outline: none;
 }
 .btn-search:hover{
     box-shadow: 0 5px 5px 0 rgba(203,233,255,0.7);
     color: #FFFFFF;
+    outline: none;
 }
 .btn-search:focus{
     border-radius: 25px;
     border-color: #2666BC;
+    outline: none;
+}
+.btn-search-line, .btn-search-line:active, .btn-search-line:focus {
+    background-color: #ffffff;
+    color: #2666BC;
+    border-color: #2666BC;
+    border-radius: 25px;
+    width: 50px;
+    outline: none;
 }
 .chip{
     border-radius: 50px;
@@ -262,7 +279,7 @@ html {
     margin-top: 24px;
     margin-right: 30px;
 }
-.btn-line{
+.btn-line, .btn-line:active{
     background-color: #FFFFFF;
     color: #2666BC;
     border-radius: 25px;
@@ -275,13 +292,15 @@ html {
     min-width: 130px;
     width: 180px;
     margin-left: 16px;
+    outline: none;
 }
-.btn-line:hover{
+.btn-line:hover, .btn-line:focus{
     background-color: #2666BC;
     color: #FFFFFF;
     border-radius: 25px;
     width: 180px;
     margin-left: 16px;
+    outline: none;
 }
 .btn-bold{
     background-color: #2666BC;
@@ -289,14 +308,16 @@ html {
     border-radius: 25px;
     width: 180px;
     margin-left: 16px;
+    outline: none;
 }
-.btn-bold:hover{
+.btn-bold:hover, .btn-bold:focus{
     background-color: #2666BC;
     color: #FFFFFF;
     border-radius: 25px;
     width: 180px;
     margin-left: 16px;
     font-weight: bold;
+    outline: none;
 }
 
 .icon-check{
@@ -310,7 +331,15 @@ html {
     overflow: hidden;
 
 }
-
+.controls{
+    padding-left: 36px;
+    padding-right: 36px;
+}
+.button-container{
+    justify-content: flex-end;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
 
 /* CSS del Stepper*/
 
