@@ -53,7 +53,7 @@ router.get("/reservaAula", (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.body.id = data.id;
-        res.send(reservasController.updateReservaAdmin(req,res));
+        res.status(200).send(reservasController.updateReservaAdmin(req,res));
       }
     });
   });
@@ -71,13 +71,24 @@ router.get("/reservaAula", (req, res) => {
     });
   });
 
+  router.get("/filtrosReserva", eToken, (req, res) => {
+    jwt.verify(req.token, keyDocente, (err, data) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        //ESCRIBIR TODO ACA
+        return reservasController.getEdificios(req,res);
+      }
+    });
+  }); 
+
   router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.sendStatus(404);
       } else {
         //ESCRIBIR TODO ACA
-        res.send(reservasController.buscarAulaReserva(req,res));
+        return reservasController.buscarAulaReserva(req,res); 
       }
     });
   });

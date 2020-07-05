@@ -123,8 +123,7 @@ DOMstrings.stepsBar.addEventListener('click', e => {
   const activeStep = getActiveStep(eventTarget);
 
   //set all steps before clicked (and clicked too) to active
-  setActiveStep(activeStep);
-
+  setActiveStep(activeStep); 
   //open active panel
   setActivePanel(activeStep);
 });
@@ -153,8 +152,7 @@ DOMstrings.stepsForm.addEventListener('click', e => {
 
     activePanelNum++;
 
-  }
-
+  } 
   setActiveStep(activePanelNum);
   setActivePanel(activePanelNum);
 
