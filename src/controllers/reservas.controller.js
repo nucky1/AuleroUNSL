@@ -71,6 +71,10 @@ module.exports = {
         });
         res.send(reservas);
     },
+    getEdificios: async(req,res) =>{
+        const edificios = await db.Edificio.findAll();
+        res.send(edificios);
+    },
     //busca que las aulas disponibles segun:
     //edificio, dia, between(hora inicio, hora inicia+cantHoras)
     //capAula > capacidad, periodo.

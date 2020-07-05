@@ -25,8 +25,7 @@ async function iniciarSesion(){
         //la primera me tira cuando hay 404.. la segunda es por si acaso, y la tercera por el ensure token
     if(responseJSON != undefined && responseJSON.status != 404 && responseJSON.status != 403){
       localStorage.setItem("token", responseJSON.token); // Guardo token en localstorage
-      localStorage.setItem("username",responseJSON.user.usuario);
-      localStorage.setItem("")
+      localStorage.setItem("username",responseJSON.user.usuario);// Guardo usuario en localstorage 
       location.reload();
     }
 }

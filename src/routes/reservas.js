@@ -53,22 +53,34 @@ router.get("/reservaAula", (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.body.id = data.id;
-        reservasController.updateReservaAdmin(req,res);
+        res.status(200).send(reservasController.updateReservaAdmin(req,res));
       }
     });
   });
 
   router.get("/allReservas", eToken, (req, res) => {
+    console.log(req.token);
     jwt.verify(req.token, keyAdmin, (err, data) => {
       if (err) {
         res.sendStatus(403);
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
-        reservasController.allReservas(req,res);
+        res.send(reservasController.allReservas(req,res));
       }
     });
   });
+
+  router.get("/filtrosReserva", eToken, (req, res) => {
+    jwt.verify(req.token, keyDocente, (err, data) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        //ESCRIBIR TODO ACA
+        return reservasController.getEdificios(req,res);
+      }
+    });
+  }); 
 
   router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
@@ -76,7 +88,7 @@ router.get("/reservaAula", (req, res) => {
         res.sendStatus(404);
       } else {
         //ESCRIBIR TODO ACA
-        res.send(reservasController.buscarAulaReserva(req,res));
+        return reservasController.buscarAulaReserva(req,res); 
       }
     });
   });
@@ -124,6 +136,7 @@ router.get("/reservaAula", (req, res) => {
 
   function eToken(req, res, next) {
     const token = req.headers["token"];
+    console.log(token);
     if (typeof token !== "undefined") {
       req.token = token;
       next();
