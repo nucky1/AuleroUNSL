@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+<head>
+    <title>Horarios personalizados</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<!-- Barra de Navegación -->
+
+<%- include('partials/navegacion') %>
+<!-- Contenido de la página -->
+<main class="main-container" role="main">
+    <!-- Encabezado con Filtros -->
+    <div class="container bg-encabezado">
+        <div class="row">
+            <div class="col-xs-6">
+                <h1 class="titulo">Horarios personalizados</h1> <br>
+            </div>
+            <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
+                <script>
+                    if(localStorage.getItem("token")!= null){
+                        flotante = document.getElementById("flotante");
+                        flotante.innerHTML ='<div class="chip">'+
+                            '<div class="user-text">Bienvenido, '+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
+                            '</div>';
+                    }
+                </script>
+            </div>
+
+        </div>
+        <form class="form-group form-inline">
+
+            <label class="etiqueta" for="fac">Facultad</label>
+            <select class="form-control campo" id="fac" onchange="cargarCarreras()">
+            </select>
+
+            <label class="etiqueta" for="carr">Carrera</label>
+            <select class="form-control campo" id="carr" onchange="cargarAnios()">
+            </select>
+
+
+
+            <label class="etiqueta" for="cuatri">Cuatrimestre</label>
+            <select class="form-control campo" id="cuatri">
+                <option>1er</option>
+                <option>2do</option>
+            </select>
+
+        </form>
+
+        <hr/>
+
+        <div class="col-xs-6">
+            <h3 class="subtitulo-horario">Agregar materias </h3> <br>
+        </div>
+        <div class="col-xs-6 cont" style="justify-content: flex-end">
+            <button type="button" class="btn btn-line mb-2">Limpiar</button>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group form-inline">
+                <div class="controls">
+                    <form role="form" autocomplete="off">
+                        <div class="entry">
+                            <label class="etiqueta" for="anio">Año: </label>
+                            <select class="form-control campo" id="anio" name="anios[]">
+                            </select>
+
+                            <label class="etiqueta" for="carr">Materia: </label>
+                            <select class="form-control campo" name="materias[]">
+                                <option>Cálculo I</option>
+                                <option>Álgebra I</option>
+                            </select>
+
+                            <button class="btn btn-search" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 cont button-container" >
+
+                <button type="button" class="btn btn-line mb-2">Descargar</button>
+                <button type="button" class="btn btn-bold mb-2">Buscar</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Contenedor con los horarios -->
+    <div class="container bg-container">
+
+    </div>
+
+</main>
+
+
+<!-- TODO: Terminar Footer-->
+<footer class="footer">
+    <div class="container">
+        <h2>Footer</h2>
+
+    </div>
+</footer>
+<script type="text/javascript" src="js/horariosCarrera.js"></script> <!--esto lo pongo aca recien pq
+    sino no encuentra las tags cuando hace getElementByID en el js-->
+<script type="text/javascript" src="js/script-horarios.js"></script>
+</body>
+</html>

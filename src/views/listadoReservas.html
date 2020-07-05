@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" id="html">
 <head>
-    <title>Aulero UNSL</title>
+    <title>Listado de reservas</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -21,13 +21,14 @@
 
         <div class="col-xs-6">
             <h1 class="titulo">Listado de reservas</h1> <br>
+            <h3 class="subtitulo">1er Cuatrimestre</h3><br>
         </div>
         <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
             <script>
                 if(localStorage.getItem("token")!= null){
                     flotante = document.getElementById("flotante");
                     flotante.innerHTML ='<div class="chip">'+
-                                            '<div class="user-text">Bienvenido,'+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
+                                            '<div class="user-text">Bienvenido, '+ localStorage.getItem("username")+'</div>  <a class="log-out" href="javascript:logout()"><span class="glyphicon glyphicon-log-out"></span></a>'+
                                         '</div>';
                 }else{
                     
@@ -36,7 +37,7 @@
             </script>
         </div>
 
-        <h3 class="subtitulo">1er Cuatrimestre</h3><br>
+
 
         <table class="table table-hover" id="table">
             <!-- Encabezado de la tabla -->
