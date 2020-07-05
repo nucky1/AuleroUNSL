@@ -188,8 +188,6 @@ function cargarMaterias(materias){//Recupero materias
         let opcion = document.createElement('option'); //Creo el objeto opción del selector 
         opcion.text = materias[i].nombre; //Le setteo el valor del nombre del edificio
         selector.add(opcion); // 
-        let texttt = document.getElementById('codMateria');
-        texttt.value = materias[i].cod;
         materiasMap.set(materias[i].nombre,materias[i].cod);
     }
 }
