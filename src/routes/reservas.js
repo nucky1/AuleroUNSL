@@ -33,7 +33,8 @@ router.get("/reservaDocente", eToken, (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
-        res.send(reservasController.reservaDocente(req,res));
+        console.log(data.id);
+        reservasController.reservaDocente(req,res);
       }
     });
   });
@@ -53,7 +54,7 @@ router.get("/reservaAula", (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.body.id = data.id;
-        res.status(200).send(reservasController.updateReservaAdmin(req,res));
+        reservasController.updateReservaAdmin(req,res);
       }
     });
   });
@@ -66,7 +67,8 @@ router.get("/reservaAula", (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
-        res.send(reservasController.allReservas(req,res));
+        console.log(req.params.id);
+        reservasController.allReservas(req,res);
       }
     });
   });
@@ -81,7 +83,17 @@ router.get("/reservaAula", (req, res) => {
       }
     });
   }); 
-
+  router.get("/buscarMateras/periodo/:periodo", eToken, (req, res) => {
+    jwt.verify(req.token, keyDocente, (err, data) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        //ESCRIBIR TODO ACA
+        req.params.idDoc = data.id;
+        return reservasController.buscarMateria(req,res);
+      }
+    });
+  });
   router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
@@ -93,14 +105,15 @@ router.get("/reservaAula", (req, res) => {
     });
   });
 
-
-  router.post("/insertReserva/dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/idAula/:idAula/codMateria/:codMateria/idDocente/:idDocente", eToken, (req, res) => {
+///dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/idAula/:idAula/codMateria/:codMateria/idDocente/:idDocente
+  router.post("/insertReserva", eToken, (req, res) => {
     jwt.verify(req.token, keyDocente, (err, data) => {
       if (err) {
         res.sendStatus(404);
       } else {
+        req.body.idDocente = data.id;
         //ESCRIBIR TODO ACA
-        res.send(reservasController.insertReserva(req,res));
+        reservasController.insertReserva(req,res);
       }
     });
   });

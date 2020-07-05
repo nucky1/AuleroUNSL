@@ -46,8 +46,8 @@ function cargarDatosFiltros(edificios){ // asumo que recibo un arreglo de nombre
 //Carga los datos que son iguales en todos lados del front
 function cargarDatosEstaticos(){
     let selector = document.getElementById('dias');  // Dias de la semana
-    let dias = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado"];   
-    let periodo = ["1er Cuatrimestre","2do Cuatrimestre","Anual"];   
+    let dias = ["lunes", "martes","miércoles","jueves","viernes","sábado"];   
+    let periodo = ["primer cuatrimestre","segundo cuatrimestre","Anual"];   
     let opcion;  
     for(i=0;i<6;i++){
         opcion = document.createElement('option');
@@ -105,14 +105,15 @@ async function buscarAulas(){
         selector = document.getElementById('dias'); 
         day = selector.options[selector.selectedIndex].text; //Valor dia - VARIABLE GLOBAL
         selector = document.getElementById('hInicio'); 
-        let horaI = horasDisponiblesMap.get(selector.options[selector.selectedIndex].text);//Valor hora de inicio de la reserva - VARIABLE GLOBAL
+        horaI = horasDisponiblesMap.get(selector.options[selector.selectedIndex].text);//Valor hora de inicio de la reserva - VARIABLE GLOBAL
         selector = document.getElementById('hCant'); 
-        let cantH= cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);//Valor cantidad de horas - VARIABLE GLOBAL
+        cantH= cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);//Valor cantidad de horas - VARIABLE GLOBAL
         selector = document.getElementById('cap'); 
-        let capacidad=selector.text;//Valor capacidad del aula
+        let capacidad=selector.value;//Valor capacidad del aula
         selector = document.getElementById('per');  
-        let per =selector.options[selector.selectedIndex].text;//Valor periodo academico - VARIABLE GLOBAL
-        //Tengo que hacer el get 
+        per =selector.options[selector.selectedIndex].text;//Valor periodo academico - VARIABLE GLOBAL
+        //Tengo que hacer el get
+        
         var misCabeceras = new Headers();
         if(localStorage.getItem("token")){ //si hay un token almacenado 
             let token = localStorage.getItem("token"); // traigo el token
@@ -139,14 +140,14 @@ async function buscarAulas(){
     }
 }
 
-function cargarListaAulas(aulas){
-    console.log(aulas); //bueno depende el JSON que me llegue  
+function cargarListaAulas(listaAulas){
+    console.log(listaAulas); //bueno depende el JSON que me llegue  
     codigoHTML = "";
-    for(i=0;i<aulas.length;i++){
-        aulasMap.set(i,aulas[i].id);//Entonces tengo cada aula de cada fila o boton seleccionado, tranquilamente con una lista se puede pero ya conozco los mapas xD 
+    for(i=0;i<listaAulas.length;i++){
+        aulasMap.set(i,listaAulas[i].id);//Entonces tengo cada aula de cada fila o boton seleccionado, tranquilamente con una lista se puede pero ya conozco los mapas xD 
         codigoHTML+="\n<tr id=>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].nombre+" - "+listaAulas[i].numero+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].edificio.nombre+"</td>";
         codigoHTML += "\n<td>" + listaAulas[i].capacidad + "</td>";
         codigoHTML += "\n<td>" + listaAulas[i].ubicacion +"</td>";
         codigoHTML += "\n<td><input type='radio' id='"+ i +"' name='aula' value=''></td>";
@@ -154,29 +155,66 @@ function cargarListaAulas(aulas){
     }
     document.getElementById('tbody').innerHTML = codigoHTML;
 }
+
+async function getMaterias(){
+    var misCabeceras = new Headers();
+    if(localStorage.getItem("token")){
+        let token = localStorage.getItem("token"); 
+        misCabeceras.append("token", token);
+    }
+    let responseJSON = await fetch('http://localhost:3000/buscarMateras/periodo/'+per,{ //URL de getFiltrosReserva
+        method: 'GET', // or 'PUT'
+        headers: misCabeceras, 
+      })
+      .then(function (response) { //Trae los filtros en el parametro "response"  
+        if(response.status == 404){ // Esto significa que la API no loggeo al usuario 
+            window.location.href = '/login'; //Entonces lo manda a iniciar sesion
+        }else if(response.status == 200){ 
+            return response.json(); //Retorno como JSON los datos de la API 
+        }else{
+            console.log(response.text());
+        }
+    }); 
+    cargarMaterias(responseJSON);
+}
+
+function cargarMaterias(materias){
+    console.log(materias);
+    let selector = document.getElementById('nombMateria');
+    for(i=0;i<materias.length;i++){
+       // facultades.set(filtros[i].nombre,filtros[i].carreras); //lleno el Mapa facultades GLOBAL // Esto es para crear un mapa pero no se que onda si para que lo uzo
+        let opcion = document.createElement('option'); //Creo el objeto opción del selector 
+        opcion.text = materias[i].nombre; //Le setteo el valor del nombre del edificio
+        selector.add(opcion); // 
+        let texttt = document.getElementById('codMateria');
+        texttt.value = materias[i].cod;
+    }
+}
 function controlCampos2(){
     //controlar los datos del chabon eso del codigo
 }
-function reservarAula(){
-    if(controlCampos2()){
+async function reservarAula(){
+    if(true){//controlCampos2()){
         var misCabeceras = new Headers();
         if(localStorage.getItem("token")){ //si hay un token almacenado 
             let token = localStorage.getItem("token"); // traigo el token
             misCabeceras.append("token", token); //lo agrego en el heather
         } 
-//        let aulaId ="";    
-//      NO SE PARA QUE SIRVE EL TEXTFIEL MATERIA: 
-        let codMat = document.getElementById('codMateria');
-        codMat = codMat.text;
+        //tengo que obtener EL AULA SELECCIONADA 
+        let aulaId = aulasMap.get(0); // cambiar a dinamico 
+        //NO SE PARA QUE SIRVE EL TEXTFIEL MATERIA: 
+        let codMater = document.getElementById('codMateria');
+        let codMat = codMater.value;
+        console.log(codMat);
         var data = {
             dia: day,
             horaInicio : horaI,
             cantHoras : cantH,
-           // idAula : aulaId, // TENGO QUE SELECCIONAR DEL AULASMAP EL ID SELECCIONADO PERO BUENO TODAVIA NO PUEDO 
+            idAula : aulaId, // TENGO QUE SELECCIONAR DEL AULASMAP EL ID SELECCIONADO PERO BUENO TODAVIA NO PUEDO 
             codMateria : codMat,
-           // idDocente : - no se de donde lo saco
             periodo : per  
         }; 
+        console.log(data);
       let responseJSON = await fetch('/insertReserva', {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!

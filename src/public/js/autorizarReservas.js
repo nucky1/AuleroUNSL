@@ -36,11 +36,11 @@ async function updateReservaAdmin(res,est){
         method: 'POST', 
         body: JSON.stringify(data),
         headers:{ // NO SE PA QUE SIRVE 
-          'token': token // NO SE PA QUE SIRVE  
+          'token': token, // NO SE PA QUE SIRVE  
+          'Content-Type': 'application/json;charset=utf-8' // Sin esto no envia el body
         }
       }).then(function (response) { //Trae los filtros en el parametro "response" 
-            
-            //location.reload();
+            location.reload();
         });
 
 }

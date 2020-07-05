@@ -1,7 +1,23 @@
 
-//getReservasDocente();
+getReservas();
 
-
+async function getReservas() {
+    let token;
+    if(localStorage.getItem("token")){
+        token = localStorage.getItem("token");
+        console.log(token); 
+    }
+    let responseJSON = await fetch('http://localhost:3000/reservaDocente',{
+        method: 'GET', // or 'PUT'
+        headers:{ // NO SE PA QUE SIRVE 
+          'token': token // NO SE PA QUE SIRVE  
+        }
+      })
+        .then(function (response) { //Trae los filtros en el parametro "response" 
+            return response.json(); //Retorno como JSON los datos de la API
+        });
+        cargarTablaReservas(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+}
 
 
 

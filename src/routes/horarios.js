@@ -7,7 +7,7 @@ const excel = require('excel4node');
 
 // DEVUELVE LA PAGINA HORARIO PERSONALIZADO
 router.get("/horarioPersonalizado", (req, res) => {
-    res.render("horarioPersonalizado.html");
+    res.render("horariosPersonalizado.html");
 });
 
 function buildDaysAndHours(workbook,worksheet) {

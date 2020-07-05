@@ -139,7 +139,7 @@
 
                                             <div class="botones-step text-right">
                                                 <button class="btn btn-line ml-auto js-btn-prev" type="button" title="Prev" id="vovler2">Volver</button>
-                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next">Siguiente</button>
+                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next" onclick="getMaterias()">Siguiente</button>
                                             </div>
                                         </div>
                                     </div>
@@ -157,8 +157,8 @@
 
                                                 <!-- Columna derecha con los campos -->
                                                 <div class="col-xs-7 ">
-                                                    <input class="form-control campo-stretch" type="text" id="nombMateria">
-                                                    <input class="form-control campo-stretch" type="text" id="codMateria">
+                                                    <select class="form-control campo-stretch" id="nombMateria"></select>
+                                                    <input class="form-control campo-stretch" type="text" id="codMateria" disabled>
 
                                                 </div>
 

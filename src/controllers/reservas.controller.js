@@ -15,11 +15,11 @@ module.exports = {
     //router.get("/allReservas", reservasController.allReservas);
     allReservas : async (req, res) => {
         const reservas = await db.Reserva.findAll({
-            where: { state: "ACTIVO" },
+            where: { state: "ACTIVO", estado : "PENDIENTE" },
             include: [
             {
                 model: db.Aulas.Aula,
-                where: { state: "ACTIVO" },
+                where: { state: "ACTIVO"},
                 attributes: ["id","nombre","numero","ubicacion"],
             },
             {
@@ -78,12 +78,12 @@ module.exports = {
     //busca que las aulas disponibles segun:
     //edificio, dia, between(hora inicio, hora inicia+cantHoras)
     //capAula > capacidad, periodo.
-    //router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaIn/:horaIn/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", reservasController.buscarAulaReserva);
+    //router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaIn/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", reservasController.buscarAulaReserva);
     buscarAulaReserva : async (req, res) => {
         const edificio = req.params.edificio;
         const dia = req.params.dia;
         const capacidad = req.params.capacidad;
-        const horaIn = req.params.horaIn;
+        const horaIn = req.params.horaInicio;
         const cantHoras = req.params.cantHoras;
         const periodo = req.params.periodo;
         whereReserva = [{ state: "ACTIVO" }];
@@ -94,8 +94,9 @@ module.exports = {
         whereAula = [{ state: "ACTIVO" }];
         whereAula.push({ capacidad: { [db.seq.Op.gte]: capacidad } });
         if(dia != "todos")  whereReserva.push({dia : dia});
-        whereReserva.push({horaInicio : { [db.seq.Op.not]: {[Op.notBetween]: [parseInt(horaIn), parseInt(horaIn)+(parseInt(cantHoras)*100)]} } });
-        whereReserva.push({horaFin : { [db.seq.Op.not]: {[Op.notBetween]: [parseInt(horaIn), parseInt(horaIn)+(parseInt(cantHoras)*100)]} } });
+        console.log( parseInt(horaIn)+(parseInt(cantHoras)));
+        whereReserva.push({horaInicio :  {[db.seq.Op.notBetween]: [parseInt(horaIn), parseInt(horaIn)+(parseInt(cantHoras))]} });
+        whereReserva.push({horaFin :  {[db.seq.Op.notBetween]: [parseInt(horaIn), parseInt(horaIn)+(parseInt(cantHoras))]} });
 
         const aulas = await db.Aulas.Aula.findAll({
             where : {[db.seq.Op.and]: whereAula},
@@ -120,23 +121,37 @@ module.exports = {
         });
         res.send(aulas); 
     },
-    //insert reserva
+
+    buscarMateria : async (req, res) => {
+        const periodo = req.params.periodo;
+        const idDoc = req.params.idDoc;
+        db.Materia.findAll({
+            where : {periodo : periodo}
+        }).then(function(materias) {
+            console.log("se recuperaron las materias"+materias);
+            res.send(materias);
+           }, function(reason) {
+            console.log("NO se recuperaron las materias"+reason);
+            res.sendStatus(400);
+        })
+    
+    },
     //router.post("/insertReserva", reservasController.insertReserva);
     /*"/reservaAula//dia/:dia/horaInicio/:horaInicio/cantHoras/:cantHoras/idAula/:idAula/codMateria/:codMateria/idDocente/:idDocente"*/
     insertReserva : async (req, res) => {
-        const horaInicio = req.params.horaInicio;
+        const horaInicio = req.body.horaInicio;
         db.Reserva.create({
-            dia : req.params.dia,
+            dia : req.body.dia,
             horaInicio : parseInt(horaInicio),
-            horaFin : parseInt(horaInicio) + (parseInt(req.params.cantHoras)*100),
-            docenteId: idDocente,
-            aulaId: req.params.idAula,
+            horaFin : parseInt(horaInicio) + (parseInt(req.body.cantHoras)*100),
+            docenteId: req.body.idDocente,
+            aulaId: req.body.idAula,
             estado: 'PENDIENTE',
         }).then(function(reserva) {
             console.log("inserto reserva"+reserva);
             db.ReservaMateria.create({
                 reservaId : reserva.id,
-                materiumId : req.params.codMateria
+                materiumId : req.body.codMateria
             }).then(function(reservaMatera) {
                 console.log("termino la reserva materia"+reservaMatera);
                 res.sendStatus(201);
@@ -169,8 +184,8 @@ module.exports = {
         const id = req.body.id;
         const idReserva = req.body.idReserva;
         const estado = req.body.estado;
-        console.log("body en update reserva " +req.body);
-        console.log("id admin "+ id);
+        console.log("body en update reserva " +req.body.idReserva);
+        console.log("id admin  "+ id);
         try{
         const reserva = await db.Reserva.update(
             {
