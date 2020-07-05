@@ -7,8 +7,9 @@ var cantH;
 var codMat;
 var idDoc;
 var per;
-cargarDatosEstaticos(); 
 getFiltroReservarAula();
+cargarDatosEstaticos(); 
+
 
 
 async function getFiltroReservarAula() {
@@ -36,7 +37,6 @@ async function getFiltroReservarAula() {
 function cargarDatosFiltros(edificios){ // asumo que recibo un arreglo de nombres de edificios
     let selector = document.getElementById('edif'); 
     for(i=0;i<edificios.length;i++){
-       // facultades.set(filtros[i].nombre,filtros[i].carreras); //lleno el Mapa facultades GLOBAL // Esto es para crear un mapa pero no se que onda si para que lo uzo
         let opcion = document.createElement('option'); //Creo el objeto opción del selector 
         opcion.text = edificios[i].nombre; //Le setteo el valor del nombre del edificio
         selector.add(opcion); // 
@@ -100,6 +100,7 @@ function controlCampos(){
 }
 async function buscarAulas(){
     if(controlCampos()){
+        //GETTEO LOS VALORES DE LAS AULAS A BUSCAR
         let selector = document.getElementById('edif');  
         let edificio=selector.options[selector.selectedIndex].text; //Valor edificio
         selector = document.getElementById('dias'); 
@@ -112,9 +113,8 @@ async function buscarAulas(){
         let capacidad=selector.value;//Valor capacidad del aula
         selector = document.getElementById('per');  
         per =selector.options[selector.selectedIndex].text;//Valor periodo academico - VARIABLE GLOBAL
-        //Tengo que hacer el get
-        
-        var misCabeceras = new Headers();
+        //FIN GETTEO - EMPIEZA COMUNICACION API
+        var misCabeceras = new Headers();         
         if(localStorage.getItem("token")){ //si hay un token almacenado 
             let token = localStorage.getItem("token"); // traigo el token
             misCabeceras.append("token", token); //lo agrego en el heather
@@ -130,7 +130,6 @@ async function buscarAulas(){
               return response.json(); 
           }
       })
-        //Tengo que cargar el html con las aulas del json que me llega responseJSON
         //Fin get
         cargarListaAulas(responseJSON);
     }else{
@@ -150,7 +149,7 @@ function cargarListaAulas(listaAulas){
         codigoHTML+= "\n<td>"+listaAulas[i].edificio.nombre+"</td>";
         codigoHTML += "\n<td>" + listaAulas[i].capacidad + "</td>";
         codigoHTML += "\n<td>" + listaAulas[i].ubicacion +"</td>";
-        codigoHTML += "\n<td><input type='radio' id='"+ i +"' name='aula' value=''></td>";
+        codigoHTML += "\n<td><input type='radio' id='"+ i +"' name='aulaSel' value=''></td>";
         codigoHTML+= "\n</tr>";
     }
     document.getElementById('tbody').innerHTML = codigoHTML;
@@ -162,7 +161,7 @@ async function getMaterias(){
         let token = localStorage.getItem("token"); 
         misCabeceras.append("token", token);
     }
-    let responseJSON = await fetch('http://localhost:3000/buscarMateras/periodo/'+per,{ //URL de getFiltrosReserva
+    let responseJSON = await fetch('http://localhost:3000/buscarMateras/periodo/'+per,{ //URL de buscarMateras
         method: 'GET', // or 'PUT'
         headers: misCabeceras, 
       })
@@ -178,8 +177,7 @@ async function getMaterias(){
     cargarMaterias(responseJSON);
 }
 
-function cargarMaterias(materias){
-    console.log(materias);
+function cargarMaterias(materias){//Recupero materias
     let selector = document.getElementById('nombMateria');
     for(i=0;i<materias.length;i++){
        // facultades.set(filtros[i].nombre,filtros[i].carreras); //lleno el Mapa facultades GLOBAL // Esto es para crear un mapa pero no se que onda si para que lo uzo
@@ -191,26 +189,34 @@ function cargarMaterias(materias){
     }
 }
 function controlCampos2(){
-    //controlar los datos del chabon eso del codigo
+    let codMat = document.getElementById('codMateria');
+    return codMat.value != "";
+} 
+
+//TE OBTIENE EL ID DEL AULA SELECCIONADA EN LA TABLA DEL STEP 2. 
+function getAulaSeleccionada() { 
+    var rbutons = document.getElementsByName('aulaSel'); //Arreglo con todos los radio button que se llamen asi "name" no ID 
+    for(i=0; i<rbutons.length; i++) { 
+        if(rbutons[i].checked) 
+            return aulasMap.get(i);
+    } 
 }
 async function reservarAula(){
-    if(true){//controlCampos2()){
+    if(controlCampos2()){
         var misCabeceras = new Headers();
         if(localStorage.getItem("token")){ //si hay un token almacenado 
             let token = localStorage.getItem("token"); // traigo el token
             misCabeceras.append("token", token); //lo agrego en el heather
-        } 
-        //tengo que obtener EL AULA SELECCIONADA 
-        let aulaId = aulasMap.get(0); // cambiar a dinamico 
-        //NO SE PARA QUE SIRVE EL TEXTFIEL MATERIA: 
-        let codMater = document.getElementById('codMateria');
-        let codMat = codMater.value;
-        console.log(codMat);
-        var data = {
+            misCabeceras.append("Content-Type",'application/json;charset=utf-8');
+        }  
+        let aulaId = getAulaSeleccionada(); 
+        let codMat = document.getElementById('codMateria');
+        codMat = codMat.value;
+        var data = { //El body que envio 
             dia: day,
             horaInicio : horaI,
             cantHoras : cantH,
-            idAula : aulaId, // TENGO QUE SELECCIONAR DEL AULASMAP EL ID SELECCIONADO PERO BUENO TODAVIA NO PUEDO 
+            idAula : aulaId,  
             codMateria : codMat,
             periodo : per  
         }; 
@@ -224,15 +230,17 @@ async function reservarAula(){
               
           }).catch(function(reason) {
             console.log(reason);
-            setError(1);
+            //setError(1);
          });
-         
-         
+         console.log(responseJSON);
+         console.log("Deberiamos mostrarle un cartel, la reserva se ha dado correctamente");
          //Hacer algo con la respuesta 
+        // window.location.href = '/listadoReservas';
 
 
     }else{
         //Retar al chabon
+        console.log("Deberiamos mostrarle un cartel, la reserva se ha dado INcorrectamente");
     }
 }
 
