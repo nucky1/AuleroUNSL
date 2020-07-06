@@ -167,17 +167,31 @@ module.exports = {
 
     eliminarReservadocente: async (req, res) => {
         id = req.params.id;
-        db.Reserva.destroy({
-            where: {
-                id:id
+        try{
+        const x = await db.ReservaMateria.destroy({
+            where:{
+                reservaId:id
             }
-        }).then(function(reserva){
-            console.log("Reserva eliminada.");
-            res.sendStatus(201);
-        }, function(reason){
-            console.log("NO se elimino la reserva."+reason);
+        }).then(async function (resMateria){
+            await db.Reserva.destroy({
+                where: {
+                    id:id
+                }
+            }).then(function(reserva){
+                console.log("Reserva eliminada.");
+                res.sendStatus(200);
+            }, function(reason){
+                console.log("NO se elimino la reserva."+reason);
+                res.sendStatus(404);
+            })
+        },function(reason){
+            console.log("Mal eliminar reserva "+reason);
             res.sendStatus(400);
-        })
+        });
+    }catch(err){
+        console.log("ERROR"+err);
+        res.sendStatus(400);
+    }
     },
 
     updateReservaAdmin: async (req, res) =>{

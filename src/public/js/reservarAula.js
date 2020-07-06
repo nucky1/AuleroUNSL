@@ -1,6 +1,7 @@
 horasDisponiblesMap = new Map(); 
 cantidadHorasReservasMap = new Map(); //Mapa de Carreras - cantAños - lo lleno en cargarCarreras
 aulasMap = new Map();
+materiasMap = new Map();
 var day;
 var horaI;
 var cantH;
@@ -183,13 +184,12 @@ async function getMaterias(){
 
 function cargarMaterias(materias){//Recupero materias
     let selector = document.getElementById('nombMateria');
+    selector.options.length = 0;
     for(i=0;i<materias.length;i++){
-       // facultades.set(filtros[i].nombre,filtros[i].carreras); //lleno el Mapa facultades GLOBAL // Esto es para crear un mapa pero no se que onda si para que lo uzo
         let opcion = document.createElement('option'); //Creo el objeto opción del selector 
         opcion.text = materias[i].nombre; //Le setteo el valor del nombre del edificio
         selector.add(opcion); // 
-        let texttt = document.getElementById('codMateria');
-        texttt.value = materias[i].cod;
+        materiasMap.set(materias[i].nombre,materias[i].cod);
     }
 }
 function controlCampos2(){
@@ -247,5 +247,12 @@ async function reservarAula(){
         //Retar al chabon
         console.log("Deberiamos mostrarle un cartel, la reserva se ha dado INcorrectamente");
     }
+}
+
+function setCodigo(){
+    let combo = document.getElementById('nombMateria');
+    combo = combo.options[combo.selectedIndex].text; 
+    let textoCod = document.getElementById('codMateria');
+    textoCod.value = materiasMap.get(combo);
 }
 

@@ -46,7 +46,7 @@ function cargarTablaReservas(reservas) {
     let endFilabeforeId = '</ul>' +
         '</div >' +
         '<div class="botones text-right">' +
-        '<button type="button" class="btn btn-line mb-2" onclick="location.href=\'eliminarReserva/id/';
+        '<button type="button" class="btn btn-line mb-2" onclick="location.href=';
     
     let endFila = '>Eliminar Reserva</button>'  +
         '</div>' +
@@ -61,13 +61,15 @@ function cargarTablaReservas(reservas) {
         //HORARIO
         let horaIn = reservas[index].horaInicio;
         let horaFin = reservas[index].horaFin;
-        infoReserva += '<td>' + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+'<td>';
-        infoReserva += '<td>' + reservas[index].materia.nombre + '</td>';
+        infoReserva += '<td>' + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+'</td>';
+        
+        infoReserva += '<td>' + reservas[index].materia[0].nombre + '</td>';
         infoReserva += '<td>' + reservas[index].estado + '</td>';
         let extrasAula = ''; 
         for (let ind in reservas[index].aula.extras) {
             extrasAula += beforeExtra + reservas[index].aula.extras[ind].extra + afterExtra;
         }
-        tabla.innerHTML += beforeInfoReserva + index + fincolapsar + infoReserva + afterInfoReserva + index + finColapsedos + extrasAula + endFilabeforeId + reservas[index].id + endFila;
+        console.log(reservas[index].id)
+        tabla.innerHTML += beforeInfoReserva + index + fincolapsar + infoReserva + afterInfoReserva + index + finColapsedos + extrasAula + endFilabeforeId + "cancelarReservaDocente("+reservas[index].id+")\"" + endFila;
     }
 }
