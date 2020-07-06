@@ -154,14 +154,14 @@ module.exports = {
                 materiumId : req.body.codMateria
             }).then(function(reservaMatera) {
                 console.log("termino la reserva materia"+reservaMatera);
-                res.sendStatus(201);
+                res.sendStatus(200);
                }, function(reason) {
                 console.log("NO inserto reservaMateria"+reason);
-                res.sendStatus(400);
+                res.sendStatus(404);
             })
            }, function(reason) {
             console.log("NO inserto reserva"+reason);
-            res.sendStatus(400);
+            res.sendStatus(404);
         })
     },
 

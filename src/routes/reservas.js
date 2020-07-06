@@ -33,7 +33,6 @@ router.get("/reservaDocente", eToken, (req, res) => {
       } else {
         //ESCRIBIR TODO ACA
         req.params.id = data.id;
-        console.log(data.id);
         reservasController.reservaDocente(req,res);
       }
     });
@@ -112,6 +111,7 @@ router.get("/reservaAula", (req, res) => {
         res.sendStatus(404);
       } else {
         req.body.idDocente = data.id;
+        console.log(req.body.idDocente);
         //ESCRIBIR TODO ACA
         reservasController.insertReserva(req,res);
       }

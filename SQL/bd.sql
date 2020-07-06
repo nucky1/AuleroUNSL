@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS reserva(
     "horaInicio" integer NOT NULL,
     "horaFin" integer NOT NULL,
     estado state,
+    periodo period,
     "aulaId" smallint REFERENCES aulas(id),
     "docenteId" smallint REFERENCES docente(id),
     state situation DEFAULT 'ACTIVO',
@@ -249,9 +250,9 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     ('Ingles','anual',1,6);
 
     INSERT INTO reserva(dia,"horaInicio","horaFin",estado,"aulaId","docenteId") VALUES
-    ('lunes',900,1100,'AUTORIZADA',2,2),
-    ('martes',1700,2000,'AUTORIZADA',1,1),
-    ('martes',1730,2030,'AUTORIZADA',3,1);
+    ('lunes',900,1100,'PENDIENTE',2,2),
+    ('martes',1700,2000,'PENDIENTE',1,1),
+    ('martes',1730,2030,'PENDIENTE',3,1);
 
     INSERT INTO reservaMateria("reservaId","materiumId") VALUES
     (1,3),
