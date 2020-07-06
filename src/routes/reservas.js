@@ -16,8 +16,9 @@ router.post("/cancelarReserva", eToken, (req,res) => {
     if (err) {
       res.sendStatus(404);
     } else {
+      console.log("arre");
       //ESCRIBIR TODO ACA
-      res.send(reservasController.eliminarReservadocente(req,res));
+      reservasController.eliminarReservadocente(req,res);
     }
   });
 });

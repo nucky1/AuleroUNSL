@@ -147,19 +147,18 @@ module.exports = {
                 attributes: ["id"]
             }]
         }).then(async function (reservas) {
-            console.log(reservas);
             ids = [];
             for(let reserva in reservas){
-                console.log(reserva);
-                ids.push(reserva.aula.id);
+                ids.push(reservas[reserva].aula.id);
             }
             await db.Aulas.Aula.findAll({
                 
                 where: {[db.seq.Op.and]: [
-                    { state: "ACTIVO" },{id:{[db.seq.Op.notIn] : ids}}]},
+                    { state: "ACTIVO" },{id:{[db.seq.Op.notIn] : ids}},{ capacidad: { [db.seq.Op.gte]: capacidad } }]},
                 include: [
                     {
-                        model: db.Edificio
+                        model: db.Edificio,
+                        where: whereEdif
                     }
                 ]
             }).then(function(aulas) {
@@ -219,7 +218,7 @@ module.exports = {
     },
 
     eliminarReservadocente: async (req, res) => {
-        id = req.params.id;
+        id = req.body.id;
         try{
         const x = await db.ReservaMateria.destroy({
             where:{
