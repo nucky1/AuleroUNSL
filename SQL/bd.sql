@@ -249,10 +249,10 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     ('Probabilidad y estadistica','primer cuatrimestre',2,5),
     ('Ingles','anual',1,6);
 
-    INSERT INTO reserva(dia,"horaInicio","horaFin",estado,"aulaId","docenteId") VALUES
-    ('lunes',900,1100,'PENDIENTE',2,2),
-    ('martes',1700,2000,'PENDIENTE',1,1),
-    ('martes',1730,2030,'PENDIENTE',3,1);
+    INSERT INTO reserva(dia,"horaInicio","horaFin",estado,periodo,"aulaId","docenteId") VALUES
+    ('lunes',900,1100,'PENDIENTE','primer cuatrimestre',2,2),
+    ('martes',1700,2000,'PENDIENTE','segundo cuatrimestre',1,1),
+    ('martes',1730,2030,'PENDIENTE','anual',3,1);
 
     INSERT INTO reservaMateria("reservaId","materiumId") VALUES
     (1,3),

@@ -121,19 +121,71 @@ module.exports = {
         });
         res.send(aulas); 
     },
-
+    //buscar aula disponible alternative
+    buscarAula2: async (req, res) => {
+        const edificio = req.params.edificio;
+        const dia = req.params.dia;
+        const capacidad = req.params.capacidad;
+        const horaIn = req.params.horaInicio;
+        const cantHoras = req.params.cantHoras;
+        const periodo = req.params.periodo;
+        whereReserva = [{ state: "ACTIVO" },{periodo : periodo}];
+        let whereEdif = { [db.seq.Op.and]: [
+                { state: "ACTIVO" },
+                {nombre : edificio}
+            ] };
+        let whereAula = [{ state: "ACTIVO" }];
+        if(dia != "todos")  
+            whereReserva.push({dia : dia});
+        wherehorario = [{horaInicio :  {[db.seq.Op.between]: [parseInt(horaIn), parseInt(horaIn)+(parseInt(cantHoras))]} }];
+        wherehorario.push({horaFin :  {[db.seq.Op.between]: [parseInt(horaIn), parseInt(horaIn)+(parseInt(cantHoras))]} });
+        whereReserva.push({[db.seq.Op.or]: wherehorario});
+        await db.Reserva.findAll({
+            where : {[db.seq.Op.and]: whereReserva},
+            include: [{
+                model : db.Aulas.Aula,
+                attributes: ["id"]
+            }]
+        }).then(async function (reservas) {
+            console.log(reservas);
+            ids = [];
+            for(let reserva in reservas){
+                console.log(reserva);
+                ids.push(reserva.aula.id);
+            }
+            await db.Aulas.Aula.findAll({
+                
+                where: {[db.seq.Op.and]: [
+                    { state: "ACTIVO" },{id:{[db.seq.Op.notIn] : ids}}]},
+                include: [
+                    {
+                        model: db.Edificio
+                    }
+                ]
+            }).then(function(aulas) {
+                console.log("se recuperaron las aulas"+aulas);
+                res.send(aulas);
+               }, function(reason) {
+                console.log("NO se recuperaron las aulas"+reason);
+                res.sendStatus(400);
+            })
+        },function (reason) {
+            console.log("Error en buscar reserva: "+reason);
+        });
+    },
     buscarMateria : async (req, res) => {
         const periodo = req.params.periodo;
         const idDoc = req.params.idDoc;
         db.Materia.findAll({
-            where : {periodo : periodo}
+            where : {[db.seq.Op.and]: [
+                { state: "ACTIVO" },{periodo : periodo}]}
         }).then(function(materias) {
             console.log("se recuperaron las materias"+materias);
             res.send(materias);
            }, function(reason) {
             console.log("NO se recuperaron las materias"+reason);
             res.sendStatus(400);
-        })
+        });
     
     },
     //router.post("/insertReserva", reservasController.insertReserva);
@@ -147,6 +199,7 @@ module.exports = {
             docenteId: req.body.idDocente,
             aulaId: req.body.idAula,
             estado: 'PENDIENTE',
+            periodo: req.body.periodo
         }).then(function(reserva) {
             console.log("inserto reserva"+reserva);
             db.ReservaMateria.create({

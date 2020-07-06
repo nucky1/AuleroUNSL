@@ -11,13 +11,13 @@ const reservasController = require("../controllers/reservas.controller")
 router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
 
-router.get("/cancelarReserva/id/:id", eToken, (req,res) => {
+router.post("/cancelarReserva", eToken, (req,res) => {
   jwt.verify(req.token, keyDocente, (err, data) => {
     if (err) {
       res.sendStatus(404);
     } else {
       //ESCRIBIR TODO ACA
-      reservasController.eliminarReservadocente(req,res);
+      res.send(reservasController.eliminarReservadocente(req,res));
     }
   });
 });
@@ -99,7 +99,7 @@ router.get("/reservaAula", (req, res) => {
         res.sendStatus(404);
       } else {
         //ESCRIBIR TODO ACA
-        return reservasController.buscarAulaReserva(req,res); 
+        return reservasController.buscarAula2(req,res); 
       }
     });
   });
@@ -111,7 +111,6 @@ router.get("/reservaAula", (req, res) => {
         res.sendStatus(404);
       } else {
         req.body.idDocente = data.id;
-        console.log(req.body.idDocente);
         //ESCRIBIR TODO ACA
         reservasController.insertReserva(req,res);
       }

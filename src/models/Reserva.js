@@ -20,6 +20,9 @@ const Reserva = sequelize.define(
         horaFin: {
             type: Sequelize.INTEGER,
         },
+        periodo: {
+            type: Sequelize.ENUM(['primer cuatrimestre', 'segundo cuatrimestre', 'anual']),
+        },
         estado: {
             type: Sequelize.ENUM(['AUTORIZADA', 'PENDIENTE', 'FINALIZADA', 'RECHAZADA'])
         },
