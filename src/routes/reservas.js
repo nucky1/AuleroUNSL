@@ -11,13 +11,13 @@ const reservasController = require("../controllers/reservas.controller")
 router.use(morgan("tiny")); // muestra por consola.
 router.use(express.json()); // convierte datos a json.
 
-router.post("/cancelarReserva", eToken, (req,res) => {
+router.get("/cancelarReserva/id/:id", eToken, (req,res) => {
   jwt.verify(req.token, keyDocente, (err, data) => {
     if (err) {
       res.sendStatus(404);
     } else {
       //ESCRIBIR TODO ACA
-      res.send(reservasController.eliminarReservadocente(req,res));
+      reservasController.eliminarReservadocente(req,res);
     }
   });
 });
