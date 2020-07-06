@@ -46,7 +46,7 @@ function cargarTablaReservas(reservas) {
     let endFilabeforeId = '</ul>' +
         '</div >' +
         '<div class="botones text-right">' +
-        '<button type="button" class="btn btn-line mb-2" onclick="location.href=';
+        '<button type="button" class="btn btn-line mb-2" onclick="';
     
     let endFila = '>Eliminar Reserva</button>'  +
         '</div>' +
@@ -73,3 +73,32 @@ function cargarTablaReservas(reservas) {
         tabla.innerHTML += beforeInfoReserva + index + fincolapsar + infoReserva + afterInfoReserva + index + finColapsedos + extrasAula + endFilabeforeId + "cancelarReservaDocente("+reservas[index].id+")\"" + endFila;
     }
 }
+
+//Eliminar reserva
+async function cancelarReservaDocente(id) {
+    let token;
+    if (localStorage.getItem("token")) {
+      token = localStorage.getItem("token");
+    }
+    data = {id: id};
+    const responseJSON = await fetch(
+      "http://localhost:3000/cancelarReserva",
+      {
+        method: "POST", // or 'PUT'
+        body:JSON.stringify(data),
+        headers: {
+          // NO SE PA QUE SIRVE
+          'token': token, // NO SE PA QUE SIRVE
+          'Content-Type': 'application/json;charset=utf-8' // Sin esto no envia el body
+        },
+      }
+    ).then(function (response) {
+      console.log(response)
+      return response;
+      //alert("Reserva Eliminada, por favor recargue la pagina.");
+    });
+    if(responseJSON.status != 404){
+      location.reload();
+    }
+  }
+  
