@@ -132,14 +132,10 @@ function limpiarCampos(){
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function mostrarHorario() {
   //  if (periodo == "anual") period = ' ('+periodo+')';
-<<<<<<< .merge_file_a01012
-    let listaNombMaterias = horarioSelected.keys();
-=======
   for (var [key, value] of horarioSelected) {
     alert(key + " = " + value);
   }
     let listaMaterias = horarioSelected.values();
->>>>>>> .merge_file_a12440
     codigoHTML="";
     for (var [nombMat, value] of horarioSelected) {
         console.log(nombMat + " = " + value.reservas[0].aula);
@@ -212,5 +208,4 @@ async function downloadHorarios(path){
         return response; //Retorno como JSON los datos de la API
     });
     alert("El archivo esta creado en la carpeta raiz del proyecto. con el conmbre: "+path);
-    //cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
