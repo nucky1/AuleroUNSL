@@ -92,7 +92,8 @@ function agregarMateria(){
     materia = horarios.get(materiaSelect);
     if(!horarioSelected.has(materia.nombre)){
         horarioSelected.set(materia.nombre,materia);
-        fila(materia)
+        fila(materia);
+        console.log(horarioSelected);
     }
 }
 
@@ -115,7 +116,7 @@ function fila(materia){
                         '<option>'+materia.nombre+'</option>'+
                         '</select>'+
 
-                        '<button class="btn btn-search" type="button" onclick="eliminarMateria('+materia.id+','+materia.nombre+')">'+
+                        '<button class="btn btn-search" type="button" onclick="eliminarMateria('+materia.id+',\''+materia.nombre+'\')">'+
                             '<span class="glyphicon glyphicon-minus"></span>'+
                         '</button>'+
                     '</span>'+
@@ -131,7 +132,14 @@ function limpiarCampos(){
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function mostrarHorario() {
   //  if (periodo == "anual") period = ' ('+periodo+')';
+<<<<<<< .merge_file_a01012
     let listaNombMaterias = horarioSelected.keys();
+=======
+  for (var [key, value] of horarioSelected) {
+    alert(key + " = " + value);
+  }
+    let listaMaterias = horarioSelected.values();
+>>>>>>> .merge_file_a12440
     codigoHTML="";
     for (var [nombMat, value] of horarioSelected) {
         console.log(nombMat + " = " + value.reservas[0].aula);
