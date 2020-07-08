@@ -34,3 +34,19 @@ function setError(i){
   span = document.getElementById("spanError");
   span.style.opacity = i;
 }
+//POP UP
+var btnAbrirPopup = document.getElementById('btn-abrir-popup'),
+	overlay = document.getElementById('overlay'),
+	popup = document.getElementById('popup'),
+	btnCerrarPopup = document.getElementById('btn-cerrar-popup');
+
+function abrir(){
+  console.log("abrir");
+  overlay.classList.add('active');
+  popup.classList.add('active');
+}
+function cerrar(){
+  console.log("cerrar");
+	overlay.classList.remove('active');
+	popup.classList.remove('active');
+}

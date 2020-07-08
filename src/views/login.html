@@ -48,14 +48,28 @@
                     <br>
                     <br>
                     <button type="button" class="btn btn-bold mb-2" onclick="iniciarSesion()">Iniciar sesión</button>
-
-                </form>
+                    <button  type="button" id="btn-abrir-popup" class="btn-abrir-popup" onclick="abrir()">Abrir Ventana Emergente</button>
+			    </form>
                 <span style="color: red; opacity: 0;" id = "spanError"> El usuario y/o contraseña son incorrectos. </span>
             </div>
         </div>
+        
 
-
-    </div>
+<!-- pop up chetisimo-->
+        <div class="overlay" id="overlay">
+			<div class="popup" id="popup">
+				<a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup" onclick="cerrar()"><i class="fas fa-times"></i></a>
+				<h3>SUSCRIBETE</h3>
+				<h4>y recibe un cupon de descuento.</h4>
+				<form action="">
+					<div class="contenedor-inputs">
+						<input type="text" placeholder="Nombre">
+						<input type="email" placeholder="Correo">
+					</div>
+					<input type="submit" class="btn-submit" value="Suscribirse">
+				</form>
+			</div>
+		</div>
 </main>
 <!-- TODO: Terminar Footer-->
 <footer class="footer">
