@@ -6,12 +6,12 @@ const crypto = require("crypto");
 const excel = require("excel4node");
 
 var diasMapa = {
-  Lunes: 2,
-  Martes: 3,
-  Miercoles: 4,
-  Jueves: 5,
-  Viernes: 6,
-  Sabado: 7,
+  lunes: 2,
+  martes: 3,
+  miercoles: 4,
+  jueves: 5,
+  viernes: 6,
+  sabado: 7,
 };
 
 var horasMapa = {
@@ -66,12 +66,12 @@ function buildDaysAndHours(workbook, worksheet) {
   });
 
   //cell(startRow, startColumn, [[endRow, endColumn], isMerged]);
-  worksheet.cell(1, diasMapa["Lunes"]).string("Lunes").style(style);
-  worksheet.cell(1, diasMapa["Martes"]).string("Martes").style(style);
-  worksheet.cell(1, diasMapa["Miercoles"]).string("Miercoles").style(style);
-  worksheet.cell(1, diasMapa["Jueves"]).string("Jueves").style(style);
-  worksheet.cell(1, diasMapa["Viernes"]).string("Viernes").style(style);
-  worksheet.cell(1, diasMapa["Sabado"]).string("Sábado").style(style);
+  worksheet.cell(1, diasMapa["lunes"]).string("Lunes").style(style);
+  worksheet.cell(1, diasMapa["martes"]).string("Martes").style(style);
+  worksheet.cell(1, diasMapa["miercoles"]).string("Miercoles").style(style);
+  worksheet.cell(1, diasMapa["jueves"]).string("Jueves").style(style);
+  worksheet.cell(1, diasMapa["viernes"]).string("Viernes").style(style);
+  worksheet.cell(1, diasMapa["sabado"]).string("Sábado").style(style);
 
   worksheet.cell(2, 1).string("07:00").style(style);
   worksheet.cell(3, 1).string("07:30").style(style);
@@ -136,8 +136,8 @@ function buildExcel(req, res) {
         }
 
          */
-
-  req.body.horario.forEach((materia) => {
+console.log(req.body);
+  req.body.forEach((materia) => {
     materia.horarios.forEach((horaDia) => {
       if (horaDia.diaSemana in semana) {
         semana.set(
@@ -174,13 +174,17 @@ function buildExcel(req, res) {
     });
   }
 
-  //workbook.write(nameFile, res); DESCOMENTAR ESTO CUANDO ESTÉ LA PARTE DEL FRONT
   workbook.write(nameFile);
-  res.sendStatus(200);
+  res.send(nameFile);
 }
 
 router.post("/horarioPersonalizado/download", (req, res) => {
   buildExcel(req, res);
 });
+
+router.get("/horarioPersonalizado/download/path/:path", (req, res) => {
+  console.log(req.params.path);
+  res.download("/"+req.params.path);
+})
 
 module.exports = router;

@@ -43,46 +43,51 @@ function cargarFiltros(filtros){
 function cargarMateriasFiltradas(materias){
     console.log(materias);
     for(i=0;i<materias.length;i++){
-        crearBloqueMateria(materias[i].periodo,materias[i].nombre,materias[i].reservas);
+        console.log(materias.length); 
+        crearBloqueMateria(materias[i].periodo,materias[i].nombre,materias[i].reservas); 
+        console.log("salio for " + i +" "+ materias.length);
     }
 } 
 //Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function crearBloqueMateria(periodo, nombre, listaAulas) {
-    let period = "";
-    if (periodo == "anual") period = ' ('+periodo+')';
-    codigoHTML = "<div class='panel panel-default bg3'>" ; //Cerrar este Div
-    codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
-    codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre+ period + "</h2>"; // Nombre Materia
-    codigoHTML+="\n </div>";
-    //Cuerpo con la tabla de horarios
-    codigoHTML+= "\n <div class='panel-body'>";
-    codigoHTML+= "\n<table class='table'>";
-    codigoHTML+= "\n<thead>"; 
-    codigoHTML+= "\n  <tr>";
-    codigoHTML+= "\n    <th>Aula</th>";
-    codigoHTML+= "\n    <th>Edificio</th>";
-    codigoHTML+= "\n    <th>Día</th>";
-    codigoHTML+= "\n    <th>Horario</th>";
-    codigoHTML+= "\n  </tr>";
-    codigoHTML+= "\n</thead>";
-    codigoHTML+= "\n <tbody>"
-    codigoHTML+= "\n<div class='collapse'></div>";
-    for(i=0;i<listaAulas.length;i++){
+    for(j=0;j<listaAulas.length;j++){
+        let period = "";
+        if (periodo == "anual") period = ' ('+periodo+')';
+        codigoHTML = "<div class='panel panel-default bg3'>" ; //Cerrar este Div
+        codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
+        codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre+ period + "</h2>"; // Nombre Materia
+        codigoHTML+="\n </div>";
+        //Cuerpo con la tabla de horarios
+        codigoHTML+= "\n <div class='panel-body'>";
+        codigoHTML+= "\n<table class='table'>";
+        codigoHTML+= "\n<thead>"; 
+        codigoHTML+= "\n  <tr>";
+        codigoHTML+= "\n    <th>Aula</th>";
+        codigoHTML+= "\n    <th>Edificio</th>";
+        codigoHTML+= "\n    <th>Día</th>";
+        codigoHTML+= "\n    <th>Horario</th>";
+        codigoHTML+= "\n  </tr>";
+        codigoHTML+= "\n</thead>";
+        codigoHTML+= "\n <tbody>"
+        codigoHTML+= "\n<div class='collapse'></div>";
+        console.log(listaAulas.length+"asd");
+        console.log("Entra 2do for ");
         codigoHTML+="\n<tr>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
-        codigoHTML += "\n<td>" + listaAulas[i].dia + "</td>";
-        let horaIn = listaAulas[i].horaInicio;
-        let horaFin = listaAulas[i].horaFin;
+        codigoHTML+= "\n<td>"+listaAulas[j].aula.nombre+" - "+listaAulas[j].aula.numero+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[j].aula.edificio.nombre+"</td>";
+        codigoHTML += "\n<td>" + listaAulas[j].dia + "</td>";
+        let horaIn = listaAulas[j].horaInicio;
+        let horaFin = listaAulas[j].horaFin;
         codigoHTML += "\n<td>" + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+"</td>";
         codigoHTML+= "\n</tr>";
+        codigoHTML+= "              </tbody>";
+        codigoHTML+= "\n        </table>";
+        codigoHTML+= "\n    </div>";       
+        codigoHTML+= "\n</div>";
     }
-    codigoHTML+= "              </tbody>";
-    codigoHTML+= "\n        </table>";
-    codigoHTML+= "\n    </div>";       
-    codigoHTML+= "\n</div>";
-    document.getElementById("ContenedorHorarios").innerHTML = codigoHTML;
+    
+    document.getElementById("ContenedorHorarios").innerHTML += codigoHTML;
 }
 //-------------------------- METODOS LLAMADOS DESDE EL FRONT ------------------------------------
 function cargarCarreras(){ 

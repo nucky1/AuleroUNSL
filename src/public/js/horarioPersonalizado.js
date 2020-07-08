@@ -50,6 +50,7 @@ function cargarAnios(){
         opcion.text = i+1; //Le setteo el valor del nombre de la carrera 
         selectorAnio.add(opcion); //Añado la opcion al selector fac
     }
+    pedirMaterias();
 }
 async function pedirMaterias(){
     //get facultad
@@ -130,14 +131,14 @@ function limpiarCampos(){
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function mostrarHorario() {
   //  if (periodo == "anual") period = ' ('+periodo+')';
-    let listaMaterias = horarioSelected.values();
+    let listaNombMaterias = horarioSelected.keys();
     codigoHTML="";
-    console.log(listaMaterias.length);
-    for(i=0;i<listaMaterias.length;i++){
+    for (var [nombMat, value] of horarioSelected) {
+        console.log(nombMat + " = " + value.reservas[0].aula);
         console.log("que onda");
         codigoHTML+= "<div class='panel panel-default bg3'>" ; //Cerrar este Div
         codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
-        codigoHTML+="\n   <h2 class='titulo-materia'>"+ listaMaterias[i].nombre+ "</h2>"; // Nombre Materia
+        codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombMat+ "</h2>"; // Nombre Materia
         codigoHTML+="\n </div>";
     // Cuerpo con la tabla de horarios
         codigoHTML+= "\n <div class='panel-body'>";
@@ -153,16 +154,55 @@ function mostrarHorario() {
         codigoHTML+= "\n<div class='collapse'></div>";  
     //Aca empezaba el for
         codigoHTML+="\n<tr>";
-        codigoHTML+= "\n<td>"+listaMaterias[i].reservas.aula.nombre+" - "+listaMaterias[i].reservas.aula.numero+"</td>";
-        codigoHTML += "\n<td>" + listaMaterias[i].reservas.dia + "</td>";
-        let horaIn = listaMaterias[i].reservas.horaInicio;
-        let horaFin = listaMaterias[i].reservas.horaFin;
-        codigoHTML += "\n<td>" + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+"</td>";
+        codigoHTML+= "\n<td>"+value.reservas[0].aula.nombre+" - "+value.reservas[0].aula.numero+"</td>";
+        codigoHTML += "\n<td>" + value.reservas[0].dia + "</td>";
+        let horaIn = value.reservas[0].horaInicio;
+        let horaFin = value.reservas[0].horaFin;
+        codigoHTML += "\n<td>" + Math.floor( horaIn / 100 )+ ':' + horaIn % 100 + " - " + Math.floor( horaFin / 100 )+ ':' + horaFin % 100+"</td>";
         codigoHTML+= "\n</tr>";
+        codigoHTML+= "              </tbody>";
+        codigoHTML+= "\n        </table>";
+        codigoHTML+= "\n    </div>";       
+        codigoHTML+= "\n</div>";
     }
-    codigoHTML+= "              </tbody>";
-    codigoHTML+= "\n        </table>";
-    codigoHTML+= "\n    </div>";       
-    codigoHTML+= "\n</div>";
     document.getElementById("ContenedorHorarios").innerHTML = codigoHTML;
+}
+
+async function descargarHorario(){
+    var horario = [];
+    for (var [nombMat, value] of horarioSelected) { // nombremateria, materia 
+        var objeto = {nombre: nombMat, horarios: []};
+        value.reservas.forEach(reserva => {
+            objeto.horarios.push({
+                diaSemana: reserva.dia,
+                horaInicio:Math.floor(reserva.horaInicio / 100)+":"+Math.floor(reserva.horaInicio % 100),
+                horaFin: Math.floor(reserva.horaFin / 100)+":"+Math.floor(reserva.horaFin % 100)
+            }) 
+        });
+        horario.push(objeto);
+    }
+    console.log(horario); // a hacer post
+    let responseJSON = await fetch('/horarioPersonalizado/download', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(horario), // data can be `string` or {object}!
+        headers:{ // NO SE PA QUE SIRVE 
+          'Content-Type': 'application/json;charset=utf-8' // NO SE PA QUE SIRVE pero sino no funca 
+        }
+      }).then(function(response) { 
+            return response.text(); //Retorno como JSON los datos de la API
+          
+      }).catch(function(reason) {
+        console.log(reason);
+        setError(1);
+     });
+     downloadHorarios(responseJSON);
+}
+
+async function downloadHorarios(path){
+    let responseJSON = await fetch('http://localhost:3000/horarioPersonalizado/download/path/'+path)
+    .then(function(response) { //Trae los filtros en el parametro "response" 
+        return response; //Retorno como JSON los datos de la API
+    });
+    alert("El archivo esta creado en la carpeta raiz del proyecto. con el conmbre: "+path);
+    //cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
