@@ -83,28 +83,48 @@ function cargarMateriasFiltradas(materia){
         selectorMateria.add(opcion); //Añado la opcion al selector de carreras
     }
 }
-function guardarHorario(){
+function agregarMateria(){
     //guardamos las materias
     let selector = document.getElementById('materia'); 
     let materiaSelect = selector.options[selector.selectedIndex].text; 
     materia = horarios.get(materiaSelect);
-    horarioSelected.set(materia.nombre,materia);
-
+    if(!horario.Selected.has(materia.nombre)){
+        horarioSelected.set(materia.nombre,materia);
+        fila(materia)
+    }
 }
+
+
+function eliminarMateria(id,nombre){
+    let div = document.getElementById(id);
+    let form = document.getElementById('materiasForm');
+    form.removeChild(div);
+    horarioSelected.delete(nombre);
+}
+function fila(materia){
+    let filaNueva = '<div class="entry" id = "'+materia.id+'">'+
+                        '<label class="etiqueta" for="anio">Año: </label>'+
+                        '<select class="form-control campo" id="anio" name="anios[]">'+
+                        '<option>'+materia.anio+'</option>'+
+                        '</select>'+
+
+                        '<label class="etiqueta" for="carr">Materia: </label>'+
+                        '<select class="form-control campo" name="materias[]">'+
+                        '<option>'+materia.nombre+'</option>'+
+                        '</select>'+
+
+                        '<button class="btn btn-search" type="button" onclick="eliminarMateria('+materia.id+','+materia.nombre+')">'+
+                            '<span class="glyphicon glyphicon-minus"></span>'+
+                        '</button>'+
+                    '</span>'+
+                    '</div>';
+    let form = document.getElementById('materiasForm');
+    form.innerHTML += filaNueva;
+}
+// mas cortito
 function limpiarCampos(){
 
 }
-function agregarMateria(){
-
-}
-function eliminarMateria(){
-
-}
-function fila(){
-    
-}
-// mas cortito
-
 //Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function mostrarHorario(periodo, nombre, listaAulas) {
