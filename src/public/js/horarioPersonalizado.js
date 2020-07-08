@@ -3,7 +3,7 @@ getFiltros();//Llama al getFiltros, esto se ejecuta cada vez que horarios carrer
 var facultades = new Map(); //Mapa de facultades - lo lleno en cargarFiltros
 var anios = new Map(); //Mapa de Carreras - cantAños - lo lleno en cargarCarreras
 var horarios = new Map();
-var horarioSelected = newMap(); // mapa con la materia
+var horarioSelected = new Map(); // mapa con la materia
 //---------------------- TODO LO QUE EMPIECE CON GET  =  PETICIONES A API------------------------
 async function getFiltros(){
     let responseJSON = await fetch('http://localhost:3000/getDatosFiltros')
@@ -12,7 +12,8 @@ async function getFiltros(){
     });
     cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-function cargarFiltros(filtros){ 
+function cargarFiltros(filtros){
+    console.log(filtros);
     let selector = document.getElementById('fac'); //Obtengo el objeto del comboBox o "Selector" del front
     for(i=0;i<filtros.length;i++){ 
         facultades.set(filtros[i].nombre,filtros[i].carreras); //lleno el Mapa facultades GLOBAL
@@ -71,7 +72,7 @@ async function pedirMaterias(){
     });
     cargarMateriasFiltradas(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-function cargarMateriasFiltradas(materia){
+function cargarMateriasFiltradas(materia){ 
     let boton = document.getElementById("agregar");
     boton.removeAttribute('disabled'); //habilito el boton para buscar
     let selectorMateria = document.getElementById('materia'); 
@@ -88,7 +89,7 @@ function agregarMateria(){
     let selector = document.getElementById('materia'); 
     let materiaSelect = selector.options[selector.selectedIndex].text; 
     materia = horarios.get(materiaSelect);
-    if(!horario.Selected.has(materia.nombre)){
+    if(!horarioSelected.has(materia.nombre)){
         horarioSelected.set(materia.nombre,materia);
         fila(materia)
     }
@@ -127,33 +128,35 @@ function limpiarCampos(){
 }
 //Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
-function mostrarHorario(periodo, nombre, listaAulas) {
-    let period = "";
-    if (periodo == "anual") period = ' ('+periodo+')';
-    codigoHTML = "<div class='panel panel-default bg3'>" ; //Cerrar este Div
-    codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
-    codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre+ period + "</h2>"; // Nombre Materia
-    codigoHTML+="\n </div>";
-    //Cuerpo con la tabla de horarios
-    codigoHTML+= "\n <div class='panel-body'>";
-    codigoHTML+= "\n<table class='table'>";
-    codigoHTML+= "\n<thead>"; 
-    codigoHTML+= "\n  <tr>";
-    codigoHTML+= "\n    <th>Aula</th>";
-    codigoHTML+= "\n    <th>Edificio</th>";
-    codigoHTML+= "\n    <th>Día</th>";
-    codigoHTML+= "\n    <th>Horario</th>";
-    codigoHTML+= "\n  </tr>";
-    codigoHTML+= "\n</thead>";
-    codigoHTML+= "\n <tbody>"
-    codigoHTML+= "\n<div class='collapse'></div>";
-    for(i=0;i<listaAulas.length;i++){
+function mostrarHorario() {
+  //  if (periodo == "anual") period = ' ('+periodo+')';
+    let listaMaterias = horarioSelected.values();
+    codigoHTML="";
+    console.log(listaMaterias.length);
+    for(i=0;i<listaMaterias.length;i++){
+        console.log("que onda");
+        codigoHTML+= "<div class='panel panel-default bg3'>" ; //Cerrar este Div
+        codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
+        codigoHTML+="\n   <h2 class='titulo-materia'>"+ listaMaterias[i].nombre+ "</h2>"; // Nombre Materia
+        codigoHTML+="\n </div>";
+    // Cuerpo con la tabla de horarios
+        codigoHTML+= "\n <div class='panel-body'>";
+        codigoHTML+= "\n<table class='table'>";
+        codigoHTML+= "\n<thead>"; 
+        codigoHTML+= "\n  <tr>";
+        codigoHTML+= "\n    <th>Aula</th>";
+        codigoHTML+= "\n    <th>Día</th>";
+        codigoHTML+= "\n    <th>Horario</th>";
+        codigoHTML+= "\n  </tr>";
+        codigoHTML+= "\n</thead>";
+        codigoHTML+= "\n <tbody>"
+        codigoHTML+= "\n<div class='collapse'></div>";  
+    //Aca empezaba el for
         codigoHTML+="\n<tr>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
-        codigoHTML += "\n<td>" + listaAulas[i].dia + "</td>";
-        let horaIn = listaAulas[i].horaInicio;
-        let horaFin = listaAulas[i].horaFin;
+        codigoHTML+= "\n<td>"+listaMaterias[i].reservas.aula.nombre+" - "+listaMaterias[i].reservas.aula.numero+"</td>";
+        codigoHTML += "\n<td>" + listaMaterias[i].reservas.dia + "</td>";
+        let horaIn = listaMaterias[i].reservas.horaInicio;
+        let horaFin = listaMaterias[i].reservas.horaFin;
         codigoHTML += "\n<td>" + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+"</td>";
         codigoHTML+= "\n</tr>";
     }
