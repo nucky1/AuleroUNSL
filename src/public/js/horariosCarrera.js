@@ -45,7 +45,7 @@ function cargarMateriasFiltradas(materias){
     for(i=0;i<materias.length;i++){
         crearBloqueMateria(materias[i].periodo,materias[i].nombre,materias[i].reservas);
     }
-}
+} 
 //Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function crearBloqueMateria(periodo, nombre, listaAulas) {
@@ -58,7 +58,7 @@ function crearBloqueMateria(periodo, nombre, listaAulas) {
     //Cuerpo con la tabla de horarios
     codigoHTML+= "\n <div class='panel-body'>";
     codigoHTML+= "\n<table class='table'>";
-    codigoHTML+= "\n<thead>";
+    codigoHTML+= "\n<thead>"; 
     codigoHTML+= "\n  <tr>";
     codigoHTML+= "\n    <th>Aula</th>";
     codigoHTML+= "\n    <th>Edificio</th>";

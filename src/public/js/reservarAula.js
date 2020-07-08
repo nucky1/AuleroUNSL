@@ -142,19 +142,69 @@ async function buscarAulas(){
 
 function cargarListaAulas(listaAulas){
     console.log(listaAulas); //bueno depende el JSON que me llegue  
-    codigoHTML = "";
-    for(i=0;i<listaAulas.length;i++){
-        aulasMap.set(i,listaAulas[i].id);//Entonces tengo cada aula de cada fila o boton seleccionado, tranquilamente con una lista se puede pero ya conozco los mapas xD 
-        codigoHTML+="\n<tr id=>";
-        codigoHTML+= "\n<td>"+listaAulas[i].nombre+" - "+listaAulas[i].numero+"</td>";
-        codigoHTML+= "\n<td>"+listaAulas[i].edificio.nombre+"</td>";
-        codigoHTML += "\n<td>" + listaAulas[i].capacidad + "</td>";
-        codigoHTML += "\n<td>" + listaAulas[i].ubicacion +"</td>";
-        codigoHTML += "\n<td><input type='radio' id='"+ i +"' name='aulaSel' value=''></td>";
-        codigoHTML+= "\n</tr>";
-    }
-    document.getElementById('tbody').innerHTML = codigoHTML;
+    codigoHTML = "<br><br>"
+        +"    <div class='conatiner'>"
+        +"      <table class='table'>"
+        +"      <thead>"
+        +"            <tr>"
+        +"                <th>Nombre</th>"
+        +"                <th>Edificio</th>"
+        +"                <th>Capacidad</th>"
+        +"                <th>Ubicación</th>"
+        +"                <th></th>"
+        +"            </tr>"
+        +"            </thead>"
+        +"            <tbody>";
+        for(i=0;i<listaAulas.length;i++){
+            aulasMap.set(i,listaAulas[i].id);//Entonces tengo cada aula de cada fila o boton seleccionado, tranquilamente con una lista se puede pero ya conozco los mapas xD 
+            codigoHTML+="\n<tr id=>";
+            codigoHTML+= "\n<td>"+listaAulas[i].nombre+" - "+listaAulas[i].numero+"</td>";
+            codigoHTML+= "\n<td>"+listaAulas[i].edificio.nombre+"</td>";
+            codigoHTML += "\n<td>" + listaAulas[i].capacidad + "</td>";
+            codigoHTML += "\n<td>" + listaAulas[i].ubicacion +"</td>";
+            codigoHTML += "\n<td><input type='radio' id='"+ i +"' name='aulaSel' value=''></td>";
+            codigoHTML+= "\n</tr>";
+        }
+                //Aca va el for
+        codigoHTML+="            </tbody>"
+        +"        </table>"
+        +"  <div class='botones-step text-right'>"
+        +"      <button class='btn btn-line ml-auto js-btn-prev' type='button' title='Prev' id='vovler2'>Volver</button>"
+        +"      <button class='btn btn-bold ml-auto js-btn-next' type='button' title='Next' onclick='getMaterias()'>Siguiente</button>"
+        +"  </div>"
+        +"</div>";
+    document.getElementById('panelSelecAula').innerHTML = codigoHTML;
 }
+
+
+/**
+ * <div class="multisteps-form__panel" data-animation="slideHorz">
+                                        <br><br>
+                                        <div class="conatiner">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Edificio</th>
+                                                    <th>Capacidad</th>
+                                                    <th>Ubicación</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody id='tbody'>
+                                               
+                                                </tbody>
+
+                                            </table>
+
+                                            <div class="botones-step text-right">
+                                                <button class="btn btn-line ml-auto js-btn-prev" type="button" title="Prev" id="vovler2">Volver</button>
+                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next" onclick="getMaterias()">Siguiente</button>
+                                            </div>
+                                        </div>
+                                    </div>
+ */
 
 async function getMaterias(){
     if(getAulaSeleccionada()>-1){
