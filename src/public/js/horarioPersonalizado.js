@@ -3,7 +3,7 @@ getFiltros();//Llama al getFiltros, esto se ejecuta cada vez que horarios carrer
 var facultades = new Map(); //Mapa de facultades - lo lleno en cargarFiltros
 var anios = new Map(); //Mapa de Carreras - cantAños - lo lleno en cargarCarreras
 var horarios = new Map();
-var horarioSelected = newMap(); // mapa con la materia
+var horarioSelected = new Map(); // mapa con la materia
 //---------------------- TODO LO QUE EMPIECE CON GET  =  PETICIONES A API------------------------
 async function getFiltros(){
     let responseJSON = await fetch('http://localhost:3000/getDatosFiltros')
@@ -88,7 +88,7 @@ function agregarMateria(){
     let selector = document.getElementById('materia'); 
     let materiaSelect = selector.options[selector.selectedIndex].text; 
     materia = horarios.get(materiaSelect);
-    if(!horario.Selected.has(materia.nombre)){
+    if(!horarioSelected.has(materia.nombre)){
         horarioSelected.set(materia.nombre,materia);
         fila(materia)
     }
@@ -113,7 +113,7 @@ function fila(materia){
                         '<option>'+materia.nombre+'</option>'+
                         '</select>'+
 
-                        '<button class="btn btn-search" type="button" onclick="eliminarMateria('+materia.id+','+materia.nombre+')">'+
+                        '<button class="btn btn-search" type="button" onclick="eliminarMateria('+materia.id+',"'+materia.nombre+'")">'+
                             '<span class="glyphicon glyphicon-minus"></span>'+
                         '</button>'+
                     '</span>'+
