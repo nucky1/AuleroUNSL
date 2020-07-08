@@ -176,36 +176,7 @@ function cargarListaAulas(listaAulas){
     document.getElementById('panelSelecAula').innerHTML = codigoHTML;
 }
 
-
-/**
- * <div class="multisteps-form__panel" data-animation="slideHorz">
-                                        <br><br>
-                                        <div class="conatiner">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Edificio</th>
-                                                    <th>Capacidad</th>
-                                                    <th>Ubicación</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-
-                                                <tbody id='tbody'>
-                                               
-                                                </tbody>
-
-                                            </table>
-
-                                            <div class="botones-step text-right">
-                                                <button class="btn btn-line ml-auto js-btn-prev" type="button" title="Prev" id="vovler2">Volver</button>
-                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next" onclick="getMaterias()">Siguiente</button>
-                                            </div>
-                                        </div>
-                                    </div>
- */
-
+ 
 async function getMaterias(){
     if(getAulaSeleccionada()>-1){
         var misCabeceras = new Headers();

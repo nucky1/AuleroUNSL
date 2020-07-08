@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/horarioPersonalizado.js"></script>
+    
 </head>
 <body>
 
@@ -49,7 +49,7 @@
 
 
             <label class="etiqueta" for="cuatri">Cuatrimestre</label>
-            <select class="form-control campo" id="cuatri">
+            <select class="form-control campo" id="cuatri" onclick="pedirMaterias()">
                 <option>1er</option>
                 <option>2do</option>
             </select>
@@ -62,7 +62,7 @@
             <h3 class="subtitulo-horario">Agregar materias </h3> <br>
         </div>
         <div class="col-xs-6 cont" style="justify-content: flex-end">
-            <button type="button" class="btn btn-line mb-2" onClick= "limpiarCampos()">Limpiar</button>
+            <button type="button" class="btn btn-line mb-2" onclick="limpiarCampos()">Limpiar</button>
         </div>
         <div class="col-xs-12">
             <div class="form-group form-inline">
@@ -70,14 +70,14 @@
                     <form role="form" autocomplete="off" id = "materiasForm" >
                         <div class="entry">
                             <label class="etiqueta" for="anio">Año: </label>
-                            <select class="form-control campo" id="anio" name="anios[]" onClick = "pedirMaterias()">
+                            <select class="form-control campo" id="anio" name="anios[]" onclick ="pedirMaterias()">
                             </select>
 
                             <label class="etiqueta" for="carr">Materia: </label>
                             <select class="form-control campo" name="materias[]" id = "materia" >
                             </select>
 
-                            <button class="btn btn-search" type="button" id = "agregar" onclick="agregarMateria()">
+                            <button class="btn btn-search" type="button" onclick="agregarMateria()" id="agregar">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </button>
                         </span>
@@ -117,5 +117,6 @@
 
     </div>
 </footer>
+<script src="js/horarioPersonalizado.js"></script>
 </body>
 </html>

@@ -36,7 +36,7 @@ function cargarTablaReservas(reservas) {
     let afterInfoReserva = '</tr>' +
         '</div >' +
         '<tr>' +
-        '<td colspan = "4" style = "padding: 0; border-top-style: none;">' +
+        '<td colspan = "5" style = "padding: 0; border-top-style: none;">' +
         '<div id="collapse';
     let finColapsedos = '" class="collapse">' +
         '<div class="expansible">' +
@@ -46,7 +46,7 @@ function cargarTablaReservas(reservas) {
     let endFilabeforeId = '</ul>' +
         '</div >' +
         '<div class="botones text-right">' +
-        '<button type="button" class="btn btn-line mb-2" onclick="';
+        '<button type="button" class="btn btn-line mb-2" data-toggle="modal" data-target="#flipFlop" onclick="';
     
     let endFila = '>Eliminar Reserva</button>'  +
         '</div>' +
