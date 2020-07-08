@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/listadoReservas.js">getReservasDocente();</script>
+    <!-- <script src="js/listadoReservas.js">getReservasDocente();</script> -->
 </head>
 <body>
 <!-- Barra de Navegación -->
@@ -75,7 +75,7 @@
                         </div>
                         <div class="botones text-right">
 
-                            <button type="button" class="btn btn-line mb-2">Comentar aula</button>
+                            <button type="button" class="btn btn-line mb-2" data-toggle="modal" data-target="#comentarAula">Comentar aula</button>
                             <button type="button" class="btn btn-line mb-2" disabled>Cancelar reserva</button>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="botones text-right">
 
-                            <button type="button" class="btn btn-line mb-2" disabled>Cancelar reserva</button>
+                            <button type="button" class="btn btn-line mb-2" data-toggle="modal" data-target="#cancelarReserva">Cancelar reserva</button>
                         </div>
                     </div>
                 </td>
@@ -141,6 +141,68 @@
 
         </table>
 
+        <!-- PopUp de cancelar reserva -->
+        <div class="modal fade" id="cancelarReserva" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabel1">Eliminar reserva</h4>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro de que quiere eliminar la reserva?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" >Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PopUp de Autorizar reserva -->
+        <div class="modal fade" id="autorizarReserva" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabel2">Autorizar reserva</h4>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro de que quiere autorizar la reserva?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" >Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PopUp de comentar aula -->
+        <div class="modal fade" id="comentarAula" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalLabel3">Comentar aula</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group">
+                            <textarea class="form-control" placeholder="Ingrese su comentario..."></textarea>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" >Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
