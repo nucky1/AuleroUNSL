@@ -3,7 +3,7 @@ getFiltros();//Llama al getFiltros, esto se ejecuta cada vez que horarios carrer
 var facultades = new Map(); //Mapa de facultades - lo lleno en cargarFiltros
 var anios = new Map(); //Mapa de Carreras - cantAños - lo lleno en cargarCarreras
 var horarios = new Map();
-var horarioSelected = newMap();
+var horarioSelected = newMap(); // mapa con la materia
 //---------------------- TODO LO QUE EMPIECE CON GET  =  PETICIONES A API------------------------
 async function getFiltros(){
     let responseJSON = await fetch('http://localhost:3000/getDatosFiltros')
@@ -94,72 +94,52 @@ function guardarHorario(){
 function limpiarCampos(){
 
 }
-// mas cortito
-function llenarTabla(materias) {
-    let container = document.getElementById('contenedorTabla');
-    container.style.opacity = 1;
-    let tabla = document.getElementById('tablaHorarios');
-    let thead = ['horario','lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+function agregarMateria(){
 
-    //Eliminamos las filas:
-    for (let index = tabla.rows.length-1; index > 0 ; index--) {
-        tabla.deleteRow(index);        
-    }
-    //creamos un mapa con las reservas (clave dia, valores materias que reservan con su respectiva hora inicio y fin)
-    let mapaReserva = new Map();
-    materias.forEach(materia =>{
-        let nombre = materia.nobre; 
-        materia.reservas.forEach(index => {
-            if (mapaReserva.has(index.dia)) {
-                let value = {
-                    inicio: index.horaInicio,
-                    fin: index.horaFin,
-                    materia: nombre,
-                    aula : index.aula.nombre + " "+ index.aula.numero
-                }
-                let valores = mapaReserva.get(index.dia);
-                valores.push(value);
-                mapaReserva.set(index.dia, valores);
-            } else {
-                let value = {
-                    inicio: index.horaInicio,
-                    fin: index.horaFin,
-                    materia: nombre,
-                    aula : index.aula.nombre + " "+ index.aula.numero
-                }
-                mapaReserva.set(index.dia, [value]);
-            }
-        })
-    });
-    const horariosConst = ["8:00",'8:30','9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30'];
+}
+function eliminarMateria(){
+
+}
+function fila(){
     
+}
+// mas cortito
 
-    for (let indexFila = 0; indexFila < horariosConst.length; indexFila++) {
-        fila = tabla.insertRow(-1);
-        let celda = fila.insertCell(0);
-        var temp = horariosConst[indexFila];
-        celda.appendChild(document.createTextNode(temp));
-        const horaSplit = temp.split(':');
-        var hora = parseInt(horaSplit[0]+horaSplit[1]);
-
-        for (let columna = 1; columna < thead.length; columna++) {
-                    
-            celda = fila.insertCell(columna);
-            if (mapaReserva.has(thead[columna])) {
-                valores = mapaReserva.get(thead[columna].toLowerCase());
-                for (let i = 0; i < valores.length; i++) {
-                    if (valores[i].inicio <= hora && valores[i].fin >= hora) {
-                        celda.appendChild(document.createTextNode(valores[i].materia));
-                    } else {
-                        celda.appendChild(document.createTextNode('-'));
-                    }                    
-                }
-            } else {
-                celda.appendChild(document.createTextNode('-'));
-            }
-            
-        }
+//Esta es la funcion llenar tabla, basicamente "averigue y pregunte, solamente se puede generar de esta forma el HTML"
+//En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
+function mostrarHorario(periodo, nombre, listaAulas) {
+    let period = "";
+    if (periodo == "anual") period = ' ('+periodo+')';
+    codigoHTML = "<div class='panel panel-default bg3'>" ; //Cerrar este Div
+    codigoHTML+="\n <div class='panel-heading bg3'>";// Encabezado con el nombre de la materia
+    codigoHTML+="\n   <h2 class='titulo-materia'>"+ nombre+ period + "</h2>"; // Nombre Materia
+    codigoHTML+="\n </div>";
+    //Cuerpo con la tabla de horarios
+    codigoHTML+= "\n <div class='panel-body'>";
+    codigoHTML+= "\n<table class='table'>";
+    codigoHTML+= "\n<thead>"; 
+    codigoHTML+= "\n  <tr>";
+    codigoHTML+= "\n    <th>Aula</th>";
+    codigoHTML+= "\n    <th>Edificio</th>";
+    codigoHTML+= "\n    <th>Día</th>";
+    codigoHTML+= "\n    <th>Horario</th>";
+    codigoHTML+= "\n  </tr>";
+    codigoHTML+= "\n</thead>";
+    codigoHTML+= "\n <tbody>"
+    codigoHTML+= "\n<div class='collapse'></div>";
+    for(i=0;i<listaAulas.length;i++){
+        codigoHTML+="\n<tr>";
+        codigoHTML+= "\n<td>"+listaAulas[i].aula.nombre+" - "+listaAulas[i].aula.numero+"</td>";
+        codigoHTML+= "\n<td>"+listaAulas[i].aula.edificio.nombre+"</td>";
+        codigoHTML += "\n<td>" + listaAulas[i].dia + "</td>";
+        let horaIn = listaAulas[i].horaInicio;
+        let horaFin = listaAulas[i].horaFin;
+        codigoHTML += "\n<td>" + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+"</td>";
+        codigoHTML+= "\n</tr>";
     }
-
-
+    codigoHTML+= "              </tbody>";
+    codigoHTML+= "\n        </table>";
+    codigoHTML+= "\n    </div>";       
+    codigoHTML+= "\n</div>";
+    document.getElementById("ContenedorHorarios").innerHTML = codigoHTML;
 }
