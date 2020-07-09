@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const morgan = require("morgan");
-const path = require("path");
 const crypto = require("crypto");
 const excel = require("excel4node");
 
@@ -117,26 +115,6 @@ function buildExcel(req, res) {
   buildDaysAndHours(workbook, worksheet);
   var semana = new Map();
 
-  //  (2,2) es la celda inicial
-  /*
-        FORMA DEL RES.BODY:
-        {
-            "horario":[
-                    {
-                        "nombre": "Nombre de la materia.",
-                        "horarios": [
-                            {
-                                "diaSemana": "Lunes",
-                                "horaInicio": "09:00",
-                                "horaFin": "10:00"
-                            }
-                        ]
-                    }
-                ]
-        }
-
-         */
-console.log(req.body);
   req.body.forEach((materia) => {
     materia.horarios.forEach((horaDia) => {
       if (horaDia.diaSemana in semana) {
@@ -159,7 +137,7 @@ console.log(req.body);
       }
     });
   });
-  
+
   for (var dia in semana) {
     semana[dia].forEach((materia) => {
       worksheet
@@ -170,21 +148,36 @@ console.log(req.body);
           diasMapa[dia], // COLUMNA
           true // MERGE
         )
-        .string(materia.nombre);
+        .string(materia.nombre)
+        .style({
+          alignment: {
+            horizontal: "center",
+            vertical: "center",
+            wrapText: true,
+          },
+          border: {
+            left: {
+              style: 'medium',
+            },
+            right: {
+              style: 'medium',
+            },
+            top: {
+              style: 'medium',
+            },
+            bottom: {
+              style: 'medium',
+            },
+          },
+        });
     });
   }
 
-  workbook.write(nameFile);
-  res.send(nameFile);
+  workbook.write(nameFile, res);
 }
 
 router.post("/horarioPersonalizado/download", (req, res) => {
   buildExcel(req, res);
 });
-
-router.get("/horarioPersonalizado/download/path/:path", (req, res) => {
-  console.log(req.params.path);
-  res.download("/"+req.params.path);
-})
 
 module.exports = router;
