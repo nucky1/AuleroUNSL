@@ -139,8 +139,9 @@ module.exports = {
     const edificio = req.params.edificio;
     const dia = req.params.dia;
     const capacidad = req.params.capacidad;
-    const horaIn = req.params.horaInicio;
-    const cantHoras = req.params.cantHoras;
+    const horaIn = parseInt(req.params.horaInicio,10);
+    const cantHoras = parseInt(req.params.cantHoras,10);
+    const horaFin = horaIn + cantHoras;
     const periodo = req.params.periodo;
     whereReserva = [{ state: "ACTIVO" }, { periodo: periodo }];
     let whereEdif = {
@@ -152,8 +153,8 @@ module.exports = {
       {
         horaInicio: {
           [db.seq.Op.between]: [
-            parseInt(horaIn),
-            parseInt(horaIn) + parseInt(cantHoras),
+            horaIn,
+            horaFin,
           ],
         },
       },
@@ -161,8 +162,8 @@ module.exports = {
     wherehorario.push({
       horaFin: {
         [db.seq.Op.between]: [
-          parseInt(horaIn),
-          parseInt(horaIn) + parseInt(cantHoras),
+          horaIn,
+          horaFin,
         ],
       },
     });
@@ -234,7 +235,7 @@ module.exports = {
     db.Reserva.create({
       dia: req.body.dia,
       horaInicio: parseInt(horaInicio),
-      horaFin: parseInt(horaInicio) + parseInt(req.body.cantHoras) * 100,
+      horaFin: parseInt(horaInicio) + parseInt(req.body.cantHoras),
       docenteId: req.body.idDocente,
       aulaId: req.body.idAula,
       estado: "PENDIENTE",

@@ -147,9 +147,9 @@ function limpiarCampos() {}
 //En los frameworks como ANGULAR Y REACT,ETC creo que hay alternativas pero bueno, estamos como estamos - igual anda joya
 function mostrarHorario() {
   //  if (periodo == "anual") period = ' ('+periodo+')';
-  for (var [key, value] of horarioSelected) {
+  /*for (var [key, value] of horarioSelected) {
     alert(key + " = " + value);
-  }
+  }*/
   let listaMaterias = horarioSelected.values();
   codigoHTML = "";
   for (var [nombMat, value] of horarioSelected) {
@@ -207,16 +207,20 @@ async function descargarHorario() {
     // nombremateria, materia
     var objeto = { nombre: nombMat, horarios: [] };
     value.reservas.forEach((reserva) => {
+      var parte1Inicio = Math.floor(reserva.horaInicio / 100) > 9 ? Math.floor(reserva.horaInicio / 100) : "0"+Math.floor(reserva.horaInicio / 100);
+      var parte2Inicio = Math.floor(reserva.horaInicio % 100) == 30 ? Math.floor(reserva.horaInicio % 100) : "0"+Math.floor(reserva.horaInicio % 100);
+      var parte1Fin = Math.floor(reserva.horaFin / 100) > 9 ? Math.floor(reserva.horaFin / 100) : "0"+Math.floor(reserva.horaFin / 100);
+      var parte2Fin = Math.floor(reserva.horaFin % 100) == 30 ? Math.floor(reserva.horaFin % 100) : "0"+Math.floor(reserva.horaFin % 100);
       objeto.horarios.push({
         diaSemana: reserva.dia,
         horaInicio:
-          Math.floor(reserva.horaInicio / 100) +
+        parte1Inicio +
           ":" +
-          Math.floor(reserva.horaInicio % 100),
+          parte2Inicio,
         horaFin:
-          Math.floor(reserva.horaFin / 100) +
+        parte1Fin +
           ":" +
-          Math.floor(reserva.horaFin % 100),
+          parte2Fin,
       });
     });
     horario.push(objeto);

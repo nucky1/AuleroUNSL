@@ -61,7 +61,7 @@ function cargarTablaReservas(reservas) {
         //HORARIO
         let horaIn = reservas[index].horaInicio;
         let horaFin = reservas[index].horaFin;
-        infoReserva += '<td>' + horaIn / 100 + ':' + horaIn % 100 + " - " + horaFin / 100 + ':' + horaFin % 100+'</td>';
+        infoReserva += '<td>' + Math.floor(horaIn / 100) + ':' + Math.floor(horaIn % 100) + " - " + Math.floor(horaFin / 100) + ':' + Math.floor(horaFin % 100)+'</td>';
         
         infoReserva += '<td>' + reservas[index].materia[0].nombre + '</td>';
         infoReserva += '<td>' + reservas[index].estado + '</td>';

@@ -47,7 +47,7 @@ function cargarDatosFiltros(edificios){ // asumo que recibo un arreglo de nombre
 //Carga los datos que son iguales en todos lados del front
 function cargarDatosEstaticos(){
     let selector = document.getElementById('dias');  // Dias de la semana
-    let dias = ["lunes", "martes","miércoles","jueves","viernes","sábado"];   
+    let dias = ["lunes", "martes","miercoles","jueves","viernes","sabado"];   
     let periodo = ["primer cuatrimestre","segundo cuatrimestre","Anual"];   
     let opcion;  
     for(i=0;i<6;i++){
@@ -56,28 +56,28 @@ function cargarDatosEstaticos(){
         selector.add(opcion);
     }
     selector = document.getElementById('hInicio'); // Hora de inicio Reserva 
-    for(i=1;i<23;i++){
-        horasDisponiblesMap.set(i+".00 hs",i*100);
+    for(i=7;i<23;i++){
+        horasDisponiblesMap.set(i+":00 hs",i*100);
         opcion = document.createElement('option');
-        opcion.text = i+".00 hs";
+        opcion.text = i+":00 hs";
         selector.add(opcion);
         if(i!=23){
-            horasDisponiblesMap.set(i+".30 hs",i*100+30);
+            horasDisponiblesMap.set(i+":30 hs",i*100+30);
             opcion = document.createElement('option');
-            opcion.text = i+".30 hs";                      2
+            opcion.text = i+":30 hs"; 
             selector.add(opcion);
         }
     }
     selector = document.getElementById('hCant');  // Cantidad de horas Reserva
     for(i=1;i<6;i++){
-        cantidadHorasReservasMap.set(i+".00 hs",i*100);
+        cantidadHorasReservasMap.set(i+":00 hs",i*100);
         opcion = document.createElement('option');
-        opcion.text = i+".00 hs";
+        opcion.text = i+":00 hs";
         selector.add(opcion);
         if(i!=5){
-            cantidadHorasReservasMap.set(i+".30 hs",i*100+30);
+            cantidadHorasReservasMap.set(i+":30 hs",i*100+30);
             opcion = document.createElement('option');
-            opcion.text = i+".30 hs";
+            opcion.text = i+":30 hs";
             selector.add(opcion);
         }
     }
@@ -94,10 +94,11 @@ function controlCampos(){
     let selector = document.getElementById('hInicio'); 
     let horaInicio = horasDisponiblesMap.get(selector.options[selector.selectedIndex].text);    
     selector = document.getElementById('hCant'); 
-    let horaFin = cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);
+    let cantHoras = cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);
+    
     selector = document.getElementById('cap'); 
     let capacidad=selector.value;
-    return (horaInicio+horaFin)<= 2300 && (capacidad>0) ; //Controlo que no sea mas de las 23 hs     
+    return (horaInicio+cantHoras)<= 2300 && (capacidad>0) ; //Controlo que no sea mas de las 23 hs     
 }
 async function buscarAulas(){
     if(controlCampos()){
@@ -108,6 +109,7 @@ async function buscarAulas(){
         day = selector.options[selector.selectedIndex].text; //Valor dia - VARIABLE GLOBAL
         selector = document.getElementById('hInicio'); 
         horaI = horasDisponiblesMap.get(selector.options[selector.selectedIndex].text);//Valor hora de inicio de la reserva - VARIABLE GLOBAL
+        alert(horaI);
         selector = document.getElementById('hCant'); 
         cantH= cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);//Valor cantidad de horas - VARIABLE GLOBAL
         selector = document.getElementById('cap'); 
