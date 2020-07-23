@@ -109,7 +109,7 @@ async function buscarAulas(){
         day = selector.options[selector.selectedIndex].text; //Valor dia - VARIABLE GLOBAL
         selector = document.getElementById('hInicio'); 
         horaI = horasDisponiblesMap.get(selector.options[selector.selectedIndex].text);//Valor hora de inicio de la reserva - VARIABLE GLOBAL
-        alert(horaI);
+        
         selector = document.getElementById('hCant'); 
         cantH= cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);//Valor cantidad de horas - VARIABLE GLOBAL
         selector = document.getElementById('cap'); 
@@ -137,8 +137,9 @@ async function buscarAulas(){
         cargarListaAulas(responseJSON);
     }else{
         //let volver2 = document.getElementById('vovler2');
-        //volver2.click(); 
-        //Deberiamos mostrarle un cartel que no se puede pasr de las 23 hs ... 
+        //volver2.click();
+        alert("ERROR. Coloque correctamente los campos.");
+        window.location.reload()
     }
 }
 
@@ -201,7 +202,7 @@ async function getMaterias(){
         }); 
         cargarMaterias(responseJSON);
     }else{
-        console.log("tenemos que mostrarle que tiene que seleccionar al menos una materia ");
+        alert("Debe seleccionar al menos una materia.");
     }
 }
 

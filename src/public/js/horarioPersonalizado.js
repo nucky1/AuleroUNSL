@@ -29,15 +29,21 @@ function cargarCarreras() {
   let selectorCarreras = document.getElementById("carr");
   let facSelect = selector.options[selector.selectedIndex].text; //Get Texto seleccionado
   let arrayCarreras = facultades.get(facSelect); //Arreglo de carreras by claveNombre
-  selectorCarreras.options.length = 0;
-  document.getElementById("anio").options.length = 0;
-  for (i = 0; i < arrayCarreras.length; i++) {
-    anios.set(arrayCarreras[i].nombre, arrayCarreras[i].cantAnios); //lleno el Mapa anios GLOBAL
-    let opcion = document.createElement("option"); //Creo el objeto opción
-    opcion.text = arrayCarreras[i].nombre; //Le setteo el valor del nombre de la carrera
-    selectorCarreras.add(opcion); //Añado la opcion al selector de carreras
+
+  if (arrayCarreras.length > 0) {
+    selectorCarreras.options.length = 0;
+    document.getElementById("anio").options.length = 0;
+    for (i = 0; i < arrayCarreras.length; i++) {
+      anios.set(arrayCarreras[i].nombre, arrayCarreras[i].cantAnios); //lleno el Mapa anios GLOBAL
+      let opcion = document.createElement("option"); //Creo el objeto opción
+      opcion.text = arrayCarreras[i].nombre; //Le setteo el valor del nombre de la carrera
+      selectorCarreras.add(opcion); //Añado la opcion al selector de carreras
+    }
+
+    cargarAnios();
+  } else {
+    alert("ATENCION. no existen carreras en esa facultad.");
   }
-  cargarAnios();
 }
 
 function cargarAnios() {
@@ -75,7 +81,6 @@ async function pedirMaterias() {
     anioSelect +
     "/periodo/" +
     cuatriSelect;
-  console.log(peticionGet);
   let responseJSON = await fetch(peticionGet).then(function (response) {
     //Trae los filtros en el parametro "response"
     return response.json(); //Retorno como JSON los datos de la API
@@ -102,7 +107,6 @@ function agregarMateria() {
   if (!horarioSelected.has(materia.nombre)) {
     horarioSelected.set(materia.nombre, materia);
     fila(materia);
-    console.log(horarioSelected);
   }
 }
 
@@ -153,8 +157,6 @@ function mostrarHorario() {
   let listaMaterias = horarioSelected.values();
   codigoHTML = "";
   for (var [nombMat, value] of horarioSelected) {
-    console.log(nombMat + " = " + value.reservas[0].aula);
-    console.log("que onda");
     codigoHTML += "<div class='panel panel-default bg3'>"; //Cerrar este Div
     codigoHTML += "\n <div class='panel-heading bg3'>"; // Encabezado con el nombre de la materia
     codigoHTML += "\n   <h2 class='titulo-materia'>" + nombMat + "</h2>"; // Nombre Materia
@@ -171,28 +173,30 @@ function mostrarHorario() {
     codigoHTML += "\n</thead>";
     codigoHTML += "\n <tbody>";
     codigoHTML += "\n<div class='collapse'></div>";
-    //Aca empezaba el for
-    codigoHTML += "\n<tr>";
-    codigoHTML +=
-      "\n<td>" +
-      value.reservas[0].aula.nombre +
-      " - " +
-      value.reservas[0].aula.numero +
-      "</td>";
-    codigoHTML += "\n<td>" + value.reservas[0].dia + "</td>";
-    let horaIn = value.reservas[0].horaInicio;
-    let horaFin = value.reservas[0].horaFin;
-    codigoHTML +=
-      "\n<td>" +
-      Math.floor(horaIn / 100) +
-      ":" +
-      (horaIn % 100) +
-      " - " +
-      Math.floor(horaFin / 100) +
-      ":" +
-      (horaFin % 100) +
-      "</td>";
-    codigoHTML += "\n</tr>";
+    for (let index = 0; index < value.reservas.length; index++) {
+      //Aca empezaba el for
+      codigoHTML += "\n<tr>";
+      codigoHTML +=
+        "\n<td>" +
+        value.reservas[index].aula.nombre +
+        " - " +
+        value.reservas[index].aula.numero +
+        "</td>";
+      codigoHTML += "\n<td>" + value.reservas[index].dia + "</td>";
+      let horaIn = value.reservas[index].horaInicio;
+      let horaFin = value.reservas[index].horaFin;
+      codigoHTML +=
+        "\n<td>" +
+        Math.floor(horaIn / 100) +
+        ":" +
+        (horaIn % 100) +
+        " - " +
+        Math.floor(horaFin / 100) +
+        ":" +
+        (horaFin % 100) +
+        "</td>";
+      codigoHTML += "\n</tr>";
+    }
     codigoHTML += "              </tbody>";
     codigoHTML += "\n        </table>";
     codigoHTML += "\n    </div>";
@@ -207,20 +211,26 @@ async function descargarHorario() {
     // nombremateria, materia
     var objeto = { nombre: nombMat, horarios: [] };
     value.reservas.forEach((reserva) => {
-      var parte1Inicio = Math.floor(reserva.horaInicio / 100) > 9 ? Math.floor(reserva.horaInicio / 100) : "0"+Math.floor(reserva.horaInicio / 100);
-      var parte2Inicio = Math.floor(reserva.horaInicio % 100) == 30 ? Math.floor(reserva.horaInicio % 100) : "0"+Math.floor(reserva.horaInicio % 100);
-      var parte1Fin = Math.floor(reserva.horaFin / 100) > 9 ? Math.floor(reserva.horaFin / 100) : "0"+Math.floor(reserva.horaFin / 100);
-      var parte2Fin = Math.floor(reserva.horaFin % 100) == 30 ? Math.floor(reserva.horaFin % 100) : "0"+Math.floor(reserva.horaFin % 100);
+      var parte1Inicio =
+        Math.floor(reserva.horaInicio / 100) > 9
+          ? Math.floor(reserva.horaInicio / 100)
+          : "0" + Math.floor(reserva.horaInicio / 100);
+      var parte2Inicio =
+        Math.floor(reserva.horaInicio % 100) == 30
+          ? Math.floor(reserva.horaInicio % 100)
+          : "0" + Math.floor(reserva.horaInicio % 100);
+      var parte1Fin =
+        Math.floor(reserva.horaFin / 100) > 9
+          ? Math.floor(reserva.horaFin / 100)
+          : "0" + Math.floor(reserva.horaFin / 100);
+      var parte2Fin =
+        Math.floor(reserva.horaFin % 100) == 30
+          ? Math.floor(reserva.horaFin % 100)
+          : "0" + Math.floor(reserva.horaFin % 100);
       objeto.horarios.push({
         diaSemana: reserva.dia,
-        horaInicio:
-        parte1Inicio +
-          ":" +
-          parte2Inicio,
-        horaFin:
-        parte1Fin +
-          ":" +
-          parte2Fin,
+        horaInicio: parte1Inicio + ":" + parte2Inicio,
+        horaFin: parte1Fin + ":" + parte2Fin,
       });
     });
     horario.push(objeto);
@@ -245,4 +255,3 @@ async function descargarHorario() {
       setError(1);
     });
 }
-

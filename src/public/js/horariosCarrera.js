@@ -11,6 +11,7 @@ async function getFiltros(){
     cargarFiltros(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 async function getHorariosByFiltros(){
+    document.getElementById("ContenedorHorarios").innerHTML = "";
     //get facultad
     let selector = document.getElementById('fac'); 
     let facSelect = selector.options[selector.selectedIndex].text;
@@ -24,12 +25,23 @@ async function getHorariosByFiltros(){
     let selectorCuatri = document.getElementById('cuatri'); 
     let cuatriSelect = selectorCuatri.options[selectorCuatri.selectedIndex].text; 
     let peticionGet = "http://localhost:3000/horariosCarrera/facultad/"+facSelect+"/carrera/"+carrSelect+"/anio/"+anioSelect+"/periodo/"+cuatriSelect;
-    console.log(peticionGet);
-    let responseJSON = await fetch(peticionGet)
-    .then(function(response) { //Trae los filtros en el parametro "response" 
-        return response.json(); //Retorno como JSON los datos de la API
-    });
-    cargarMateriasFiltradas(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+
+    if(facSelect && carrSelect && anioSelect && cuatriSelect){
+        let responseJSON = await fetch(peticionGet)
+        .then(function(response) { //Trae los filtros en el parametro "response" 
+            return response.json(); //Retorno como JSON los datos de la API
+        });
+    
+        if(responseJSON.length==0){
+            alert("ATENCIÓN. No existen horarios con las caracteristicas señaladas.");
+        }else{
+            cargarMateriasFiltradas(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+        }
+    }else{
+        alert("ERROR. Seleccione correctamente los campos de busqueda.");
+    }
+    
+    
 }
 function cargarFiltros(filtros){ 
     let selector = document.getElementById('fac'); //Obtengo el objeto del comboBox o "Selector" del front
@@ -91,22 +103,29 @@ function crearBloqueMateria(periodo, nombre, listaAulas) {
 }
 //-------------------------- METODOS LLAMADOS DESDE EL FRONT ------------------------------------
 function cargarCarreras(){ 
-    let boton = document.getElementById("lupa");
-    boton.removeAttribute('disabled'); //habilito el boton para buscar
-    // boton.setAttribute('disabled', "true");
+    
+    
     let selector = document.getElementById('fac');
     let selectorCarreras = document.getElementById('carr');
     let facSelect = selector.options[selector.selectedIndex].text;//Get Texto seleccionado
     let arrayCarreras = facultades.get(facSelect); //Arreglo de carreras by claveNombre
-    selectorCarreras.options.length = 0;
-    document.getElementById('anio').options.length = 0;
-    for(i=0;i<arrayCarreras.length;i++){
-        anios.set(arrayCarreras[i].nombre,arrayCarreras[i].cantAnios); //lleno el Mapa anios GLOBAL
-        let opcion = document.createElement('option'); //Creo el objeto opción 
-        opcion.text = arrayCarreras[i].nombre; //Le setteo el valor del nombre de la carrera 
-        selectorCarreras.add(opcion); //Añado la opcion al selector de carreras
+    if(arrayCarreras.length > 0){
+        let boton = document.getElementById("lupa");
+        boton.removeAttribute('disabled'); //habilito el boton para buscar
+        // boton.setAttribute('disabled', "true");
+        selectorCarreras.options.length = 0;
+        document.getElementById('anio').options.length = 0;
+        for(i=0;i<arrayCarreras.length;i++){
+            anios.set(arrayCarreras[i].nombre,arrayCarreras[i].cantAnios); //lleno el Mapa anios GLOBAL
+            let opcion = document.createElement('option'); //Creo el objeto opción 
+            opcion.text = arrayCarreras[i].nombre; //Le setteo el valor del nombre de la carrera 
+            selectorCarreras.add(opcion); //Añado la opcion al selector de carreras
+        }
+        cargarAnios();
+    }else{
+        alert("ATENCIÓN. No existen carreras en la facultad seleccionada.")
     }
-    cargarAnios();
+    
 }
 
 function cargarAnios(){
