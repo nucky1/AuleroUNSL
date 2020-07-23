@@ -136,10 +136,7 @@ async function buscarAulas(){
         //Fin get
         cargarListaAulas(responseJSON);
     }else{
-        //let volver2 = document.getElementById('vovler2');
-        //volver2.click();
         alert("ERROR. Coloque correctamente los campos.");
-        window.location.reload()
     }
 }
 
