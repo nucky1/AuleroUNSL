@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
 const Reserva = require("./Reserva.js");
 const Edificio = require("./Edificio.js");
+const Comentario = require("./Comentario.js");
 const extra = sequelize.define(
     "extras",
     {
@@ -68,4 +69,6 @@ Aula.hasMany(Reserva);
 Reserva.belongsTo(Aula);
 extra.belongsTo(Aula);
 Aula.hasMany(extra);
+Comentario.belongsTo(Aula);
+Aula.hasMany(Comentario);
 module.exports = {Aula,extra};

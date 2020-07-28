@@ -1,23 +1,22 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const ReservaAdmin = sequelize.define(
-    "reservaadmin",
+const comentarioDocente = sequelize.define(
+    "comentariodocente",
     {
-        reservaId: {
+        comentarioId: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             references: {
-                model: 'reserva',
+                model: 'comentario',
                 key: 'id',
             }
         },
-        administradorId: {
+        docenteId: {
             type: Sequelize.INTEGER,
-            primaryKey: true,
             references: {
-                model: 'administrador',
+                model: 'docente',
                 key: 'id',
-            }
+            } 
         },
         state: {
             type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
@@ -33,4 +32,4 @@ const ReservaAdmin = sequelize.define(
         timestamps: false,
     }
 );
-module.exports = ReservaAdmin;
+module.exports = comentarioDocente;

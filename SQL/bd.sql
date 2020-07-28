@@ -130,6 +130,22 @@ CREATE TABLE IF NOT EXISTS reservaAdmin(
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY ("reservaId","administradorId")
 );
+CREATE TABLE IF NOT EXISTS comentario(
+    id SERIAL PRIMARY KEY, 
+    texto TEXT,
+    "aulaId" integer REFERENCES aulas(id),
+    state situation DEFAULT 'ACTIVO',
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+CREATE TABLE IF NOT EXISTS comentarioDocente(
+    "comentarioId" smallint REFERENCES comentario(id),
+    "docenteId" smallint REFERENCES docente(id),
+    state situation DEFAULT 'ACTIVO',
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY ("comentarioId","docenteId")
+);
 CREATE OR REPLACE FUNCTION update_updated_at()
   RETURNS TRIGGER AS $$
   BEGIN

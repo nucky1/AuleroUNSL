@@ -1,4 +1,5 @@
 getDatos();
+var id;
 async function getDatos() {
     let responseJSON = await fetch('http://localhost:3000/primeraVezDetallesAula')
         .then(function (response) { //Trae los filtros en el parametro "response" 
@@ -6,7 +7,18 @@ async function getDatos() {
         });
     cargarDatos(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
-var id;
+async function getComentarios(){
+    let responseJSON = await fetch('http://localhost:3000/allComentarios/id/:id')
+    .then(function (response) { //Trae los filtros en el parametro "response" 
+        return response.json(); //Retorno como JSON los datos de la API
+    });
+    cargarComentarios(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
+}
+function cargarComentarios(comentarios){
+    //funcion de carga
+    console.log(comentarios);
+}
+
 function cargarDatos(aula) {
     let nombre = document.getElementById('NombreAula');
     let edif = document.getElementById('nombreEdif');
@@ -22,6 +34,7 @@ function cargarDatos(aula) {
     for (let index in aula[0].extras) {
         listaExtras.innerHTML += beforeExtra + aula[0].extras[index].extra + '</li>';
     }
+    getComentarios();
 }
 async function getHorarios() {
     let select = document.getElementById('periodo');

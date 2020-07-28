@@ -49,7 +49,7 @@ function cargarDatosEstaticos(){
     let selector = document.getElementById('dias');  // Dias de la semana
     let dias = ["lunes", "martes","miercoles","jueves","viernes","sabado"];   
     let periodo = ["primer cuatrimestre","segundo cuatrimestre","Anual"];   
-    let opcion;  
+    let opcion;
     for(i=0;i<6;i++){
         opcion = document.createElement('option');
         opcion.text = dias[i];
@@ -90,19 +90,47 @@ function cargarDatosEstaticos(){
 }
 
 //BOTON SIGUIENTE
-function controlCampos(){
+function controlHorario(){
     let selector = document.getElementById('hInicio'); 
     let horaInicio = horasDisponiblesMap.get(selector.options[selector.selectedIndex].text);    
     selector = document.getElementById('hCant'); 
     let cantHoras = cantidadHorasReservasMap.get(selector.options[selector.selectedIndex].text);
-    
-    selector = document.getElementById('cap'); 
-    let capacidad=selector.value;
-    return (horaInicio+cantHoras)<= 2300 && (capacidad>0) ; //Controlo que no sea mas de las 23 hs     
+    return (horaInicio+cantHoras)<= 2300 ; //Controlo que no sea mas de las 23 hs     
+}
+function controlCapacidad(){
+    selector = document.getElementById('cap');
+    let capacidad=selector.value; 
+    return (capacidad>0) && ((capacidad % 1) == 0);
+}
+function verificar(){
+    let flag = true;
+    let text = "";
+    if(!controlHorario()){
+        flag = false;
+        text = "El horario de finalizacion de clases es mayor a las 23hs.\n";
+    }
+    if(!controlCapacidad()){
+        flag = false;
+        text += "La capacidad tiene un valor invalido.";
+    }
+    if(flag){
+        
+        
+    }
 }
 async function buscarAulas(){
-    if(controlCampos()){
-        //GETTEO LOS VALORES DE LAS AULAS A BUSCAR
+    let flag = true;
+    let text = "";
+    if(!controlHorario()){
+        flag = false;
+        text = "El horario de finalizacion de clases es mayor a las 23hs.\n";
+    }
+    if(!controlCapacidad()){
+        flag = false;
+        text += "La capacidad tiene un valor invalido.";
+    }
+    //GETTEO LOS VALORES DE LAS AULAS A BUSCAR
+    if(flag){
         let selector = document.getElementById('edif');  
         let edificio=selector.options[selector.selectedIndex].text; //Valor edificio
         selector = document.getElementById('dias'); 
@@ -115,7 +143,7 @@ async function buscarAulas(){
         selector = document.getElementById('cap'); 
         let capacidad=selector.value;//Valor capacidad del aula
         selector = document.getElementById('per');  
-        per =selector.options[selector.selectedIndex].text;//Valor periodo academico - VARIABLE GLOBAL
+        per =selector.options[selector.selectedIndex].text.toLowerCase();//Valor periodo academico - VARIABLE GLOBAL
         //FIN GETTEO - EMPIEZA COMUNICACION API
         var misCabeceras = new Headers();         
         if(localStorage.getItem("token")){ //si hay un token almacenado 
@@ -125,18 +153,25 @@ async function buscarAulas(){
         let responseJSON = await fetch('http://localhost:3000/buscarAulaReserva/edificio/'+edificio+'/dia/'+day+'/horaInicio/'+horaI+'/cantHoras/'+cantH+'/capacidad/'+capacidad+'/periodo/'+per,{
             method: 'GET', // or 'PUT'
             headers: misCabeceras,  //Mando el header
-          })
-          .then(function (response) { // Me trae 404 entonces no me logueé
-          if(response.status == 404){
-              window.location.href = '/login'; //Me manda al lovi
-          }else if(response.status == 200){ //Si esta loggeado 200 = OK 
-              return response.json(); 
-          }
-      })
+            })
+            .then(function (response) { // Me trae 404 entonces no me logueé
+            if(response.status == 404){
+                window.location.href = '/login'; //Me manda al lovi
+            }else{ //Si esta loggeado 200 = OK 
+                return response.json(); 
+            }
+        })
         //Fin get
-        cargarListaAulas(responseJSON);
+        if(responseJSON.length == 0){
+            showError("No hay aulas disponibles el dia "+day+" en ese horario");
+        }else{
+            document.getElementById("siguientep1").className = "btn btn-bold ml-auto js-btn-next";//cambia panel
+            cargarListaAulas(responseJSON);
+            document.getElementById("siguientep1").onclick = "";
+            document.getElementById("siguientep1").click();
+        }
     }else{
-        alert("ERROR. Coloque correctamente los campos.");
+        showError(text);
     }
 }
 
@@ -170,15 +205,14 @@ function cargarListaAulas(listaAulas){
         +"        </table>"
         +"  <div class='botones-step text-right'>"
         +"      <button class='btn btn-line ml-auto js-btn-prev' type='button' title='Prev' id='vovler2'>Volver</button>"
-        +"      <button class='btn btn-bold ml-auto js-btn-next' type='button' title='Next' onclick='getMaterias()'>Siguiente</button>"
+        +"      <button id = 'siguientep2' class='btn btn-bold mb-2' type='button' title='Next' onclick='getMaterias()'>Siguiente</button>"
         +"  </div>"
         +"</div>";
     document.getElementById('panelSelecAula').innerHTML = codigoHTML;
 }
-
- 
 async function getMaterias(){
     if(getAulaSeleccionada()>-1){
+        document.getElementById("siguientep2").className = "btn btn-bold ml-auto js-btn-next";//cambia panel
         var misCabeceras = new Headers();
         if(localStorage.getItem("token")){
             let token = localStorage.getItem("token"); 
@@ -199,7 +233,7 @@ async function getMaterias(){
         }); 
         cargarMaterias(responseJSON);
     }else{
-        alert("Debe seleccionar al menos una materia.");
+        showError("Debe seleccionar un aula.");
     }
 }
 
@@ -252,21 +286,22 @@ async function reservarAula(){
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: misCabeceras,
           }).then(function(response) { 
-                return response.json(); //Retorno como JSON los datos de la API
+                return response; //Retorno como JSON los datos de la API
               
           }).catch(function(reason) {
             console.log(reason);
             //setError(1);
          });
-         console.log(responseJSON);
-         console.log("Deberiamos mostrarle un cartel, la reserva se ha dado correctamente");
-         //Hacer algo con la respuesta 
+         if(responseJSON.status != 200){
+            showError("Ocurrio un error al realizar la reserva.");
+          }else{
+            showSuccess();
         // window.location.href = '/listadoReservas';
-
+          }
 
     }else{
         //Retar al chabon
-        console.log("Deberiamos mostrarle un cartel, la reserva se ha dado INcorrectamente");
+        showError("Debe seleccionar una materia");
     }
 }
 
@@ -276,4 +311,18 @@ function setCodigo(){
     let textoCod = document.getElementById('codMateria');
     textoCod.value = materiasMap.get(combo);
 }
+function showError(error){
+    document.getElementById("textError").innerHTML = '<span class="badge badge-danger" style="background: #f15e5e; margin-right:20px;"><i class="material-icons">&#xE5CD;</i></span>'+ error;
+    $("#cartelFail").modal();
+    setTimeout(function(){ 
+      $("#cartelFail").modal('hide');
+    }, 2000);
+  }
+  function showSuccess(){
+    $("#cartelOk").modal();
+    setTimeout(function(){ 
+      $("#cartelOk").modal('hide');
+      location.reload();
+    }, 2000);
+  }
 

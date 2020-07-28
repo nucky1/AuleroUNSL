@@ -1,23 +1,24 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../database/database");
-const ReservaAdmin = sequelize.define(
-    "reservaadmin",
+const Docente = require("./Docente.js");
+const comentarioDocente = require("./comentarioDocente");
+const Comentario = sequelize.define(
+    "comentario",
     {
-        reservaId: {
+        id: {
             type: Sequelize.INTEGER,
+            autoincrement: true,
             primaryKey: true,
-            references: {
-                model: 'reserva',
-                key: 'id',
-            }
         },
-        administradorId: {
+        texto:{
+            type: Sequelize.TEXT,
+        },
+        aulaId: {
             type: Sequelize.INTEGER,
-            primaryKey: true,
             references: {
-                model: 'administrador',
+                model: 'aulas',
                 key: 'id',
-            }
+            } 
         },
         state: {
             type: Sequelize.ENUM(['ACTIVO', 'INACTIVO', 'BAJA'])
@@ -33,4 +34,6 @@ const ReservaAdmin = sequelize.define(
         timestamps: false,
     }
 );
-module.exports = ReservaAdmin;
+Comentario.belongsToMany(Docente, { through: comentarioDocente });
+Docente.belongsToMany(Comentario, { through: comentarioDocente });
+module.exports = Comentario;

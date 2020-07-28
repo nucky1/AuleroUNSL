@@ -1,10 +1,13 @@
 const db = {
   Aulas: require("../models/Aulas"),
   Edificio: require("../models/Edificio"),
+  Docente: require("../models/Docente"),
   Carrera: require("../models/Carrera"),
   Facultad: require("../models/Facultad"),
   Reserva: require("../models/Reserva"),
   Materia: require("../models/Materia"),
+  Comentario: require("../models/Comentario"),
+  ComentarioDocente: require("../models/comentarioDocente"),
   seq: require("sequelize"),
   ReservaMateria: require("../models/ReservaMateria")
 };
@@ -218,5 +221,25 @@ module.exports = {
       ]
     });
     res.send(aula);
+  },
+  allComentario : async (req, res) => {
+    const comentarios = await db.Comentario.findAll({
+      where: { state: "ACTIVO", aulaId : idDetallesAula},
+      include: [
+        {
+          model: db.Docente,
+          where: { state: "ACTIVO" },
+          //attributes: ["nombre","apellido"]
+        },
+      ],
+    }).then(
+      function (comentarios) {
+        res.send(comentarios);
+      },
+      function (reason) {
+        console.log(reason);
+        res.sendStatus(400);
+      }
+    );
   }
 };

@@ -30,6 +30,7 @@ router.get("/detallesAula/id/:id/periodo/:periodo", (req, res) => {
 });
 //retorna datos para detallesAula
 router.get("/primeraVezDetallesAula", aulasController.getAulaPrimerVez);
+router.get("/allComentarios/id/:id", aulasController.allComentario);
 //retorna los filtros para listadoAulas.html
 router.get("/getFiltrosAulas", aulasController.getFiltrosAulas);
 //retorna los filtros para horariosCarrera.html

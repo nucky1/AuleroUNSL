@@ -16,13 +16,22 @@ router.post("/cancelarReserva", eToken, (req,res) => {
     if (err) {
       res.sendStatus(404);
     } else {
-      console.log("arre");
       //ESCRIBIR TODO ACA
       reservasController.eliminarReservadocente(req,res);
     }
   });
 });
-
+router.post("/comentarAula", eToken, (req,res) => {
+  jwt.verify(req.token, keyDocente, (err, data) => {
+    if (err) {
+      res.sendStatus(404);
+    } else {
+      console.log("arre llego al router de reservas");
+      //ESCRIBIR TODO ACA
+      reservasController.comentarAula(req,res);
+    }
+  });
+});
 router.get("/listadoReservas", (req, res) => {
     res.render("listadoReservas.html");
 });

@@ -5,6 +5,8 @@ const db = {
   Docente: require("../models/Docente"),
   Facultad: require("../models/Facultad"),
   Reserva: require("../models/Reserva"),
+  Comentario: require("../models/Comentario"),
+  ComentarioDocente: require("../models/comentarioDocente"),
   Materia: require("../models/Materia"),
   seq: require("sequelize"),
   ReservaMateria: require("../models/ReservaMateria"),
@@ -15,7 +17,7 @@ module.exports = {
   //router.get("/allReservas", reservasController.allReservas);
   allReservas: async (req, res) => {
     const reservas = await db.Reserva.findAll({
-      where: { state: "ACTIVO", estado: "PENDIENTE" },
+      where: { state: "ACTIVO"},
       include: [
         {
           model: db.Aulas.Aula,
@@ -347,4 +349,33 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  comentarAula: async (req, res) => {
+    const horaInicio = req.body.horaInicio;
+    db.Comentario.create({
+      texto: req.body.comentario,
+      aulaId: req.body.idAula,
+    }).then(
+      function (comentario) {
+        console.log("inserto comentario" + comentario);
+        db.ComentarioDocente.create({
+          comentarioId: comentario.id,
+          docenteId: req.body.idDoc,
+        }).then(
+          function (comentarioDocente) {
+            console.log("termino la reserva materia" + comentarioDocente);
+            res.sendStatus(200);
+          },
+          function (reason) {
+            console.log("NO inserto comentarioDocente" + reason);
+            res.sendStatus(404);
+          }
+        );
+      },
+      function (reason) {
+        console.log("NO inserto comentario" + reason);
+        res.sendStatus(404);
+      }
+    );
+  },
+  
 };

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -49,7 +50,7 @@
                             <div class="col-12 col-lg-8 ml-auto mr-auto mb-4 col-centered">
                                 <div class="multisteps-form__progress">
                                     <button class="multisteps-form__progress-btn js-active" type="button" title="User Info" id="botonPaso1">Buscar aula</button>
-                                    <button class="multisteps-form__progress-btn" type="button" title="Address">Seleccionar aula</button>
+                                    <button class="multisteps-form__progress-btn" type="button" title="Address" id="botonPaso2">Seleccionar aula</button>
                                     <button class="multisteps-form__progress-btn" type="button" title="Order Info">Completar datos</button>
                                 </div>
                             </div>
@@ -91,8 +92,8 @@
                                                 </div>
 
                                             </div>
-                                            <div class="botones-step text-right">
-                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next" onclick="buscarAulas()">Siguiente</button>
+                                            <div class="botones-step text-right" id = "containerp1">
+                                                <button id = "siguientep1" class="btn btn-bold mb-2" type="button" title="Next" onclick="verificar()" >Siguiente</button>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +123,7 @@
                                             </div>
                                             <div class="botones-step text-right">
                                                 <button class="btn btn-line ml-auto js-btn-prev" type="button" title="Prev">Volver</button>
-                                                <button class="btn btn-bold ml-auto js-btn-next" type="button" title="Next" onclick="reservarAula()">Finalizar</button>
+                                                <button class="btn btn-bold mb-2" type="button" title="next" onclick="reservarAula()">Finalizar</button>
 
                                             </div>
 
@@ -136,7 +137,26 @@
             </div>
         </div>
         <!-- partial -->
-
+        <!-- PopUp OK -->
+        <div class="modal fade" id="cartelOk" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-center" id = "textOk"><span class="badge badge-success" style="background: #82ce34; margin-right:20px;"><i class="material-icons">&#xE876;</i></span>La reserva se realizo con exito</h4>
+                    </div>                                       
+                </div>
+            </div>
+        </div>
+        <!-- PopUp FAIL -->
+        <div class="modal fade" id="cartelFail" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">	
+                        <h4 class="text-center" id = "textError"><span class="badge badge-danger" style="background: #f15e5e; margin-right:20px;"><i class="material-icons">&#xE5CD;</i></span></h4>
+                    </div>                    
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- TODO: Terminar Footer-->

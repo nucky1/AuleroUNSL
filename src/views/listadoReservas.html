@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -142,7 +143,7 @@
         </table>
 
         <!-- PopUp de cancelar reserva -->
-        <div class="modal fade" id="cancelarReserva" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="cancelarReserva" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -156,7 +157,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
-                        <button type="button" class="btn btn-bold" data-dismiss="modal" >Aceptar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="cancelarReservaDocente()" >Aceptar</button>
                     </div>
                 </div>
             </div>
@@ -193,13 +194,33 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-group">
-                            <textarea class="form-control" placeholder="Ingrese su comentario..."></textarea>
+                            <textarea id="comentario" class="form-control" placeholder="Ingrese su comentario..."></textarea>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
-                        <button type="button" class="btn btn-bold" data-dismiss="modal" >Enviar</button>
+                        <button type="button" class="btn btn-line" data-dismiss="modal" onclick="hidePopUp('comentarAula')" >Cancelar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="comentarAula()" >Enviar</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- PopUp OK -->
+        <div class="modal fade" id="cartelOk" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-center"><span class="badge badge-success" style="background: #82ce34; margin-right:20px;"><i class="material-icons">&#xE876;</i></span>El comentario fue enviado con exito.</h4>
+                    </div>                                       
+                </div>
+            </div>
+        </div>
+        <!-- PopUp FAIL -->
+        <div class="modal fade" id="cartelFail" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">	
+                        <h4 class="text-center" id = "textError"></h4>
+                    </div>                    
                 </div>
             </div>
         </div>
