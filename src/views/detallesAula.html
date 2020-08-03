@@ -309,13 +309,51 @@
             </div>
 
         </div>
-    </main>
-    <!-- TODO: Terminar Footer-->
-    <footer class="footer">
-        <div class="container">
-            <h2>Footer</h2>
+
+        <!-- Contenedor de Comentarios -->
+        <div class="container bg-encabezado">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h2 class="titulo">Comentarios</h2>
+                </div>
+            </div>
+
+            <div class="comentarios">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <div class="comment-info">13/07/2020</div>
+                    </div>
+
+                    <div class="col-xs-1">
+                        <div class="comment-info">docente1</div>
+                    </div>
+
+                    <div class="col-xs-8">
+                        <textarea id="comentario" class="form-control" placeholder="Comentario aquí"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comentarios">
+                <div class="row ">
+                    <div class="col-xs-1">
+                        <div class="comment-info">22/12/2019</div>
+                    </div>
+
+                    <div class="col-xs-1">
+                        <div class="comment-info">docente1</div>
+                    </div>
+
+                    <div class="col-xs-8">
+                        <textarea  class="form-control" placeholder="Comentario aquí"></textarea>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
-    </footer>
+    </main>
+    <!-- Footer -->
+    <%- include('partials/footer') %>
 </body>
 </html>
