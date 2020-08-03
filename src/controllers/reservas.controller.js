@@ -145,7 +145,7 @@ module.exports = {
     const cantHoras = parseInt(req.params.cantHoras,10);
     const horaFin = horaIn + cantHoras;
     const periodo = req.params.periodo;
-    whereReserva = [{ state: "ACTIVO" }, { periodo: periodo }];
+    whereReserva = [{ state: "ACTIVO" }, { periodo: periodo },{estado : 'AUTORIZADA'}];
     let whereEdif = {
       [db.seq.Op.and]: [{ state: "ACTIVO" }, { nombre: edificio }],
     };

@@ -22,14 +22,10 @@ router.get("/horariosCarrera", (req, res) => {
 router.get("/detallesAula", (req, res) => {
     res.render("detallesAula.html");
 });
-router.get("/detallesAula/id/:id/periodo/:periodo", (req, res) => {
-    id = req.params.id;
-    aulasController.setId(id);
-    res.location('/');
-    res.redirect('/detallesAula');
-});
+
 //retorna datos para detallesAula
-router.get("/primeraVezDetallesAula", aulasController.getAulaPrimerVez);
+router.get("/getDetalles/id/:id", aulasController.getDetallesAula);
+//retorna los comentarios de un aula
 router.get("/allComentarios/id/:id", aulasController.allComentario);
 //retorna los filtros para listadoAulas.html
 router.get("/getFiltrosAulas", aulasController.getFiltrosAulas);

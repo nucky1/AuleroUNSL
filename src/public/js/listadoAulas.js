@@ -1,8 +1,6 @@
 var mapaUbicaciones = new Map();
 getFiltros();
 async function getFiltros() {
-  console.log(document.domain);
-  console.log(document.write);
   let responseJSON = await fetch("getFiltrosAulas").then(
     function (response) {
       //Trae los filtros en el parametro "response"
@@ -121,10 +119,10 @@ function cargarTabla(aulas) {
     "</ul>" +
     "</div >" +
     '<div class="botones text-right">' +
-    '<button type="button" class="btn btn-line mb-2" onclick="location.href=\'detallesAula/id/';
+    '<button type="button" class="btn btn-line mb-2" onclick="verDetallesAula(';
 
   let endFila =
-    "/periodo/primer cuatrimestre'\">Ver detalles</button>" +
+    ")\">Ver detalles</button>" +
     '<button type="button" class="btn btn-line mb-2">Reservar</button>' +
     "</div>" +
     "</div >" +
@@ -154,4 +152,8 @@ function cargarTabla(aulas) {
       aulas[index].id +
       endFila;
   }
+}
+function verDetallesAula(idAula){
+  localStorage.setItem("idAula",idAula);
+  location.href= "detallesAula";
 }

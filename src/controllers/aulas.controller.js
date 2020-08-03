@@ -13,9 +13,6 @@ const db = {
 };
 var idDetallesAula;
 module.exports = {
-  setId: function(id) {
-    idDetallesAula = id;
-  },
   //retorna los filtros para listadoAulas.html
   getFiltrosAulas: async (req, res) => {
     const filtros = await db.Edificio.findAll({
@@ -30,10 +27,10 @@ module.exports = {
     res.send(filtros);
   },
   //idDetallesAula
-  getAulaPrimerVez: async (req, res) => {
+  getDetallesAula: async (req, res) => {
     const aula = await db.Aulas.Aula.findAll({
       where: {
-        id: idDetallesAula
+        id: req.params.id
       },
       include: [
         {
@@ -224,7 +221,7 @@ module.exports = {
   },
   allComentario : async (req, res) => {
     const comentarios = await db.Comentario.findAll({
-      where: { state: "ACTIVO", aulaId : idDetallesAula},
+      where: { state: "ACTIVO", aulaId : req.params.id},
       include: [
         {
           model: db.Docente,

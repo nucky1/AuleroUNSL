@@ -1,22 +1,19 @@
 getDatos();
-var id;
 async function getDatos() {
-    let responseJSON = await fetch('primeraVezDetallesAula')
+    let id = localStorage.getItem("idAula");
+    let responseJSON = await fetch('getDetalles/id/'+id)
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API
         });
     cargarDatos(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 async function getComentarios(){
-    let responseJSON = await fetch('allComentarios/id/:id')
+    let id = localStorage.getItem("idAula");
+    let responseJSON = await fetch('allComentarios/id/'+id)
     .then(function (response) { //Trae los filtros en el parametro "response" 
         return response.json(); //Retorno como JSON los datos de la API
     });
     cargarComentarios(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
-}
-function cargarComentarios(comentarios){
-    //funcion de carga
-    console.log(comentarios);
 }
 
 function cargarDatos(aula) {
@@ -25,7 +22,6 @@ function cargarDatos(aula) {
     let capacidad = document.getElementById('capacidad');
     let ubicacion = document.getElementById('ubicacion');
     let listaExtras = document.getElementById('listaExtras');
-    id = aula[0].id;
     nombre.innerText = aula[0].nombre + ' ' + aula[0].numero;
     edif.innerText = aula[0].edificio.nombre;
     capacidad.innerText = aula[0].capacidad;
@@ -34,9 +30,10 @@ function cargarDatos(aula) {
     for (let index in aula[0].extras) {
         listaExtras.innerHTML += beforeExtra + aula[0].extras[index].extra + '</li>';
     }
-    getComentarios();
+    getHorarios();
 }
 async function getHorarios() {
+    let id = localStorage.getItem("idAula");
     let select = document.getElementById('periodo');
     let periodo = select.options[select.selectedIndex].text;
     if (periodo.includes('1er')) {
@@ -111,6 +108,43 @@ function llenarTabla(aula) {
             
         }
     }
+    getComentarios();
+}
+function cargarComentarios(comentarios){
+    console.log(comentarios);
+    let comentarioContainer = document.getElementById("comentarioContainer");
+    let comentario = '<div class="comentarios">'+
+                        '<div class="row">'+
+                            '<div class="col-xs-1">'+
+                                '<div class="comment-info">';
+    let afterFecha = '</div>'+
+            '</div>'+
 
-
+            '<div class="col-xs-2">'+
+                '<div class="comment-info">';
+    let afterDocente = '</div>'+
+        '</div>'+
+        '<div class="col-xs-8">'+
+            '<textarea id="comentario" readonly="readonly" class="form-control">'
+    let afterComentario = '</textarea>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+    if(comentarios.length == 0){
+        comentarioContainer.innerHTML += "<h4>No hay comentarios de esta aula hasta el momento.</h4>"
+    }else{
+        comentarios.forEach(element => {
+            let d = new Date(element.createdAt);
+            let fecha;
+            if(d.getHours() == 0){
+                fecha = d.getDate() +"/"+ d.getMonth() +"/"+ d.getFullYear()  +" 00:"+ d.getMinutes(); 
+            }else{
+                fecha = d.getDate() +"/"+ d.getMonth() +"/"+ d.getFullYear()  +" "+ d.getHours()  +":"+ d.getMinutes(); 
+            }
+            comentarioContainer.innerHTML += comentario + fecha + afterFecha + element.docentes[0].nombre + " "+
+            element.docentes[0].apellido + afterDocente + element.texto + afterComentario;
+            console.log(comentario + fecha + afterFecha + element.docentes[0].nombre + " "+
+            element.docentes[0].apellido + afterDocente + element.texto + afterComentario)
+        });
+    }
 }

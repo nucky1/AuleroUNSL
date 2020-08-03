@@ -68,7 +68,9 @@ body{
     padding-right: 16px;
     padding-left: 16px;
 }
-
+.col-xs-1{
+    margin-right: 20px;
+}
 .panel .panel-heading{
     background-color: #CBE9FF;
 }
