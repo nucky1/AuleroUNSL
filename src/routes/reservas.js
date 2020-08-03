@@ -68,6 +68,18 @@ router.get("/reservaAula", (req, res) => {
     });
   });
 
+  router.post("/rechazarCoincidentes", eToken, (req, res) => {
+    jwt.verify(req.token, keyAdmin, (err, data) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        //ESCRIBIR TODO ACA
+        req.body.id = data.id;
+        reservasController.updateCoincidente(req,res);
+      }
+    });
+  });
+
   router.get("/allReservas", eToken, (req, res) => {
     console.log(req.token);
     jwt.verify(req.token, keyAdmin, (err, data) => {
@@ -100,6 +112,16 @@ router.get("/reservaAula", (req, res) => {
         //ESCRIBIR TODO ACA
         req.params.idDoc = data.id;
         return reservasController.buscarMateria(req,res);
+      }
+    });
+  });
+  router.get("/buscarReservasCoincidentes/idAula/:idAula/periodo/:periodo/reservaId/:reservaId/horaIn/:horaIn/horaFin/:horaFin/dia/:dia", eToken, (req, res) => {
+    jwt.verify(req.token, keyAdmin, (err, data) => {
+      if (err) {
+        res.sendStatus(404);
+      } else {
+        //ESCRIBIR TODO ACA
+        return reservasController.buscarReservasCoincidentes(req,res); 
       }
     });
   });

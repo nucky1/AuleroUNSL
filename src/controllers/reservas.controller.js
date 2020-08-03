@@ -78,63 +78,65 @@ module.exports = {
     const edificios = await db.Edificio.findAll();
     res.send(edificios);
   },
-  //busca que las aulas disponibles segun:
-  //edificio, dia, between(hora inicio, hora inicia+cantHoras)
-  //capAula > capacidad, periodo.
-  //router.get("/buscarAulaReserva/edificio/:edificio/dia/:dia/horaInicio/:horaIn/cantHoras/:cantHoras/capacidad/:capacidad/periodo/:periodo", reservasController.buscarAulaReserva);
-  buscarAulaReserva: async (req, res) => {
-    const edificio = req.params.edificio;
-    const dia = req.params.dia;
-    const capacidad = req.params.capacidad;
-    const horaIn = req.params.horaInicio;
-    const cantHoras = req.params.cantHoras;
+  //busca que las aulas con la reserva en el mismo horario
+  buscarReservasCoincidentes: async (req, res) => {
+    const idReserva = req.params.reservaId;
+    const idAula = req.params.idAula;
+    const horaIn = req.params.horaIn;
+    const horaFin = req.params.horaFin;
     const periodo = req.params.periodo;
-    whereReserva = [{ state: "ACTIVO" }];
-    whereEdif = {
-      [db.seq.Op.and]: [{ state: "ACTIVO" }, { nombre: edificio }],
-    };
-    whereAula = [{ state: "ACTIVO" }];
-    whereAula.push({ capacidad: { [db.seq.Op.gte]: capacidad } });
-    if (dia != "todos") whereReserva.push({ dia: dia });
-    console.log(parseInt(horaIn) + parseInt(cantHoras));
-    whereReserva.push({
-      horaInicio: {
-        [db.seq.Op.notBetween]: [
-          parseInt(horaIn),
-          parseInt(horaIn) + parseInt(cantHoras),
-        ],
-      },
-    });
-    whereReserva.push({
-      horaFin: {
-        [db.seq.Op.notBetween]: [
-          parseInt(horaIn),
-          parseInt(horaIn) + parseInt(cantHoras),
-        ],
-      },
-    });
-
-    const aulas = await db.Aulas.Aula.findAll({
-      where: { [db.seq.Op.and]: whereAula },
-      include: [
-        {
-          model: db.Edificio,
-          where: whereEdif,
-        },
-        {
-          model: db.Reserva,
-          where: { [db.seq.Op.and]: whereReserva },
-          include: [
-            {
-              model: db.Materia,
-              where: { periodo: periodo },
-              attributes: [],
-            },
+    const dia = req.params.dia;
+    whereReserva = [{id: {[db.seq.Op.ne]: idReserva}},{ state: "ACTIVO" }, { aulaId: idAula },{estado : 'PENDIENTE'}];
+    if(periodo == 'primer cuatrimestre'){
+      whereReserva.push({periodo:{ [db.seq.Op.in]:['primer cuatrimestre','anual']}});
+    }else{
+      if(periodo == 'segundo cuatrimestre'){
+        whereReserva.push({periodo:{ [db.seq.Op.in]:['segundo cuatrimestre','anual']}});
+      }
+    }
+    whereReserva.push({ dia: dia });
+    wherehorario = [
+      {
+        horaInicio: {
+          [db.seq.Op.between]: [
+            horaIn,
+            horaFin,
           ],
         },
-      ],
+      },
+    ];
+    wherehorario.push({
+      horaFin: {
+        [db.seq.Op.between]: [
+          horaIn,
+          horaFin,
+        ],
+      },
     });
-    res.send(aulas);
+    whereReserva.push({ [db.seq.Op.or]: wherehorario });
+    console.log(whereReserva)
+    await db.Reserva.findAll({
+      where: { [db.seq.Op.and]: whereReserva },
+      include: [
+        {
+          model: db.Docente,
+          where: { state: "ACTIVO" },
+        },
+        {
+          model: db.Materia,
+          where: { state: "ACTIVO" },
+          attributes: ["nombre", "periodo"],
+        },
+      ],
+    }).then(function (reservas) {
+            console.log("se recuperaron las reservas" + reservas);
+            res.send(reservas);
+          },
+          function (reason) {
+            console.log("NO se recuperaron las reservas" + reason);
+            res.sendStatus(400);
+          }
+        );
   },
   //buscar aula disponible alternative
   buscarAula2: async (req, res) => {
@@ -149,7 +151,6 @@ module.exports = {
     let whereEdif = {
       [db.seq.Op.and]: [{ state: "ACTIVO" }, { nombre: edificio }],
     };
-    let whereAula = [{ state: "ACTIVO" }];
     if (dia != "todos") whereReserva.push({ dia: dia });
     wherehorario = [
       {
@@ -305,12 +306,64 @@ module.exports = {
       res.sendStatus(400);
     }
   },
-
+  updateCoincidente: async (req, res) => {
+    const id = req.body.id;
+    var idReserva;
+    if( req.body.idReservas.includes(",")){
+      idReserva = req.body.idReservas.split(",");
+    }else{
+      idReserva = req.body.idReservas;
+    }
+    console.log("body en update reserva " + idReserva);
+    console.log("id admin  " + id);
+    try {
+      const reserva = await db.Reserva.update(
+        {
+          estado: 'RECHAZADA',
+        },
+        {
+          where: { id:{[db.seq.Op.in]:idReserva}, state: "ACTIVO" },
+        }
+      ).then(
+        async function (reserva) {
+          console.log("Reserva actualizada " + reserva);
+          console.log("id Reserva" + idReserva);
+          console.log("id admin" + id);
+          var idsReserva = [];
+          if(Array.isArray(idReserva)){
+            idReserva.forEach(element => {
+              idsReserva.push({administradorId: id, reservaId: element});
+            });
+          }else{
+              idsReserva.push({administradorId: id, reservaId: idReserva});
+          }
+          const reservaAdmin = await db.ReservaAdmin.bulkCreate({
+            idsReserva
+          }).then(
+            function (reserva) {
+              console.log("Reserva actualizada " + reserva);
+              res.sendStatus(200);
+            },
+            function (reason) {
+              console.log("Mal update reservaAdin " + reason);
+              res.sendStatus(400);
+            }
+          );
+        },
+        function (reason) {
+          console.log("Mal update reserva " + reason);
+          res.sendStatus(400);
+        }
+      );
+    } catch (err) {
+      console.log("ERROR" + err);
+      res.sendStatus(400);
+    }
+  },
   updateReservaAdmin: async (req, res) => {
     const id = req.body.id;
     const idReserva = req.body.idReserva;
     const estado = req.body.estado;
-    console.log("body en update reserva " + req.body.idReserva);
     console.log("id admin  " + id);
     try {
       const reserva = await db.Reserva.update(
