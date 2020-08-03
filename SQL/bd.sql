@@ -195,19 +195,51 @@ CREATE TRIGGER tr_reservaadmin BEFORE UPDATE ON reservaadmin FOR EACH ROW
     ('El barco','D5700HOI, Chacabuco 917, D5700HOI San Luis');
 
     INSERT INTO aulas(nombre,numero,"edificioId",capacidad,ubicacion) VALUES 
-    ('aula',58,1,50,'planta baja'),
-    ('sala',7,1,15,'planta baja'),
+    -- bloque 1 ('aula',,2,,'planta baja'),
     ('aula',36,2,60,'planta baja'),
-    ('laboratorio',6,1,20,'segundo piso'),
+    ('aula',37,2,45,'planta baja'),
     ('aula',38,2,60,'planta baja'),
+    ('aula',39,2,45,'planta baja'),
+    ('aula',40,2,60,'planta baja'),
+    ('aula',41,2,45,'planta baja'),
+    ('aula',42,2,60,'planta baja'),
+    ('aula',43,2,45,'planta baja'),
+    -- bloque 2 ('aula',,1,,'planta baja'),
+    ('aula',51,1,30,'planta baja'),
+    ('aula',52,1,50,'planta baja'),
+    ('aula',53,1,30,'planta baja'),
+    ('aula',54,1,50,'planta baja'),
+    ('aula',57,1,80,'planta baja'),
+    ('aula',58,1,100,'planta baja'),
+    ('sala',7,1,40,'planta baja'),
+    ('sala',8,1,40,'planta baja'),
+    ('laboratorio',6,1,20,'segundo piso'),
+    -- bloque 4 ('aula',,3,,'planta baja'),
+    ('aula',27,3,100,'planta baja'),
     ('aula',28,3,80,'planta baja'),
-    ('aula',29,4,38,'primer piso'),
-    ('Aula magna',0,4,100,'subusuelo');
+    ('aula',29,3,100,'planta baja'),
+    ('aula',30,3,100,'planta baja'),
+    ('aula',31,3,100,'planta baja'),
+    ('aula',32,3,100,'planta baja'),
+    ('aula',33,3,100,'planta baja'),
+    ('aula',34,3,160,'planta baja'),
+    -- El barco ('aula',,4,,'planta baja'),
+    ('aula magna',0,4,150,'subusuelo'),
+    ('aula',1,4,50,'planta baja'),
+    ('aula',2,4,70,'planta baja'),
+    ('aula',3,4,30,'planta baja');
 
     INSERT INTO extras("aulaId",extra) VALUES 
     (1,'Pizarron'),
     (2,'Proyector'),
-    (3,'Pizarra');
+    (3,'Pizarra'),
+    (4,'Pizarron'),
+    (6,'Pizarra'),
+    (4,'Pizarra'),
+    (8,'Proyector'),
+    (4,'Proyector'),
+    (10,'Pizarron'),
+    (4,'Proyector');
 
     insert into facultad (nombre) VALUES 
     ('Facultad de Química, Bioquímica y Farmacia'),
