@@ -19,7 +19,7 @@ async function getFiltroReservarAula() {
         let token = localStorage.getItem("token"); 
         misCabeceras.append("token", token);
     }
-    let responseJSON = await fetch('http://localhost:3000/filtrosReserva',{ //URL de getFiltrosReserva
+    let responseJSON = await fetch('filtrosReserva',{ //URL de getFiltrosReserva
         method: 'GET', // or 'PUT'
         headers: misCabeceras, 
       })
@@ -102,22 +102,7 @@ function controlCapacidad(){
     let capacidad=selector.value; 
     return (capacidad>0) && ((capacidad % 1) == 0);
 }
-function verificar(){
-    let flag = true;
-    let text = "";
-    if(!controlHorario()){
-        flag = false;
-        text = "El horario de finalizacion de clases es mayor a las 23hs.\n";
-    }
-    if(!controlCapacidad()){
-        flag = false;
-        text += "La capacidad tiene un valor invalido.";
-    }
-    if(flag){
-        
-        
-    }
-}
+
 async function buscarAulas(){
     let flag = true;
     let text = "";
@@ -150,7 +135,7 @@ async function buscarAulas(){
             let token = localStorage.getItem("token"); // traigo el token
             misCabeceras.append("token", token); //lo agrego en el heather
         }    
-        let responseJSON = await fetch('http://localhost:3000/buscarAulaReserva/edificio/'+edificio+'/dia/'+day+'/horaInicio/'+horaI+'/cantHoras/'+cantH+'/capacidad/'+capacidad+'/periodo/'+per,{
+        let responseJSON = await fetch('buscarAulaReserva/edificio/'+edificio+'/dia/'+day+'/horaInicio/'+horaI+'/cantHoras/'+cantH+'/capacidad/'+capacidad+'/periodo/'+per,{
             method: 'GET', // or 'PUT'
             headers: misCabeceras,  //Mando el header
             })
@@ -171,6 +156,7 @@ async function buscarAulas(){
             document.getElementById("siguientep1").click();
         }
     }else{
+        console.log("asd");
         showError(text);
     }
 }
@@ -218,7 +204,7 @@ async function getMaterias(){
             let token = localStorage.getItem("token"); 
             misCabeceras.append("token", token);
         }
-        let responseJSON = await fetch('http://localhost:3000/buscarMateras/periodo/'+per,{ //URL de buscarMateras
+        let responseJSON = await fetch('buscarMateras/periodo/'+per,{ //URL de buscarMateras
             method: 'GET', // or 'PUT'
             headers: misCabeceras, 
         })

@@ -1,7 +1,9 @@
 var mapaUbicaciones = new Map();
 getFiltros();
 async function getFiltros() {
-  let responseJSON = await fetch("http://localhost:3000/getFiltrosAulas").then(
+  console.log(document.domain);
+  console.log(document.write);
+  let responseJSON = await fetch("getFiltrosAulas").then(
     function (response) {
       //Trae los filtros en el parametro "response"
       return response.json(); //Retorno como JSON los datos de la API
@@ -70,7 +72,7 @@ async function getAulas() {
   );
   if (capacidad >= 0 && capacidad <= 500) {
     let responseJSON = await fetch(
-      "http://localhost:3000/listadoAulas/edificio/" +
+      "listadoAulas/edificio/" +
         edificio +
         "/capacidad/" +
         capacidad +

@@ -4,7 +4,7 @@ anios = new Map(); //Mapa de Carreras - cantAños - lo lleno en cargarCarreras
 
 //---------------------- TODO LO QUE EMPIECE CON GET  =  PETICIONES A API------------------------
 async function getFiltros(){
-    let responseJSON = await fetch('http://localhost:3000/getDatosFiltros')
+    let responseJSON = await fetch('getDatosFiltros')
     .then(function(response) { //Trae los filtros en el parametro "response" 
         return response.json(); //Retorno como JSON los datos de la API
     });
@@ -24,7 +24,7 @@ async function getHorariosByFiltros(){
     //get Periodo
     let selectorCuatri = document.getElementById('cuatri'); 
     let cuatriSelect = selectorCuatri.options[selectorCuatri.selectedIndex].text; 
-    let peticionGet = "http://localhost:3000/horariosCarrera/facultad/"+facSelect+"/carrera/"+carrSelect+"/anio/"+anioSelect+"/periodo/"+cuatriSelect;
+    let peticionGet = "horariosCarrera/facultad/"+facSelect+"/carrera/"+carrSelect+"/anio/"+anioSelect+"/periodo/"+cuatriSelect;
 
     if(facSelect && carrSelect && anioSelect && cuatriSelect){
         let responseJSON = await fetch(peticionGet)

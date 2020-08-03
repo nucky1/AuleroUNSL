@@ -13,7 +13,7 @@ async function redirectListadoReservas(){
         console.log(token); // 
         misCabeceras.append("token", token);
     }    
-    let responseJSON = await fetch('http://localhost:3000/verificarDocente/pagina/verReservas',{
+    let responseJSON = await fetch('verificarDocente/pagina/verReservas',{
         method: 'GET', // or 'PUT'
         headers: misCabeceras, 
       })
@@ -37,7 +37,7 @@ async function redirectReservarAula(){
         let token = localStorage.getItem("token"); // traigo el token
         misCabeceras.append("token", token); //lo agrego en el heather
     }    
-    let responseJSON = await fetch('http://localhost:3000/verificarDocente/pagina/reservarAula',{
+    let responseJSON = await fetch('verificarDocente/pagina/reservarAula',{
         method: 'GET', // or 'PUT'
         headers: misCabeceras,  //Mando el header
       })
@@ -63,7 +63,7 @@ async function redirectAutorizarReservas(){
         console.log(token); // 
         misCabeceras.append("token", token);
     }    
-    let responseJSON = await fetch('http://localhost:3000/verificarAdmin',{
+    let responseJSON = await fetch('verificarAdmin',{
         method: 'GET', // or 'PUT'
         headers: misCabeceras, 
       })

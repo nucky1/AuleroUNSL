@@ -7,7 +7,7 @@ async function getReservas() {
         token = localStorage.getItem("token");
         console.log(token); 
     }
-    let responseJSON = await fetch('http://localhost:3000/reservaDocente',{
+    let responseJSON = await fetch('reservaDocente',{
         method: 'GET', // or 'PUT'
         headers:{ // NO SE PA QUE SIRVE 
           'token': token // NO SE PA QUE SIRVE  
@@ -106,7 +106,7 @@ async function cancelarReservaDocente() {
     }
     data = {id: idReserva};
     const responseJSON = await fetch(
-      "http://localhost:3000/cancelarReserva",
+      "cancelarReserva",
       {
         method: "POST", // or 'PUT'
         body:JSON.stringify(data),
@@ -139,7 +139,7 @@ async function comentarAula() {
     }
     data = {idAula : idAula, idDoc : idDocente,comentario : textArea.value};
     const responseJSON = await fetch(
-      "http://localhost:3000/comentarAula",
+      "comentarAula",
       {
         method: "POST", // or 'PUT'
         body:JSON.stringify(data),

@@ -5,7 +5,7 @@ var horarios = new Map();
 var horarioSelected = new Map(); // mapa con la materia
 //---------------------- TODO LO QUE EMPIECE CON GET  =  PETICIONES A API------------------------
 async function getFiltros() {
-  let responseJSON = await fetch("http://localhost:3000/getDatosFiltros").then(
+  let responseJSON = await fetch("getDatosFiltros").then(
     function (response) {
       //Trae los filtros en el parametro "response"
       return response.json(); //Retorno como JSON los datos de la API
@@ -73,7 +73,7 @@ async function pedirMaterias() {
   let selectorCuatri = document.getElementById("cuatri");
   let cuatriSelect = selectorCuatri.options[selectorCuatri.selectedIndex].text;
   let peticionGet =
-    "http://localhost:3000/horariosCarrera/facultad/" +
+    "horariosCarrera/facultad/" +
     facSelect +
     "/carrera/" +
     carrSelect +

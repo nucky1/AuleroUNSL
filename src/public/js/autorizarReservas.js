@@ -9,7 +9,7 @@ async function getReservas() {
         token = localStorage.getItem("token");
         console.log(token); 
     }
-    let responseJSON = await fetch('http://localhost:3000/allReservas',{
+    let responseJSON = await fetch('allReservas',{
         method: 'GET', // or 'PUT'
         headers:{ // NO SE PA QUE SIRVE 
           'token': token // NO SE PA QUE SIRVE  
@@ -38,7 +38,7 @@ async function updateReservaAdmin(){
     };
     console.log(data);
     console.log(JSON.stringify(data));
-    let responseJSON = await fetch('http://localhost:3000/updateReserva',{
+    let responseJSON = await fetch('updateReserva',{
         method: 'POST', 
         body: JSON.stringify(data),
         headers:{ // NO SE PA QUE SIRVE 
@@ -202,7 +202,6 @@ function cargarAutorizadasRechazadas(reservasAutorizadas,reservasRechazadas){
     if(reservasAutorizadas.length > 0){
         listaReservas = "";
         container.innerHTML += autorizadas;
-        var reservasAnual = [];
         for (let index in reservasAutorizadas) {
             let infoAula = '<td>' + reservasAutorizadas[index].aula.nombre +' '+ reservasAutorizadas[index].aula.numero+ '</td>';
             infoAula += '<td>' + reservasAutorizadas[index].dia + '</td>'
@@ -219,9 +218,7 @@ function cargarAutorizadasRechazadas(reservasAutorizadas,reservasRechazadas){
         return;
     listaReservas = "";
     container.innerHTML += rechazadas;
-    var reservasAnual = [];
     for (let index in reservasRechazadas) {
-        
         let infoAula = '<td>' + reservasRechazadas[index].aula.nombre +' '+ reservasRechazadas[index].aula.numero+ '</td>';
         infoAula += '<td>' + reservasRechazadas[index].dia + '</td>'
         infoAula += '<td>' + parseInt(reservasRechazadas[index].horaInicio/100) +":"+parseInt(reservasRechazadas[index].horaInicio%100) +"-"+ parseInt(reservasRechazadas[index].horaFin/100)+":"+parseInt(reservasRechazadas[index].horaFin%100)+ '</td>';
@@ -245,5 +242,6 @@ function showError(error){
     $("#cartelOk").modal();
     setTimeout(function(){ 
       $("#cartelOk").modal('hide');
+      location.reload();
     }, 2000);
   }

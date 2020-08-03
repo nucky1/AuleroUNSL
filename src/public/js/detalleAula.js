@@ -1,14 +1,14 @@
 getDatos();
 var id;
 async function getDatos() {
-    let responseJSON = await fetch('http://localhost:3000/primeraVezDetallesAula')
+    let responseJSON = await fetch('primeraVezDetallesAula')
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API
         });
     cargarDatos(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
 }
 async function getComentarios(){
-    let responseJSON = await fetch('http://localhost:3000/allComentarios/id/:id')
+    let responseJSON = await fetch('allComentarios/id/:id')
     .then(function (response) { //Trae los filtros en el parametro "response" 
         return response.json(); //Retorno como JSON los datos de la API
     });
@@ -44,7 +44,7 @@ async function getHorarios() {
     } else {
         periodo = 'segundo cuatrimestre';
     }
-    let responseJSON = await fetch('http://localhost:3000/getHorariosReserva/id/'+id+'/periodo/'+periodo)
+    let responseJSON = await fetch('getHorariosReserva/id/'+id+'/periodo/'+periodo)
         .then(function (response) { //Trae los filtros en el parametro "response" 
             return response.json(); //Retorno como JSON los datos de la API
         });
