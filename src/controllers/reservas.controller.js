@@ -346,7 +346,7 @@ module.exports = {
             },
             function (reason) {
               console.log("Mal update reservaAdin " + reason);
-              res.sendStatus(400);
+              res.sendStatus(200);
             }
           );
         },
@@ -364,7 +364,6 @@ module.exports = {
     const id = req.body.id;
     const idReserva = req.body.idReserva;
     const estado = req.body.estado;
-    console.log("id admin  " + id);
     try {
       const reserva = await db.Reserva.update(
         {
@@ -375,9 +374,6 @@ module.exports = {
         }
       ).then(
         async function (reserva) {
-          console.log("Reserva actualizada " + reserva);
-          console.log("id Reserva" + idReserva);
-          console.log("id admin" + id);
           const reservaAdmin = await db.ReservaAdmin.create({
             administradorId: id,
             reservaId: idReserva,

@@ -109,8 +109,6 @@ async function updateReservaAdmin(){
                     var data = {
                         idReservas : idReservaCoincidente
                     };
-                    console.log(data);
-                    console.log(JSON.stringify(data));
                     let responsejson = await fetch('rechazarCoincidentes',{
                         method: 'POST', 
                         body: JSON.stringify(data),
@@ -130,7 +128,7 @@ async function updateReservaAdmin(){
                     showSuccess("La reserva fue autorizada.");
                 }
             }
-          }
+        }
 
 }
 function cargarTablaAdmin(reservas){
@@ -310,6 +308,7 @@ function showError(error){
     $("#cartelOk").modal();
     setTimeout(function(){ 
       $("#cartelOk").modal('hide');
+      console.log("aca deberia recargar");
       location.reload();
     }, 2000);
   }

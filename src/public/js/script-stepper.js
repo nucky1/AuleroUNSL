@@ -34,11 +34,11 @@ const findParent = (elem, parentClass) => {
   return currentNode;
 
 };
-
+/*
 //get active button step number
 const getActiveStep = elem => {
   return Array.from(DOMstrings.stepsBtns).indexOf(elem);
-};
+};*/
 
 //set all steps before clicked (and clicked too) to active
 const setActiveStep = activeStepNum => {

@@ -150,19 +150,17 @@ async function buscarAulas(){
         if(responseJSON.length == 0){
             showError("No hay aulas disponibles el dia "+day+" en ese horario");
         }else{
-            document.getElementById("siguientep1").className = "btn btn-bold ml-auto js-btn-next";//cambia panel
             cargarListaAulas(responseJSON);
+            document.getElementById("siguientep1").className = "btn btn-bold ml-auto js-btn-next";//cambia panel
             document.getElementById("siguientep1").onclick = "";
             document.getElementById("siguientep1").click();
         }
     }else{
-        console.log("asd");
         showError(text);
     }
 }
 
 function cargarListaAulas(listaAulas){
-    console.log(listaAulas); //bueno depende el JSON que me llegue  
     codigoHTML = "<br><br>"
         +"    <div class='conatiner'>"
         +"      <table class='table'>"
@@ -190,11 +188,15 @@ function cargarListaAulas(listaAulas){
         codigoHTML+="            </tbody>"
         +"        </table>"
         +"  <div class='botones-step text-right'>"
-        +"      <button class='btn btn-line ml-auto js-btn-prev' type='button' title='Prev' id='vovler2'>Volver</button>"
+        +"      <button class='btn btn-line ml-auto js-btn-prev' type='button' title='Prev' id='vovler2' onclick = \"activatebuscarAula()\">Volver</button>"
         +"      <button id = 'siguientep2' class='btn btn-bold mb-2' type='button' title='Next' onclick='getMaterias()'>Siguiente</button>"
         +"  </div>"
         +"</div>";
     document.getElementById('panelSelecAula').innerHTML = codigoHTML;
+}
+function activatebuscarAula(){
+    document.getElementById("siguientep1").className = "btn btn-bold mb-2";//cambia panel
+    document.getElementById("siguientep1").setAttribute('onclick','buscarAulas()');
 }
 async function getMaterias(){
     if(getAulaSeleccionada()>-1){
@@ -308,6 +310,7 @@ function showError(error){
     $("#cartelOk").modal();
     setTimeout(function(){ 
       $("#cartelOk").modal('hide');
+      
       location.reload();
     }, 2000);
   }

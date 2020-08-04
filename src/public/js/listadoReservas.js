@@ -36,7 +36,7 @@ function cargarTablaReservas(reservas) {
     let afterInfoReserva = '</tr>' +
         '</div >' +
         '<tr>' +
-        '<td colspan = "5" style = "padding: 0; border-top-style: none;">' +
+        '<td colspan = "6" style = "padding: 0; border-top-style: none;">' +
         '<div id="collapse';
     let finColapsedos = '" class="collapse">' +
         '<div class="expansible">' +

@@ -88,6 +88,9 @@ module.exports = {
           as: "extras",
           attributes: ["extra"]
         }
+      ],
+      order : [
+        ['numero', 'asc']
       ]
     }).then(function(aulas) {
       filtroExtras = [];
