@@ -19,6 +19,7 @@ async function redirectListadoReservas(){
       })
       .then(function (response) { //Trae los filtros en el parametro "response"    
             if(response.status == 404 || response.status == 403){
+                localStorage.setItem("redirect","/listadoReservas");
                 window.location.href = '/login';
             }   
             else{
@@ -43,6 +44,7 @@ async function redirectReservarAula(){
       })
       .then(function (response) { //Trae los filtros en el parametro "response"    
         if(response.status == 404 || response.status == 403){
+            localStorage.setItem("redirect","/reservaAula");
             window.location.href = '/login';
         }   
         else{
@@ -69,6 +71,7 @@ async function redirectAutorizarReservas(){
       })
       .then(function (response) { //Trae los filtros en el parametro "response"    
             if(response.status == 404 || response.status == 403){
+                localStorage.setItem("redirect","/autorizarReserva");
                 window.location.href = '/login';
             }   
             else{

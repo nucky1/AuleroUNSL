@@ -26,7 +26,7 @@ async function iniciarSesion(){
     if(responseJSON != undefined && responseJSON.status != 404 && responseJSON.status != 403){
       localStorage.setItem("token", responseJSON.token); // Guardo token en localstorage
       localStorage.setItem("username",responseJSON.user.usuario);// Guardo usuario en localstorage 
-      location.reload();
+      window.location.href = localStorage.getItem("redirect");
     }
 }
 
