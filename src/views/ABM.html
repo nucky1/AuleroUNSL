@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" id = "html">
 <head>
@@ -16,13 +17,17 @@
 <!-- Barra de Navegación -->
     <%- include('partials/navegacion') %>
 <!-- Contenido de la página -->
+<!-- a la altura del main o adentro y modificar css debe ir la barra vertical (la idea es que no tape la barrra de navegacion,
+     y no mueva el main de lugar-->
+
+<!--fin codigo barra vertical-->
 <main class="main-container" role="main">
     <!-- Container con información -->
     <div class="container bg-encabezado" id = "containerListado">
 
         <div class="row">
             <div class="col-xs-6">
-                <h1 class="titulo">Listado de reservas pendientes</h1> <br>
+                <h1 class="titulo" id = "titulo"><!-- cambiaria segun la tabla que se muestre y botones--></h1> <br>
             </div>
             <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
                 <script>
@@ -36,9 +41,9 @@
             </div>
 
         </div>
-       
-
     </div>
+    <!-- codigo de tabla-->
+
     <!-- PopUp de rechazar reserva -->
     <div class="modal fade" id="cancelarReserva" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -56,46 +61,6 @@
                     <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
                     <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="updateReservaAdmin()" >Aceptar</button>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- PopUp de Autorizar reserva -->
-    <div class="modal fade" id="autorizarReserva" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="modalLabel2">Autorizar reserva</h4>
-                </div>
-                <div class="modal-body" id = "autorizarReservaBody">
-                    ¿Está seguro de que quiere autorizar la reserva?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
-                    <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="updateReservaAdmin()" >Aceptar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- PopUp OK -->
-    <div class="modal fade" id="cartelOk" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="text-center" id = "textOk"></h4>
-                </div>                                       
-            </div>
-        </div>
-    </div>
-    <!-- PopUp FAIL -->
-    <div class="modal fade" id="cartelFail" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">	
-                    <h4 class="text-center" id = "textError"></h4>
-                </div>                    
             </div>
         </div>
     </div>
