@@ -16,6 +16,7 @@ app.use(require("./routes/aulas.js"));
 app.use(require("./routes/user.js"));
 app.use(require("./routes/reservas.js"));
 app.use(require("./routes/horarios.js"));
+app.use(require("./routes/abm.js"));
 
 // abre server.
 app.listen(app.get('port'), () => {

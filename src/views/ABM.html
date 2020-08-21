@@ -27,7 +27,7 @@
 
         <div class="row">
             <div class="col-xs-6">
-                <h1 class="titulo" id = "titulo"><!-- cambiaria segun la tabla que se muestre y botones--></h1> <br>
+                <h1 class="titulo" >Administrador</h1> <br>
             </div>
             <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
                 <script>
@@ -39,12 +39,107 @@
                     }
                 </script>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="titulo" id = "nombreTabla">segun la seccion</b></h2>
+            </div>
+            <div class="col-xs-6">
+                <button type="button" class="btn btn-line ml-auto" style="padding : 0" data-toggle="modal" data-target="#eliminar" ><i class="material-icons fa fa-play align-middle">&#xE15C;</i><span>Eliminar</span></button>
+                <button type="button" class="btn btn-bold mb-2" data-toggle="modal" data-target="#createOrUpdate" ><i class="material-icons">&#xE147;</i><span>Añadir</span></button>
+            </div>
+        </div>
+        <!-- codigo de tabla-->
+        <div class="table-wrapper"></div>
+            <table class="table table-hover" id="table">
+                <!-- Encabezado de la tabla -->
+                <thead id = "thead">
+                    <tr>
+                        <th>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="selectAll">
+                                <label for="selectAll"></label>
+                            </span>
+                        </th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <!-- Cuerpo de la tabla -->
+                <tbody id="tbody">
+                    <tr>
+                        <td>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                <label for="checkbox1"></label>
+                            </span>
+                        </td>
+                        <td>Thomas Hardy</td>
+                        <td>thomashardy@mail.com</td>
+                        <td>89 Chiaroscuro Rd, Portland, USA</td>
+                        <td>(171) 555-2222</td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                </tbody>
 
+            </table>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <!-- codigo de tabla-->
-
+    
     <!-- PopUp de rechazar reserva -->
+    <div class="modal fade" id="createOrUpdate" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">						
+                        <h4 class="modal-title" id = "añadirTitulo">segun la seccion</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">					
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" required>
+                        </div>					
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="añadir()" >Aceptar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- PopUp de eliminar -->
     <div class="modal fade" id="cancelarReserva" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -55,12 +150,32 @@
                     <h4 class="modal-title" id="modalLabel1">Eliminar reserva</h4>
                 </div>
                 <div class="modal-body">
-                    ¿Está seguro de que quiere rechazar la reserva?
+                    ¿Está seguro de que quiere eliminar este registro?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
-                    <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="updateReservaAdmin()" >Aceptar</button>
+                    <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="eliminar()" >Aceptar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- PopUp OK -->
+    <div class="modal fade" id="cartelOk" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-center" id = "textOk"></h4>
+                </div>                                       
+            </div>
+        </div>
+    </div>
+    <!-- PopUp FAIL -->
+    <div class="modal fade" id="cartelFail" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">	
+                    <h4 class="text-center" id = "textError"></h4>
+                </div>                    
             </div>
         </div>
     </div>
