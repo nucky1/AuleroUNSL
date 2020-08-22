@@ -512,7 +512,32 @@ html {
     left: 0;
 }
 
-/* ABM STYLE */
+/* ------------------------------------ ABM STYLE ----------------------------- */
+/*-------- Menu Costado ---------*/
+.vertical-bar{
+    background: #2666BC;
+    align-items: center;
+    padding-top:5px;
+    padding-bottom: 20px;
+    min-height: 55px;
+    width:150px;
+    height:400px;
+}
+
+.boton-vertical-bar{
+    background: #2666BC;
+    align-items: center;
+    min-height: 55px;
+    border-style: solid;
+    border-color: #04121E;
+    border-width: 1px;
+    color: #D9D9D9;
+    font-family: "Mitram Regular",sans-serif;
+    font-size: medium;
+    font-weight: bold;
+}
+
+/*-------- TABLA PRINCIPAL ------ */
 .pagination {
 	float: right;
 	margin: 0 0 5px;
