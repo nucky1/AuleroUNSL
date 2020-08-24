@@ -195,7 +195,8 @@ module.exports = {
       };
     const aula = await db.Aulas.Aula.findAll({
       where: {
-        id: id
+        id: id,
+        estado : 'AUTORIZADA'
       },
       include: [
         {
@@ -225,12 +226,15 @@ module.exports = {
   allComentario : async (req, res) => {
     const comentarios = await db.Comentario.findAll({
       where: { state: "ACTIVO", aulaId : req.params.id},
+      order: [
+        ['createdAt','DESC']
+      ],
       include: [
         {
           model: db.Docente,
           where: { state: "ACTIVO" },
           //attributes: ["nombre","apellido"]
-        },
+        }
       ],
     }).then(
       function (comentarios) {
