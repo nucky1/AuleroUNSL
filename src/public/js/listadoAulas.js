@@ -84,13 +84,27 @@ async function getAulas() {
     });
 
     if (responseJSON.length == 0) {
-      alert("ATENCIÓN. No hay aulas de estas caracteristicas.");
+      showWarning("No hay aulas de estas caracteristicas.");
     } else {
       cargarTabla(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
     }
   } else {
-    alert("ERROR, Seleccione correctamente la capacidad del aula.");
+    showError("Seleccione correctamente la capacidad del aula.");
   }
+}
+function showError(error){
+  document.getElementById("textError").innerHTML = '<span class="badge badge-danger" style="background: #f15e5e; margin-right:20px;"><i class="material-icons">&#xE5CD;</i></span>'+ error;
+  $("#cartelFail").modal();
+  setTimeout(function(){ 
+    $("#cartelFail").modal('hide');
+  }, 2000);
+}
+function showWarning(error){
+  document.getElementById("textError").innerHTML = '<span class="badge badge-pill badge-warning" style="background: #FFFF00;color: black; margin-right:20px;"><i class="material-icons">&#xe002;</i></span>'+ error;
+  $("#cartelFail").modal();
+  setTimeout(function(){ 
+    $("#cartelFail").modal('hide');
+  }, 2000);
 }
 function cargarTabla(aulas) {
   let tabla = document.getElementById("tbody");
@@ -123,7 +137,7 @@ function cargarTabla(aulas) {
 
   let endFila =
     ")\">Ver detalles</button>" +
-    '<button type="button" class="btn btn-line mb-2">Reservar</button>' +
+    '<button type="button" class="btn btn-line mb-2" onclick = "redirectReservarAula()">Reservar</button>' +
     "</div>" +
     "</div >" +
     "</td >" +
