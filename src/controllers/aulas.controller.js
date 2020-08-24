@@ -193,10 +193,10 @@ module.exports = {
               { periodo: "anual" }
           ]
       };
+      whereOr.estado = 'AUTORIZADA';
     const aula = await db.Aulas.Aula.findAll({
       where: {
-        id: id,
-        estado : 'AUTORIZADA'
+        id: id
       },
       include: [
         {
@@ -207,10 +207,10 @@ module.exports = {
         {
           model: db.Reserva,
           attributes: ["dia", "horaInicio", "horaFin"],
+          where: whereOr,
           include: [
             {
               model: db.Materia,
-              where: whereOr
             }
           ]
         },
