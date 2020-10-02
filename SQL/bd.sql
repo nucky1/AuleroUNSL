@@ -3,6 +3,7 @@ create schema public;
 --CREO EL TIPO ENUMERADO QUE VAMOS A USAR
 CREATE TYPE chiches AS ENUM ('Pizarra','Proyector','Pizarron','Ventilador');
 CREATE TYPE situation AS ENUM ('ACTIVO','INACTIVO','BAJA');
+CREATE TYPE "tipoDNI" AS ENUM ('DU','LC','LE','Pasaporte','CUIL');
 CREATE TYPE dias AS ENUM ('lunes','martes','miercoles','jueves','viernes','sabado');
 CREATE TYPE period AS ENUM ('primer cuatrimestre','segundo cuatrimestre','anual');
 CREATE TYPE state AS ENUM ('AUTORIZADA','PENDIENTE','FINALIZADA','RECHAZADA');
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS usuarios(
     id SERIAL PRIMARY KEY,
     username text NOT NULL CHECK (username <> ''),
     password text NOT NULL CHECK (password <> ''),
+    mail text NOT NULL CHECK (mail <> ''),
     tipo text NOT NULL CHECK (tipo <> ''),
     state situation DEFAULT 'ACTIVO',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -64,6 +66,7 @@ CREATE TABLE IF NOT EXISTS docente(
     nombre text NOT NULL CHECK (nombre <> ''),
     apellido text NOT NULL CHECK (apellido <> ''),
     legajo text NOT NULL CHECK (legajo <> ''),
+    "tipoDni" tipoDNI DEFAULT "DU",
     dni integer NOT NULL,
     "usuarioId" smallint,
     state situation DEFAULT 'ACTIVO',
@@ -76,6 +79,7 @@ CREATE TABLE IF NOT EXISTS administrador(
     nombre text NOT NULL CHECK (nombre <> ''),
     apellido text NOT NULL CHECK (apellido <> ''),
     legajo text NOT NULL CHECK (legajo <> ''),
+    "tipoDni" tipoDNI DEFAULT "DU",
     dni integer NOT NULL,
     "usuarioId" smallint,
     state situation DEFAULT 'ACTIVO',

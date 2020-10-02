@@ -11,7 +11,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/autorizarReservas.js"></script>
+    <script src="js/ABM.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function(){
+                if(this.checked){
+                    checkbox.each(function(){
+                        this.checked = true;                        
+                    });
+                } else{
+                    checkbox.each(function(){
+                        this.checked = false;                        
+                    });
+                } 
+            });
+            checkbox.click(function(){
+                if(!this.checked){
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+        </script>
 </head>
 <body>
 <!-- Barra de Navegación -->
@@ -19,31 +44,36 @@
 <!-- Contenido de la página -->
 <!-- a la altura del main o adentro y modificar css debe ir la barra vertical (la idea es que no tape la barrra de navegacion,
      y no mueva el main de lugar-->
-
 <!--fin codigo barra vertical-->
 <main class="main-container" role="main">
     <div class="btn-group-vertical vertical-bar" role="group" aria-label="ABM">
         <div class="btn-group boton-vertical-bar" role="group">
             <button type="button" class="btn  dropdown-toggle boton-vertical-bar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+                Usuarios
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu boton-vertical-bar">
-              <li><a href="#">Dropdown link</a></li>
-              <li><a href="#">Dropdown link</a></li>
+              <li><a href="javascript:getDatosAdmin(true)">Administradores</a></li>
+              <li><a href="javascript:getDatosDocente(true)">Docentes</a></li>
             </ul>
         </div>
 
         <div class="btn-group" role="group">
-            <button type="button" class="btn boton-vertical-bar">dsfsdfdsf</button>
+            <button type="button" class="btn boton-vertical-bar" onclick="getDatosEdificio(true)">Edificios</button>
         </div>
         
         <div class="btn-group" role="group">
-            <button type="button" class="btn boton-vertical-bar">BOTOOOOOOOOO</button>
+            <button type="button" class="btn boton-vertical-bar" onclick="getDatosAula(true)">Aulas</button>
         </div>
         
         <div class="btn-group" role="group">
-            <button type="button" class="btn boton-vertical-bar">BOTOOOOOOOOOOO</button>
+            <button type="button" class="btn boton-vertical-bar" onclick="getDatosFacultad(true)">Facultades</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn boton-vertical-bar" onclick="getDatosCarrera(true)">Carreras</button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn boton-vertical-bar" onclick="getDatosMateria(true)">Materias</button>
         </div>
     </div>
     <!-- Container con información -->
@@ -51,7 +81,7 @@
 
         <div class="row">
             <div class="col-xs-6">
-                <h1 class="titulo" >Administrador</h1> <br>
+                <h1 class="titulo" >Administrador de</h1> <br>
             </div>
             <div class="col-xs-6 cont" style="justify-content: flex-end" id= "flotante">
                 <script>
@@ -75,7 +105,7 @@
         </div>
         <!-- codigo de tabla-->
         <div class="table-wrapper"></div>
-            <table class="table table-hover" id="table">
+            <table class="table table-hover" id="table" style="opacity: 1;">
                 <!-- Encabezado de la tabla -->
                 <thead id = "thead">
                     <tr>
@@ -113,7 +143,7 @@
                 </tbody>
 
             </table>
-            <div class="clearfix">
+            <div class="clearfix" id ="paginacion" style="opacity: 1;">
                 <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#">Previous</a></li>
@@ -128,8 +158,8 @@
         </div>
     </div>
     
-    <!-- PopUp de rechazar reserva -->
-    <div class="modal fade" id="createOrUpdate" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <!-- PopUp de modificar admin/docente -->
+    <div class="modal fade" id="createOrUpdate-user" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form>
@@ -137,34 +167,68 @@
                         <h4 class="modal-title" id = "añadirTitulo">segun la seccion</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">					
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" required>
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- Columna izquierda con los label de los campos -->
+                            <div class="col-xs-6 text-right">
+                                <label class="etiqueta-stretch">nombre:</label><br>
+                                <label class="etiqueta-stretch">Apellido:</label><br>
+                                <label class="etiqueta-stretch">Tipo de documento:</label><br>
+                                <label class="etiqueta-stretch">Numero de documento:</label><br>
+                                <label class="etiqueta-stretch">Legajo:</label><br>
+                            </div>
+
+                            <!-- Columna derecha con los campos -->
+                            <div class="col-xs-6 ">
+                                <input type="text" class="form-control campo-stretch" id="nombre"></select>
+
+                                <input type="text" class="form-control campo-stretch" id="apellido"></select>
+
+                                <select class="form-control campo-stretch" id="tipoDoc">
+                                    <option>DU</option>
+                                    <option>LC</option>
+                                    <option>LE</option>
+                                    <option>Pasaporte</option>
+                                    <option>CUIL</option>
+                                </select>
+
+                                <input type="number" class="form-control campo-stretch" id="documento"></select>
+
+                                <input type="text" class="form-control campo-stretch" id="legajo"></select>
+
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" required>
+                        <h2>DATOS DEL USUARIO</h2>		
+                        <div class="row">
+                            <!-- Columna izquierda con los label de los campos -->
+                            <div class="col-xs-6 text-right">
+                                <label class="etiqueta-stretch">Mail:</label><br>
+                                <label class="etiqueta-stretch">Usuario:</label><br>
+                                <label class="etiqueta-stretch">Contraseña:</label><br>
+                            </div>
+
+                            <!-- Columna derecha con los campos -->
+                            <div class="col-xs-6 ">
+                                <input type="email" class="form-control campo-stretch" id="mail"></select>
+
+                                <input type="text" class="form-control campo-stretch" id="usuario"></select>
+
+                                <input type="text" class="form-control campo-stretch" id="contraseña"></select>
+
+                            </div>
                         </div>					
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-line" data-dismiss="modal" >Cancelar</button>
-                        <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="añadir()" >Aceptar</button>
+                        <button type="button" class="btn btn-bold" data-dismiss="modal" onclick="ejecutarOperacion()" >Aceptar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <!-- PopUp de eliminar -->
-    <div class="modal fade" id="cancelarReserva" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="eliminar" tabindex="1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
