@@ -1,5 +1,6 @@
 <script src="js/navegador.js"></script>
 <header>
+
     <div class="container header">
 
         <nav class="navbar navbar-default navbar-fixed-top ">
@@ -19,7 +20,7 @@
 
                 <div class="collapse navbar-collapse center-content" id="nav1">
 
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" id = >
                         <li class="nav-item"><a href="listadoAulas" class="nav-link">AULAS</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ESTUDIANTES</a>
@@ -41,11 +42,48 @@
                         </li>
 
                         <li class="nav-item"><a href="javascript:redirectAutorizarReservas()" class="nav-link">ADMINISTRATIVOS</a></li>
+                        <li class="nav-item"><a href="ABM" class="nav-link">ABM</a></li>
+                        <script>
+                            if(localStorage.getItem("token")!= null){
+                                var misCabeceras = new Headers();
+                                //misCabeceras.append('Content-Type','application/json'); 
+                                //misCabeceras.append('Accept','application/json'); 
+                                if(localStorage.getItem("token")){
+                                    let token = localStorage.getItem("token");
+                                    console.log(token); // 
+                                    misCabeceras.append("token", token);
+                                }    
+                                let responseJSON = await fetch('verificarSuperADMIN',{
+                                    method: 'GET', // or 'PUT'
+                                    headers: misCabeceras, 
+                                })
+                                .then(function (response) { //Trae los filtros en el parametro "response"    
+                                        if(response.status == 404 || response.status == 403){
+                                            console.log("ABM");
+                                            '<li class="nav-item"><a href="ABM" class="nav-link">ABM</a></li>';
+                                        }   
+                                        else{
+                                            console.log("LOGIN");
+                                            '<li class="nav-item"><a href="login" class="nav-link">Login</a></li>';
+                                        }
+                                    })
+                                    if(responseJSON.status != 404 && responseJSON.status != 403){
+                                        console.log("LOGIN");
+                                        '<li class="nav-item"><a href="ABM" class="nav-link">ABM</a></li>';
+                                    }
+                                
+                            }else{
+                                console.log("LOGIN else token");
+                                '<li class="nav-item"><a href="login" class="nav-link">Login</a></li>';
+                            }
+                        </script>
+                        
                     </ul>
 
                 </div>
             </div>
         </nav>
-
     </div>
+    
 </header>
+

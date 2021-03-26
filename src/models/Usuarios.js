@@ -33,6 +33,8 @@ const Usuario = sequelize.define(
         timestamps: false,
     }
 );
-Usuario.hasMany(Docente);
-Usuario.hasMany(Administrador);
+Usuario.hasOne(Docente);
+Usuario.hasOne(Administrador);
+Docente.belongsTo(Usuario);
+Administrador.belongsTo(Usuario);
 module.exports = Usuario;

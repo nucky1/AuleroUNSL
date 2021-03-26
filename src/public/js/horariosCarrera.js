@@ -33,16 +33,28 @@ async function getHorariosByFiltros(){
         });
     
         if(responseJSON.length==0){
-            alert("ATENCIÓN. No existen horarios con las caracteristicas señaladas.");
+            showWarning("No existen horarios con las caracteristicas señaladas.");
         }else{
             cargarMateriasFiltradas(responseJSON); // Con el awayt espero a que responda, despues llamo a cargarFiltros
         }
     }else{
-        alert("ERROR. Seleccione correctamente los campos de busqueda.");
+        showError("Seleccione correctamente los campos de busqueda.");
     }
-    
-    
 }
+function showError(error){
+    document.getElementById("textError").innerHTML = '<span class="badge badge-danger" style="background: #f15e5e; margin-right:20px;"><i class="material-icons">&#xE5CD;</i></span>'+ error;
+    $("#cartelFail").modal();
+    setTimeout(function(){ 
+      $("#cartelFail").modal('hide');
+    }, 2000);
+  }//
+  function showWarning(error){
+    document.getElementById("textError").innerHTML = '<span class="badge badge-pill badge-warning" style="background: #FFFF00;color: black; margin-right:20px;"><i class="material-icons">&#xe002;</i></span>'+ error;
+    $("#cartelFail").modal();
+    setTimeout(function(){ 
+      $("#cartelFail").modal('hide');
+    }, 2000);
+  }
 function cargarFiltros(filtros){ 
     let selector = document.getElementById('fac'); //Obtengo el objeto del comboBox o "Selector" del front
     for(i=0;i<filtros.length;i++){ 

@@ -113,6 +113,11 @@ function llenarTabla(aula) {
 function cargarComentarios(comentarios){
     console.log(comentarios);
     let comentarioContainer = document.getElementById("comentarioContainer");
+    comentarioContainer.innerHTML = '<div class="row">'+
+    '<div class="col-xs-6">'+
+        '<h2 class="titulo">Comentarios</h2>'+
+    '</div>'+
+    '</div>';
     let comentario = '<div class="comentarios">'+
                         '<div class="row">'+
                             '<div class="col-xs-1">'+
